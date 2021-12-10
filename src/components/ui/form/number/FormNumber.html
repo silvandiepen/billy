@@ -1,0 +1,12 @@
+<div :class="[bem(block),'form-field']">
+  <div :class="bem(block, 'container')">
+    <input
+      :class="bem(block, 'control')"
+      :placeholder="placeholder"
+      type="number"
+      v-model="input"
+    />
+    <label :class="bem(block, 'label')">{{ label }}</label>
+  </div>
+  <FormError :errors="errors" />
+</div>

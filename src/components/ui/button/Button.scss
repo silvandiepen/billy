@@ -1,0 +1,98 @@
+.button {
+  $block: &;
+  color: white;
+  border-radius: var(--border-radius);
+  border: none;
+  padding: calc(var(--space) / 4) calc(var(--space) / 2);
+  display: flex;
+
+  &__text {
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1em;
+  }
+
+  &:hover {
+    background-color: var(--primary-75);
+  }
+
+  // Size Modifiers
+  &--small {
+    font-size: 0.85em;
+  }
+  &--medium {
+    font-size: 1em;
+  }
+  &--large {
+    font-size: 1.2em;
+  }
+  // Type Modifiers
+  &--normal {
+  }
+  &--ghost {
+    &#{$block}--primary {
+      background-color: transparent;
+      color: var(--primary);
+    }
+  }
+  &--icon-only {
+    padding: calc(var(--space) / 4);
+  }
+
+  // Color Modifiers
+
+  &--primary {
+    background-color: var(--primary);
+    color: var(--primary-text);
+  }
+  &--secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-text);
+  }
+
+  &--has-icon {
+    padding-left: calc(var(--space) / 4);
+    .button__icon {
+      margin-right: calc(var(--space) / 4);
+    }
+  }
+
+  // icons
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    display: block;
+    line-height: 1em;
+    &--delete,
+    &--close {
+      &::before {
+        font-weight: bold;
+        content: "\2715";
+      }
+    }
+    &--arrow-right {
+      &::before {
+        content: "\2794";
+      }
+    }
+    &--arrow-left {
+      transform: rotate(180deg);
+      &::before {
+        content: "\2794";
+      }
+    }
+    &--arrow-up {
+      transform: rotate(270deg);
+      &::before {
+        content: "\2794";
+      }
+    }
+    &--arrow-down {
+      transform: rotate(90deg);
+      &::before {
+        content: "\2794";
+      }
+    }
+  }
+}

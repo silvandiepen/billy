@@ -1,0 +1,25 @@
+.invoice-edit {
+  &__subheader {
+    color: var(--primary);
+    // padding: 1em;
+  }
+  &__section {
+    padding: var(--space);
+    & + & {
+      border-top: 1px solid var(--foreground-75);
+    }
+  }
+
+  // entries
+  &__item {
+    background-color: var(--foreground-90);
+    position: relative;
+    padding: 1em;
+    border-radius: var(--border-radius);
+    margin: 0 -1em;
+
+    & + & {
+      margin-top: 1em;
+    }
+  }
+}

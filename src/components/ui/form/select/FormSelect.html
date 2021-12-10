@@ -1,0 +1,16 @@
+<div :class="[bem(block),'form-field']">
+  <div :class="bem(block, 'container')">
+    <select :class="bem(block,'control')" v-model="input">
+      <option
+        v-for="(option,index) in options"
+        :key="index"
+        :value="option.value"
+      >
+        {{option.label}}
+      </option>
+    </select>
+    <label :class="bem(block, 'label')">{{ label }}</label>
+  </div>
+
+  <FormError :errors="errors" />
+</div>

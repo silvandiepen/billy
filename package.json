@@ -1,0 +1,21 @@
+{
+  "name": "billy",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "mitt": "^3.0.0",
+    "vue": "^3.2.16",
+    "vue-i18n": "^9.2.0-beta.23"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.3",
+    "sass": "^1.44.0",
+    "typescript": "^4.5.2",
+    "vite": "^2.6.4",
+    "vue-tsc": "^0.29.8"
+  }
+}

@@ -1,0 +1,16 @@
+<div
+  :class="[bem(block),bem(block,'',position),bem(block,'',isActive ? 'active' : 'inactive')]"
+>
+  <div @click="closeSidepanel" :class="bem(block,'background')"></div>
+  <Knop
+    :icon="isActive ? 'arrow-right' : 'arrow-left'"
+    :type="ButtonType.ICON"
+    :class="bem(block,'button')"
+    @click="toggleSidepanel"
+  />
+  <aside :class="bem(block,'panel')">
+    <div :class="bem(block,'container')">
+      <slot></slot>
+    </div>
+  </aside>
+</div>

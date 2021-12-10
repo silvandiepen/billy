@@ -1,0 +1,157 @@
+// Layout
+
+.invoice {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header header header header header"
+    "client client space seller seller"
+    "data data data data data"
+    "total total total total total";
+  line-height: 1.5;
+
+  &__header {
+    grid-area: header;
+  }
+  &__data {
+    grid-area: data;
+  }
+  &__totals {
+    grid-area: total;
+  }
+  &__seller {
+    grid-area: seller;
+  }
+  &__client {
+    grid-area: client;
+  }
+}
+
+// Header
+
+.invoice {
+  &__header {
+    padding: 2em 0;
+  }
+}
+
+// Entities
+.invoice {
+  &__seller,
+  &__client {
+    &--name {
+      font-weight: bold;
+    }
+    &--postalcode + &--city {
+      display: inline-block;
+      &::before {
+        content: "\2000";
+      }
+    }
+    &--city {
+      display: block;
+    }
+    &--country {
+      display: block;
+    }
+  }
+}
+
+// Data
+.invoice {
+  padding: 4em;
+  font-size: 0.3cm;
+
+  @media print {
+    padding: 0;
+  }
+
+  .cell {
+    padding: 0.5em 0;
+  }
+
+  &__total,
+  &__item {
+    display: grid;
+    // padding: calc(var(--space) / 2) 0;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    & + & {
+      border-top: 1px solid var(--accent);
+    }
+  }
+  &__item {
+    padding: 1em 0;
+    &--title {
+      grid-area: title;
+      font-size: 1em;
+    }
+    &--amount {
+      grid-area: amount;
+      text-align: right;
+      font-size: 1em;
+    }
+    &--total {
+      grid-area: total;
+      font-size: 1em;
+      text-align: right;
+    }
+    &--description {
+      grid-area: description;
+      font-size: 1em;
+      padding-top: 0em;
+    }
+    &--total-discount {
+      font-weight: bold;
+      opacity: 1;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    &--has-discount {
+      span:first-child {
+        opacity: 0.55;
+        text-decoration: line-through;
+      }
+    }
+    &--discount {
+      color: var(--secondary);
+      display: block;
+    }
+  }
+
+  &__total {
+    font-weight: bold;
+    &:last-child {
+      color: var(--primary);
+    }
+
+    &--total {
+      grid-area: totalAmount;
+      text-align: right;
+      font-size: 1em;
+    }
+    &--space {
+      grid-area: space;
+    }
+    &--label {
+      text-align: right;
+      grid-area: label;
+    }
+  }
+
+  &__item {
+    grid-template-areas:
+      "title title title amount total"
+      "description description description description description";
+  }
+  &__total {
+    grid-template-areas: "space space space label totalAmount";
+  }
+  //   &__total-item--total {
+  //     .invoice__total-label,
+  //     .invoice__total-total {
+  //       color: var(--primary);
+  //     }
+  //   }
+}

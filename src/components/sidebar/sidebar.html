@@ -1,0 +1,24 @@
+<div :class="bem(block)">
+  <template v-if="show=='start'">
+    <section :class="bem(block,'section')">
+      <p>TESTTT</p>
+      <KnoppenBar>
+        <Knop @click="show = 'edit'">{{t('action.new-invoice')}}</Knop>
+      </KnoppenBar>
+    </section>
+    <section :class="bem(block,'section')">
+      <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
+    </section>
+  </template>
+
+  <template v-if="show == 'edit'">
+    <InvoiceForm />
+
+    <section :class="bem(block,'section')">
+      <KnoppenBar>
+        <Knop @click="switchLanguage('nl')">{{t('language.nl')}}</Knop>
+        <Knop @click="switchLanguage('en')">{{t('language.en')}}</Knop>
+      </KnoppenBar>
+    </section>
+  </template>
+</div>

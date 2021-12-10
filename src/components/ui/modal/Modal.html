@@ -1,0 +1,10 @@
+<div :class="[bem(block),bem(block,'',isActive ? 'active' : 'inactive')]">
+  <div @click="closeModal" :class="bem(block,'background')"></div>
+
+  <div :class="bem(block,'content')">
+    <Knop icon="close" :class="bem(block,'button')" @click="closeModal" />
+    <div :class="bem(block,'container')">
+      <slot></slot>
+    </div>
+  </div>
+</div>

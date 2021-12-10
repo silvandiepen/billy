@@ -1,0 +1,82 @@
+.modal {
+  $block: &;
+
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0s 1s;
+
+  &__button {
+    position: absolute;
+    top: 0;
+    pointer-events: all;
+    right: 0;
+    transform: translate(100%, -100%) scale(0);
+    background-color: var(--foreground);
+    color: var(--background);
+    padding: 1em;
+    border-radius: var(--border-radius);
+    border: none;
+    font-size: 1em;
+  }
+
+  &__content {
+    max-height: 80vh;
+    overflow: scroll;
+    max-width: 80vw;
+    transition: clip-path 0.3s ease-in-out;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__background {
+    background-color: var(--foreground);
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__container {
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+    color: var(--foreground);
+    transition: opacity 0.3s ease-in-out;
+    transform: translateX(calc(50%));
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  &--active {
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 0s 0s;
+
+    #{$block}__button {
+      transform: translate(100%, -100%) scale(1);
+      pointer-events: all;
+    }
+    #{$block}__background {
+      opacity: 0.5;
+      pointer-events: all;
+    }
+    #{$block}__container {
+      opacity: 1;
+      transform: translateX(0%);
+    }
+  }
+  @media print {
+    display: none;
+  }
+}
