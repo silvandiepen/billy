@@ -1,6 +1,13 @@
 <template>
   <component :is="tag" :class="bem(block)">
     <FormText :label="t('label.name')" v-model="entity.companyName" />
+    <FormText :label="t('label.firstName')" v-model="entity.firstName" />
+    <FormText :label="t('label.lastName')" v-model="entity.lastName" />
+    <FormText
+      v-if="entity.companyName"
+      :label="t('label.taxId')"
+      v-model="entity.taxId"
+    />
     <FormText :label="t('label.street')" v-model="entity.street" />
     <FormText :label="t('label.number')" v-model="entity.number" />
     <FormText :label="t('label.additional')" v-model="entity.additional" />

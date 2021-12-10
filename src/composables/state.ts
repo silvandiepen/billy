@@ -7,6 +7,7 @@ import {
   InvoiceItem,
 } from "../components/invoice/invoice.model";
 import { getInvoiceTotal } from "../components/invoice/Invoice.helpers";
+import { store } from ".";
 
 interface State {
   invoice: Invoice;
@@ -39,12 +40,12 @@ export const removeEntry = (id: string): void => {
 
 export const savedInvoices = ref<Invoice[]>([]);
 
-export const loadInvoices = () => {
-  const invoices = JSON.parse(localStorage.getItem("billy:invoices") || "[]");
+export const loadSavedInvoices = () => {
+  const invoices = JSON.parse(localStorage.getItem(store.INVOICES) || "[]");
   savedInvoices.value = invoices;
 };
 export const getInvoices = () => {
-  const invoices = JSON.parse(localStorage.getItem("billy:invoices") || "[]");
+  const invoices = JSON.parse(localStorage.getItem(store.INVOICES) || "[]");
   savedInvoices.value = invoices;
   return invoices.value;
 };
@@ -70,16 +71,18 @@ export const saveInvoiceToStore = (): void => {
     : invoiceIDExists(tempInvoice.current.id);
 
   if (isNew) {
+    console.log(tempInvoices.length, tempInvoices);
     tempInvoices.push(tempInvoice);
 
-    localStorage.setItem("billy:invoices", JSON.stringify(tempInvoices));
+    localStorage.setItem(store.INVOICES, JSON.stringify(tempInvoices));
+    console.log(tempInvoices.length, tempInvoices);
   } else {
     const currentIndex = tempInvoices.findIndex(
       (inv: Invoice) => inv.current.id == tempInvoice.current.id
     );
     tempInvoices[currentIndex] = tempInvoice;
-    localStorage.setItem("billy:invoices", JSON.stringify(tempInvoices));
+    localStorage.setItem(store.INVOICES, JSON.stringify(tempInvoices));
   }
 
-  loadInvoices();
+  loadSavedInvoices();
 };

@@ -27,3 +27,15 @@ export enum ButtonAlign {
   CENTER = "center",
   RIGHT = "right",
 }
+
+export enum ButtonIcon {
+  CLOSE = "close",
+  REMOVE = "close",
+  DELETE = "close",
+  ARROW_LEFT = "arrow-left",
+  ARROW_UP = "arrow-up",
+  ARROW_RIGHT = "arrow-right",
+  ARROW_DOWN = "arrow-down",
+  FLAG_UK = "flag-uk",
+  FLAG_NL = "flag-nl",
+}

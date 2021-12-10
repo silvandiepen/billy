@@ -65,6 +65,7 @@
     display: block;
     line-height: 1em;
     &--delete,
+    &--remove,
     &--close {
       &::before {
         font-weight: bold;
@@ -92,6 +93,111 @@
       transform: rotate(90deg);
       &::before {
         content: "\2794";
+      }
+    }
+    &--new {
+      &::before {
+        content: "\FF0A";
+      }
+    }
+    &--flag-nl {
+      &::before {
+        content: "";
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        display: block;
+        background-image: linear-gradient(
+          to bottom,
+          red,
+          red 33.33%,
+          white 33.33%,
+          white 66.66%,
+          blue 66.66%,
+          blue
+        );
+      }
+    }
+    &--flag-uk {
+      &::before {
+        content: "";
+        width: 1em;
+        height: 1em;
+        display: block;
+        border-radius: 50%;
+        background-color: blue;
+        background-image: linear-gradient(
+            to right,
+            transparent,
+            transparent calc(50% - 0.05em),
+            red calc(50% - 0.05em),
+            red calc(50% + 0.05em),
+            transparent calc(50% + 0.05em),
+            transparent
+          ),
+          linear-gradient(
+            to bottom,
+            transparent,
+            transparent calc(50% - 0.05em),
+            red calc(50% - 0.05em),
+            red calc(50% + 0.05em),
+            transparent calc(50% + 0.05em),
+            transparent
+          ),
+          linear-gradient(
+            to top,
+            transparent,
+            transparent calc(50% - 0.1em),
+            white calc(50% - 0.1em),
+            white calc(50% + 0.1em),
+            transparent calc(50% + 0.1em),
+            transparent
+          ),
+          linear-gradient(
+            to right,
+            transparent,
+            transparent calc(50% - 0.1em),
+            white calc(50% - 0.1em),
+            white calc(50% + 0.1em),
+            transparent calc(50% + 0.1em),
+            transparent
+          ),
+          linear-gradient(
+            to right bottom,
+            transparent,
+            transparent calc(50% - 0.025em),
+            red calc(50% - 0.025em),
+            red calc(50% + 0.025em),
+            transparent calc(50% + 0.025em),
+            transparent
+          ),
+          linear-gradient(
+            to left bottom,
+            transparent,
+            transparent calc(50% - 0.025em),
+            red calc(50% - 0.025em),
+            red calc(50% + 0.025em),
+            transparent calc(50% + 0.025em),
+            transparent
+          ),
+          linear-gradient(
+            to right bottom,
+            transparent,
+            transparent calc(50% - 0.05em),
+            white calc(50% - 0.05em),
+            white calc(50% + 0.05em),
+            transparent calc(50% + 0.05em),
+            transparent
+          ),
+          linear-gradient(
+            to left bottom,
+            transparent,
+            transparent calc(50% - 0.05em),
+            white calc(50% - 0.05em),
+            white calc(50% + 0.05em),
+            transparent calc(50% + 0.05em),
+            transparent
+          );
       }
     }
   }

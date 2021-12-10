@@ -1,6 +1,6 @@
 import { defineComponent, PropType, ref } from "vue";
-import { bem, eventBus } from "../../../composables";
-import { ButtonType } from "../button";
+import { bem, eventBus, eventChannel } from "../../../composables";
+import { ButtonType, ButtonIcon } from "../button";
 import Button from "../button/Button.vue";
 import {
   SidepanelPosition,
@@ -39,7 +39,7 @@ export default defineComponent({
     };
 
     // Events
-    eventBus.on("Sidepanel", (args) => {
+    eventBus.on(eventChannel.SIDEPANEL, (args) => {
       const arg: SidepanelEventArguments = args as SidepanelEventArguments;
 
       if (arg.identifier === props.identifier) {
@@ -65,6 +65,7 @@ export default defineComponent({
       openSidepanel,
       toggleSidepanel,
       ButtonType,
+      ButtonIcon,
     };
   },
 });

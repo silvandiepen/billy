@@ -7,13 +7,12 @@ import {
   newEntry,
   saveInvoiceToStore,
   savedInvoices,
-  loadInvoices,
 } from "../../composables/state";
 import { ModalAction, ModalIdentifier } from "../ui/modal/Modal.model";
 import { ButtonType, ButtonAlign } from "../ui/button/Button.model";
 
-import InvoiceItemForm from "./InvoiceEditItem.vue";
-import InvoiceEntityForm from "./InvoiceEditEntity.vue";
+import InvoiceItemForm from "./InvoiceItemForm.vue";
+import InvoiceEntityForm from "./InvoiceEntityForm.vue";
 import InvoiceItem from "../invoice/InvoiceItem.vue";
 import Button from "../ui/button/Button.vue";
 import ButtonGroup from "../ui/button/ButtonGroup.vue";
@@ -51,7 +50,6 @@ export default defineComponent({
 
     onMounted(() => {
       loadClients();
-      loadInvoices();
     });
 
     const showClientModal = () => {

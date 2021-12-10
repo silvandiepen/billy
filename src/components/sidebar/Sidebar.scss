@@ -3,6 +3,7 @@
     color: var(--primary);
     // padding: 1em;
   }
+  &__title,
   &__section {
     padding: var(--space);
     & + & {
@@ -10,6 +11,11 @@
     }
   }
 
+  &__title {
+    display: flex;
+    line-height: 2em;
+    gap: 1em;
+  }
   &__input {
   }
   // entries
@@ -24,4 +30,20 @@
       margin-top: 1em;
     }
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  position: absolute;
+  transform: translateX(0);
+
+  transition: transform 0.5s ease;
+}
+
+.fade-leave-to {
+  position: absolute;
+  transform: translateX(-100%);
+}
+.fade-enter-from {
+  position: absolute;
+  transform: translateX(100%);
 }

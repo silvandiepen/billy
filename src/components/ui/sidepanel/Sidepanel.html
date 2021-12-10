@@ -3,7 +3,7 @@
 >
   <div @click="closeSidepanel" :class="bem(block,'background')"></div>
   <Knop
-    :icon="isActive ? 'arrow-right' : 'arrow-left'"
+    :icon="isActive ? ButtonIcon.CLOSE : ButtonIcon.ARROW_LEFT"
     :type="ButtonType.ICON"
     :class="bem(block,'button')"
     @click="toggleSidepanel"

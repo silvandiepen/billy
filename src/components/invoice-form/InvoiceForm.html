@@ -1,88 +1,60 @@
-<div :class="bem(block)">
-  <template v-if="show=='start'">
-    <section :class="bem(block,'section')">
-      <p>TESTTT</p>
-      <KnoppenBar>
-        <Knop @click="show = 'edit'">{{t('action.new-invoice')}}</Knop>
-      </KnoppenBar>
-    </section>
-    <section :class="bem(block,'section')">
-      <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
-    </section>
-  </template>
+<div>
+  <section :class="bem(block,'section')">
+    <FormNumber :label="`${t('invoice')} #`" v-model="invoice.current.number" />
+    <FormNumber :label="t('vat')" v-model="invoice.settings.tax" />
+    <FormSelect
+      :label="t('currency')"
+      :options="currencyOptions"
+      v-model="invoice.settings.currency"
+    />
+  </section>
 
-  <template v-if="show == 'edit'">
-    <section :class="bem(block,'section')">
-      <h3>{{t('setting',2)}}</h3>
-    </section>
+  <section :class="bem(block,'section')">
+    <h3 :class="bem(block,'subheader')">{{t('item',2)}}</h3>
 
-    <section :class="bem(block,'section')">
-      <FormNumber
-        :label="`${t('invoice')} #`"
-        v-model="invoice.current.number"
+    <ul :class="bem(block,'items')">
+      <InvoiceItemForm
+        tag="li"
+        :class="bem(block,'item')"
+        :item="item"
+        v-for="(item,index) in invoice.current.data"
+        :key="index"
       />
-      <FormNumber :label="t('vat')" v-model="invoice.settings.tax" />
-      <FormSelect
-        :label="t('currency')"
-        :options="currencyOptions"
-        v-model="invoice.settings.currency"
-      />
-    </section>
+    </ul>
+    <Knop :class="bem(block,'add')" @click="actions.newEntry">
+      {{t('action.add-item')}}
+    </Knop>
+  </section>
 
-    <section :class="bem(block,'section')">
-      <h3 :class="bem(block,'subheader')">{{t('item',2)}}</h3>
+  <section :class="bem(block,'section')">
+    <h3 :class="bem(block,'subheader')">
+      {{t('client')}}
+      <div class="label">{{invoice.client.id}}</div>
+    </h3>
+    <Knop @click="showClientModal">{{ t('action.show-clients')}}</Knop>
 
-      <ul :class="bem(block,'items')">
-        <SettingsItem
-          tag="li"
-          :class="bem(block,'item')"
-          :item="item"
-          v-for="(item,index) in invoice.current.data"
-          :key="index"
-        />
-      </ul>
-      <Knop :class="bem(block,'add')" @click="actions.newEntry">
-        {{t('action.add-item')}}
+    <InvoiceEntityForm :class="bem(block,'entity')" :entity="invoice.client" />
+
+    <KnoppenBar>
+      <Knop @click="addClient" v-if="showSaveClient"> Save client </Knop>
+      <Knop @click="addNewClient" v-if="showSaveNewClient">
+        Save as new client
       </Knop>
-    </section>
+    </KnoppenBar>
+  </section>
 
-    <section :class="bem(block,'section')">
-      <h3 :class="bem(block,'subheader')">
-        {{t('client')}}
-        <div class="label">{{invoice.client.id}}</div>
-      </h3>
-      <Knop @click="showClientModal">{{ t('action.show-clients')}}</Knop>
+  <section :class="bem(block,'section')">
+    <h3 :class="bem(block,'subheader')">
+      Seller
+      <div class="label">{{invoice.seller.id}}</div>
+    </h3>
+    <InvoiceEntityForm :class="bem(block,'entity')" :entity="invoice.seller" />
+  </section>
 
-      <SettingsEntity :class="bem(block,'entity')" :entity="invoice.client" />
-
-      <KnoppenBar>
-        <Knop @click="addClient" v-if="showSaveClient"> Save client </Knop>
-        <Knop @click="addNewClient" v-if="showSaveNewClient">
-          Save as new client
-        </Knop>
-      </KnoppenBar>
-    </section>
-
-    <section :class="bem(block,'section')">
-      <h3 :class="bem(block,'subheader')">
-        Seller
-        <div class="label">{{invoice.seller.id}}</div>
-      </h3>
-      <SettingsEntity :class="bem(block,'entity')" :entity="invoice.seller" />
-    </section>
-
-    <section :class="bem(block,'section')">
-      <KnoppenBar>
-        <Knop @click="actions.saveInvoice" icon="arrow-down">Save</Knop>
-        <Knop icon="arrow-down">Export</Knop>
-      </KnoppenBar>
-    </section>
-
-    <section :class="bem(block,'section')">
-      <KnoppenBar>
-        <Knop @click="switchLanguage('nl')">{{t('language.nl')}}</Knop>
-        <Knop @click="switchLanguage('en')">{{t('language.en')}}</Knop>
-      </KnoppenBar>
-    </section>
-  </template>
+  <section :class="bem(block,'section')">
+    <KnoppenBar>
+      <Knop @click="actions.saveInvoice" icon="arrow-down">Save</Knop>
+      <Knop icon="arrow-down">Export</Knop>
+    </KnoppenBar>
+  </section>
 </div>

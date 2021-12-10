@@ -8,6 +8,7 @@ interface keys {
   item: string;
   setting: string;
   currency: string;
+  home: string;
 
   "currency.eur": string;
   "currency.usd": string;
@@ -22,6 +23,9 @@ interface keys {
   "action.export": string;
   "action.new-invoice": string;
   "label.name": string;
+  "label.companyName": string;
+  "label.firstName": string;
+  "label.lastName": string;
   "label.street": string;
   "label.number": string;
   "label.postalcode": string;
@@ -48,12 +52,13 @@ export const en: keys = {
   item: "Item | Items",
   setting: "Setting | Settings",
   currency: "Currency",
+  home: "Home",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
 
-  "language.en": "Engels",
-  "language.nl": "Nederlands",
+  "language.en": "English",
+  "language.nl": "Dutch",
 
   "action.add-item": "Add Item",
   "action.show-clients": "Show clients",
@@ -62,6 +67,9 @@ export const en: keys = {
   "action.export": "Export",
   "action.new-invoice": "New Invoice",
   "label.name": "Name | Names",
+  "label.companyName": "Company Name | Company Names",
+  "label.firstName": "First Name | First Names",
+  "label.lastName": "Last Name | Last Names",
   "label.street": "Street | Streets",
   "label.number": "Number | Numbers",
   "label.postalcode": "Postal Code | Postal Codes",
@@ -87,6 +95,7 @@ export const nl: keys = {
   item: "Item | Items",
   setting: "Instelling | Instellingen",
   currency: "Currency",
+  home: "Home",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
@@ -100,8 +109,10 @@ export const nl: keys = {
   "action.save": "Opslaan",
   "action.export": "Exporteren",
   "action.new-invoice": "Nieuwe Factuur",
-
   "label.name": "Naam | Namen",
+  "label.companyName": "Bedrijfsnaam | Bedrijfsnamen",
+  "label.firstName": "Voornaam | Voornamen",
+  "label.lastName": "Achternaam | Achternamen",
   "label.street": "Straat | Straten",
   "label.number": "Nummer | Nummers",
   "label.postalcode": "Postcode | Postcodes",

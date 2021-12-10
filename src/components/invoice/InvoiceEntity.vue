@@ -2,6 +2,23 @@
   <div :class="bem(block, 'name')" v-if="entity.companyName">
     <strong>{{ entity.companyName }}</strong>
   </div>
+  <div :class="bem(block, 'name')" v-if="entity.firstName || entity.lastName">
+    <component
+      :is="entity.companyName ? 'span' : 'strong'"
+      v-if="entity.firstName && entity.lastName"
+      >{{ entity.firstName }} {{ entity.lastName }}</component
+    >
+    <component
+      :is="entity.companyName ? 'span' : 'strong'"
+      v-else-if="entity.firstName"
+      >{{ entity.firstName }}</component
+    >
+    <component
+      :is="entity.companyName ? 'span' : 'strong'"
+      v-else-if="entity.lastName"
+      >{{ entity.lastName }}</component
+    >
+  </div>
   <div :class="bem(block, 'street')" v-if="entity.street">
     <span :class="bem(block, 'street-name')">{{ entity.street }}</span>
     <span :class="bem(block, 'street-number')">{{ entity.number }}</span>

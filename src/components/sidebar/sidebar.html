@@ -1,24 +1,43 @@
 <div :class="bem(block)">
-  <template v-if="show=='start'">
-    <section :class="bem(block,'section')">
-      <p>TESTTT</p>
-      <KnoppenBar>
-        <Knop @click="show = 'edit'">{{t('action.new-invoice')}}</Knop>
-      </KnoppenBar>
-    </section>
-    <section :class="bem(block,'section')">
-      <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
-    </section>
-  </template>
+  <section :class="bem(block,'title')">
+    <Knop
+      :type="ButtonType.ICON"
+      :icon="ButtonIcon.ARROW_LEFT"
+      @click="goBack()"
+    />
+    <h3>{{ sidebarTitle }}</h3>
+  </section>
 
-  <template v-if="show == 'edit'">
-    <InvoiceForm />
+  <div>
+    <transition name="fade">
+      <div v-show="show=='start'">
+        <section :class="bem(block,'section')">
+          <KnoppenBar>
+            <Knop :icon="ButtonIcon.NEW" @click="show = 'form'"
+              >{{t('action.new-invoice')}}</Knop
+            >
+          </KnoppenBar>
+        </section>
+        <section :class="bem(block,'section')">
+          <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
+        </section>
+        <section :class="bem(block,'section')">
+          <KnoppenBar>
+            <Knop :icon="ButtonIcon.FLAG_NL" @click="switchLanguage('nl')"
+              >{{t('language.nl')}}</Knop
+            >
+            <Knop :icon="ButtonIcon.FLAG_UK" @click="switchLanguage('en')"
+              >{{t('language.en')}}</Knop
+            >
+          </KnoppenBar>
+        </section>
+      </div>
+    </transition>
+  </div>
 
-    <section :class="bem(block,'section')">
-      <KnoppenBar>
-        <Knop @click="switchLanguage('nl')">{{t('language.nl')}}</Knop>
-        <Knop @click="switchLanguage('en')">{{t('language.en')}}</Knop>
-      </KnoppenBar>
-    </section>
-  </template>
+  <div>
+    <transition name="fade">
+      <InvoiceForm v-show="show == 'form'" />
+    </transition>
+  </div>
 </div>

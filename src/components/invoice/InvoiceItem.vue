@@ -1,19 +1,22 @@
 <template>
   <div :class="bem(block)">
     <div :class="bem(block, 'title')">
-      <strong>#{{ invoiceNumber }}</strong
-      ><br />
-      {{ invoice.current.date }}
-      {{ invoice.current.total }}
+      <p>
+        <strong>#{{ invoiceNumber }}</strong
+        ><br />
+        {{ invoiceName }}
+        {{ formatDate(invoice.current.date) }}<br />
+        {{ formatNumber(invoice.current.total, invoice.settings.currency) }}
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, computed } from "vue";
 import { Invoice } from "./invoice.model";
 import { bem } from "../../composables";
-import { invoiceNumber } from "./Invoice.helpers";
+import { invoiceNumber, formatNumber, formatDate } from "./Invoice.helpers";
 
 export default defineComponent({
   props: {
@@ -23,10 +26,18 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const invoiceName = computed(() => {
+      return props.invoice.client.companyName
+        ? props.invoice.client.companyName
+        : `${props.invoice.client.firstName} ${props.invoice.client.lastName}`;
+    });
     return {
       invoiceNumber: invoiceNumber(props.invoice.current.number),
       block: "invoice-item",
       bem,
+      formatNumber,
+      formatDate,
+      invoiceName,
     };
   },
 });

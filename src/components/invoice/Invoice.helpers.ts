@@ -1,4 +1,5 @@
 import { computed } from "vue";
+import { format, parseISO } from "date-fns";
 
 import { InvoiceItem } from "./invoice.model";
 import { state } from "../../composables/state";
@@ -30,3 +31,18 @@ export const getInvoiceTax = computed(() => {
 export const getInvoiceTotal = computed(() => {
   return getInvoiceSum.value + getInvoiceSum.value;
 });
+
+export const formatDate = (date: Date) => {
+  return format(parseISO(`${date}`), "yyyy-MM-dd");
+};
+
+export const currencyCode = computed(() => state.invoice.settings.currency);
+
+export const formatNumber = (
+  number: number | bigint,
+  currency = currencyCode.value
+) =>
+  new Intl.NumberFormat("nl-NL", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(number);

@@ -9,6 +9,7 @@ import {
   getInvoiceSum,
   getInvoiceTax,
   getInvoiceTotal,
+  formatNumber,
 } from "./Invoice.helpers";
 
 import InvoiceItem from "./InvoiceItem.vue";
@@ -21,14 +22,6 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n({});
-
-    const currencyCode = ref(state.invoice.settings.currency);
-
-    const formatNumber = (number: number | bigint) =>
-      new Intl.NumberFormat("nl-NL", {
-        style: "currency",
-        currency: currencyCode.value.toUpperCase(),
-      }).format(number);
 
     const invoice = ref(state.invoice);
 
