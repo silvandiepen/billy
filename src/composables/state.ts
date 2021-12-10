@@ -5,7 +5,7 @@ import {
   defaultInvoice,
   Invoice,
   InvoiceItem,
-} from "../components/invoice/invoice.model";
+} from "../components/invoice/Invoice.model";
 import { getInvoiceTotal } from "../components/invoice/Invoice.helpers";
 import { store } from ".";
 
