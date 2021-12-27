@@ -7,7 +7,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: ` @import "@sil/themer/use"; `,
+        // additionalData: ` @import "@sil/themer/use"; `,
       },
     },
   },

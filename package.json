@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@sil/themer": "^0.0.7",
+    "@sil/themer": "^0.0.8",
     "date-fns": "^2.27.0",
     "mitt": "^3.0.0",
     "vue": "^3.2.16",
