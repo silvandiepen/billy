@@ -1,3 +1,5 @@
+// @import "@sil/themer/use";
+
 @mixin FormParent($block: "") {
   display: flex;
   flex-direction: column;
@@ -5,14 +7,17 @@
 }
 
 @mixin FormContainer($block: "") {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 100%;
-  padding: 0 0 0 0.5em;
-  border-radius: var(--border-radius);
-  margin: 0 0 0 -0.5em;
-  position: relative;
-  z-index: 1;
+  @include property(
+    (
+      display: flex,
+      flex-direction: column-reverse,
+      width: 100%,
+      border-radius: var(--border-radius),
+      position: relative,
+      z-index: 1,
+    )
+  );
+
   &::before {
     content: "";
 
@@ -35,27 +40,40 @@
 
 @mixin FormLabel($block: "") {
   padding: 0.5em 0.75em;
-  width: 50%;
   line-height: 1;
   font-size: 1em;
-  padding-left: 0;
+  position: absolute;
+  top: 50%;
+  color: var(--background);
+  transform: translateY(-50%);
+  transform-origin: 0 50%;
+  font-weight: bold;
+  left: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease-in-out;
 }
 
 @mixin FormControl($block: "") {
   border-radius: var(--border-radius);
   font-family: inherit;
   font-size: 0.85em;
-  padding: 0.5em 0.75em;
+  padding: 1.25em 0.75em 0.5em 0.75em;
   border: none;
-  width: 50%;
+  width: 100%;
+  color: var(--background);
   line-height: 1;
   font-size: 1em;
+  background-color: var(--foreground-90);
+
+  #{$block}--has-value &,
   &:focus {
+    // background-color: transparent;
     outline: none;
-    box-shadow: 0 0 0px 2px var(--primary) inset;
+    // box-shadow: 0 0 0px 2px var(--primary) inset;
 
     & + #{$block}__label {
-      //   color: var(--primary);
+      opacity: 0.25;
+      transform: translateY(-90%) scale(0.8);
     }
   }
 }

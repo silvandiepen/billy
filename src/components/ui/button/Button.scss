@@ -1,19 +1,36 @@
+@import "@sil/themer/use";
+
 .button {
   $block: &;
-  color: white;
-  border-radius: var(--border-radius);
-  border: none;
-  padding: calc(var(--space) / 4) calc(var(--space) / 2);
-  display: flex;
+
+  @include property(
+    (
+      color: white,
+      border-radius: borderRadius,
+      border: none,
+      padding: calc(var(--space) / 4) calc(var(--space) / 2),
+      display: flex,
+    )
+  );
 
   &__text {
-    font-size: 1em;
-    font-weight: 600;
-    line-height: 1em;
+    @include property(
+      (
+        font-size: 1em,
+        font-weight: 600,
+        line-height: 1em,
+        white-space: nowrap,
+        text-align: left,
+      )
+    );
   }
 
   &:hover {
-    background-color: var(--primary-75);
+    @include property(
+      (
+        background-color: primary75,
+      )
+    );
   }
 
   // Size Modifiers
@@ -42,12 +59,20 @@
   // Color Modifiers
 
   &--primary {
-    background-color: var(--primary);
-    color: var(--primary-text);
+    @include property(
+      (
+        background-color: primary,
+        color: primary-text,
+      )
+    );
   }
   &--secondary {
-    background-color: var(--secondary);
-    color: var(--secondary-text);
+    @include property(
+      (
+        background-color: secondary,
+        color: secondary-text,
+      )
+    );
   }
 
   &--has-icon {
@@ -98,6 +123,16 @@
     &--new {
       &::before {
         content: "\FF0A";
+      }
+    }
+    &--add {
+      &::before {
+        content: "\002B";
+      }
+    }
+    &--edit {
+      &::before {
+        content: "\270E";
       }
     }
     &--flag-nl {

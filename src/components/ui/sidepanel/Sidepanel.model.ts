@@ -16,7 +16,11 @@ export enum SidepanelAction {
 }
 
 export interface SidepanelEventArguments {
-  identifier: string;
+  identifier: SidepanelIdentfier;
   active: boolean;
   action: SidepanelAction;
+}
+
+export enum SidepanelIdentfier {
+  MAIN = "[Sidepanel] main",
 }

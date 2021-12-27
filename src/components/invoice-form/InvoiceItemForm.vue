@@ -6,7 +6,7 @@
       :class="bem(block, 'delete')"
       @click="actions.removeEntry(item.id)"
     />
-    <div class="label">{{ item.id }}</div>
+    <!-- <div class="label">{{ item.id }}</div> -->
 
     <FormText :label="t('label.title')" v-model="item.title" />
     <FormText :label="t('label.description')" v-model="item.description" />
@@ -48,7 +48,7 @@ export default defineComponent({
   setup() {
     const { t } = useI18n({});
     return {
-      block: "setting-item",
+      block: "invoice-form-item",
       bem,
       t,
       ButtonType,
@@ -59,4 +59,13 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.invoice-form-item {
+  &__delete {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+}
+</style>

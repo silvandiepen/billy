@@ -24,6 +24,11 @@ export default defineComponent({
     const { t } = useI18n({});
 
     const invoice = ref(state.invoice);
+    const currentData = computed(() =>
+      invoice.value.current.data.filter(
+        (item) => item.title || item.description
+      )
+    );
 
     return {
       t,
@@ -33,6 +38,7 @@ export default defineComponent({
       total: getInvoiceTotal,
       tax: getInvoiceTax,
       sum: getInvoiceSum,
+      currentData,
       invoiceNumber,
       formatNumber,
       discount,

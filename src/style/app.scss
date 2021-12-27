@@ -1,4 +1,5 @@
-@import "colors";
+@import "theme";
+@import "@sil/themer/app";
 
 body,
 html {
@@ -7,17 +8,25 @@ html {
 }
 
 #app {
-  position: relative;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--foreground);
-  background-color: var(--accent);
+  @include property(
+    (
+      position: relative,
+      font-family:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      -webkit-font-smoothing: antialiased,
+      -moz-osx-font-smoothing: grayscale,
+      color: var(--foreground),
+      background-color: var(--accent),
+    )
+  );
 }
 :root {
   --space: 2em;
   --border-radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 ul,
@@ -56,16 +65,33 @@ h6,
 }
 
 .label {
-  background-color: var(--primary-50);
-  border: 1px solid var(--primary);
-  color: var(--primary-50-text);
-  font-weight: bold;
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  border-radius: var(--border-radius);
-  font-size: 0.75rem;
+  @include property(
+    (
+      background-color: primary50,
+      border: 1px solid var(--primary),
+      color: var(--primary-50-text),
+      font-weight: bold,
+      display: inline-block,
+      padding: 0.25em 0.5em,
+      border-radius: borderRadius,
+      font-size: 0.75rem,
+    )
+  );
 }
 
 p {
   line-height: 1.5;
+}
+
+hr {
+  @include property(
+    (
+      margin: 1.5em 0,
+      background-color: foreground50,
+      color: foreground50,
+      opacity: 0.5,
+      height: 1px,
+      border: none,
+    )
+  );
 }

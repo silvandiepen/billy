@@ -5,7 +5,7 @@ import {
   defaultInvoice,
   Invoice,
   InvoiceItem,
-} from "../components/invoice/invoice.model";
+} from "../components/invoice/Invoice.model";
 import { getInvoiceTotal } from "../components/invoice/Invoice.helpers";
 import { store } from ".";
 
@@ -44,10 +44,30 @@ export const loadSavedInvoices = () => {
   const invoices = JSON.parse(localStorage.getItem(store.INVOICES) || "[]");
   savedInvoices.value = invoices;
 };
+
 export const getInvoices = () => {
   const invoices = JSON.parse(localStorage.getItem(store.INVOICES) || "[]");
   savedInvoices.value = invoices;
   return invoices.value;
+};
+
+export const getInvoice = (id: string): unknown => {
+  const invoice = savedInvoices.value.filter(
+    (inv: Invoice) => inv.current.id == id
+  );
+  if (invoice) return invoice;
+};
+export const setInvoice = (id: string) => {
+  const currentInvoice = getInvoice(id);
+
+  if (currentInvoice) {
+    state.invoice = currentInvoice as Invoice;
+  }
+};
+
+export const hasCurrentInvoice = (): boolean => {
+  console.log("triggered");
+  return Object.is(state.invoice, defaultInvoice);
 };
 
 export const invoiceIDExists = (id: string) => {

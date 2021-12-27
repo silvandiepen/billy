@@ -40,6 +40,10 @@ interface keys {
   "label.amount": string;
   "label.price": string;
   "label.discount": string;
+  "label.taxId": string;
+  "label.bankName": string;
+  "label.bankAccount": string;
+  "label.bankSwift": string;
 }
 
 export const en: keys = {
@@ -84,6 +88,10 @@ export const en: keys = {
   "label.amount": "Amount",
   "label.price": "Price",
   "label.discount": "Discount",
+  "label.taxId": "Tax ID",
+  "label.bankName": "Bank naam",
+  "label.bankAccount": "Bank Account",
+  "label.bankSwift": "Swift",
 };
 export const nl: keys = {
   invoice: "Factuur",
@@ -127,4 +135,8 @@ export const nl: keys = {
   "label.amount": "Hoeveel",
   "label.price": "Prijs",
   "label.discount": "Korting",
+  "label.taxId": "BTW nummer",
+  "label.bankName": "Bank naam",
+  "label.bankAccount": "Bank Account",
+  "label.bankSwift": "Swift",
 };

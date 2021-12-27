@@ -1,4 +1,4 @@
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref, PropType, computed } from "vue";
 import { useInputValidator } from "../form.helpers";
 import { bem } from "../../../../composables";
 import FormError from "../error/FormError.vue";
@@ -30,6 +30,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const block = "form-select";
     const validators = ref<Function[]>([]);
 
     const { input, errors } = useInputValidator(
@@ -38,8 +39,17 @@ export default defineComponent({
       (value: string) => emit("update:modelValue", value)
     );
 
+    const hasValue = computed(() => input.value.length > 0);
+
+    const mainClasses = computed(() => [
+      bem(block),
+      "form-field",
+      hasValue && bem(block, "", "has-value"),
+    ]);
+
     return {
-      block: "form-select",
+      block,
+      mainClasses,
       input,
       errors,
       bem,

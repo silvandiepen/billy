@@ -31,6 +31,9 @@ export interface InvoiceEntity {
   fax: string;
   email: string;
   website: string;
+  bankAccount: string;
+  bankName: string;
+  bankSwift: string;
 }
 
 interface InvoiceNote {
@@ -99,6 +102,9 @@ export const defaultInvoice: Invoice = {
     fax: "",
     email: "",
     website: "",
+    bankAccount: "",
+    bankName: "",
+    bankSwift: "",
   },
   client: {
     id: newId(),
@@ -117,5 +123,8 @@ export const defaultInvoice: Invoice = {
     fax: "",
     email: "",
     website: "",
+    bankAccount: "",
+    bankName: "",
+    bankSwift: "",
   },
 };

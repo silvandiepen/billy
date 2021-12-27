@@ -13,7 +13,7 @@
 
   <section :class="bem(block,'data')">
     <ul :class="bem(block,'list')">
-      <li :class="bem(block,'item')" v-for="entry in invoice.current.data">
+      <li :class="bem(block,'item')" v-for="entry in currentData">
         <h5 :class="[bem(block,'item','title'), 'cell']" v-if="entry.title">
           {{entry.title}}
         </h5>

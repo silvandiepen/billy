@@ -3,13 +3,21 @@ import { useI18n } from "vue-i18n";
 
 import { bem, eventBus, eventChannel } from "../../composables";
 import { ButtonType, ButtonAlign, ButtonIcon } from "../ui/button/Button.model";
-import { savedInvoices, loadSavedInvoices } from "../../composables/state";
+import {
+  savedInvoices,
+  loadSavedInvoices,
+  hasCurrentInvoice,
+} from "../../composables/state";
 
 import Button from "../ui/button/Button.vue";
 import ButtonBar from "../ui/button/ButtonBar.vue";
 import InvoiceForm from "../invoice-form/InvoiceForm.vue";
 import InvoiceItem from "../invoice/InvoiceItem.vue";
-import { SidepanelAction } from "../ui/sidepanel/Sidepanel.model";
+import {
+  SidepanelAction,
+  SidepanelEventArguments,
+  SidepanelIdentfier,
+} from "../ui/sidepanel/Sidepanel.model";
 
 export enum SidebarState {
   START = "start",
@@ -37,7 +45,9 @@ export default defineComponent({
         case SidebarState.START:
           eventBus.emit(eventChannel.SIDEPANEL, {
             action: SidepanelAction.CLOSE,
-          });
+            identifier: SidepanelIdentfier.MAIN,
+            active: false,
+          } as SidepanelEventArguments);
           break;
         case SidebarState.FORM:
           show.value = SidebarState.START;
@@ -58,12 +68,17 @@ export default defineComponent({
       eventBus.emit(eventChannel.SET_LANGUAGE, id);
     };
 
+    const showNext = computed(() => {
+      return show.value === SidebarState.START && hasCurrentInvoice();
+    });
+
     return {
       t,
       show,
       block: "sidebar",
       bem,
       goBack,
+      showNext,
       savedInvoices,
       switchLanguage,
       SidebarState,

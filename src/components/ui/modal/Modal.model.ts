@@ -16,5 +16,8 @@ export interface ModalEventArguments {
 }
 
 export enum ModalIdentifier {
-  CLIENT = "[Modal] Client",
+  CLIENT_FORM = "[Modal] ClientForm",
+  CLIENTS_LIST = "[Modal] ClientsList",
+  SELLER_FORM = "[Modal] SellerForm",
+  SELLERS_LIST = "[Modal] SellersList",
 }

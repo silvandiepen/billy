@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useInputValidator, minLength, maxLength } from "../form.helpers";
 import FormError from "../error/FormError.vue";
 import { bem } from "../../../../composables";
@@ -31,6 +31,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const block = "form-number";
     const validators = ref<Function[]>([]);
 
     if (props.minLength > 0) validators.value.push(minLength(props.minLength));
@@ -42,8 +43,17 @@ export default defineComponent({
       (value: string) => emit("update:modelValue", value)
     );
 
+    const hasValue = computed(() => input.value.length > 0);
+
+    const mainClasses = computed(() => [
+      bem(block),
+      "form-field",
+      hasValue && bem(block, "", "has-value"),
+    ]);
+
     return {
-      block: "form-number",
+      block,
+      mainClasses,
       input,
       errors,
       bem,

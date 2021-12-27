@@ -9,17 +9,20 @@ import {
   savedInvoices,
 } from "../../composables/state";
 import { ModalAction, ModalIdentifier } from "../ui/modal/Modal.model";
-import { ButtonType, ButtonAlign } from "../ui/button/Button.model";
+import { ButtonType, ButtonAlign, ButtonIcon } from "../ui/button/Button.model";
 
 import InvoiceItemForm from "./InvoiceItemForm.vue";
 import InvoiceEntityForm from "./InvoiceEntityForm.vue";
 import InvoiceItem from "../invoice/InvoiceItem.vue";
+import InvoiceEntity from "../invoice/InvoiceEntity.vue";
 import Button from "../ui/button/Button.vue";
 import ButtonGroup from "../ui/button/ButtonGroup.vue";
 import ButtonBar from "../ui/button/ButtonBar.vue";
 import FormText from "../ui/form/text/FormText.vue";
 import FormSelect from "../ui/form/select/FormSelect.vue";
 import FormNumber from "../ui/form/number/FormNumber.vue";
+import Modal from "../ui/modal/Modal.vue";
+import Clients from "../clients/Clients.vue";
 
 import {
   savedClients,
@@ -42,6 +45,9 @@ export default defineComponent({
     FormNumber,
     InvoiceItemForm,
     InvoiceEntityForm,
+    InvoiceEntity,
+    Modal,
+    Clients,
   },
   setup() {
     const { t } = useI18n({});
@@ -52,10 +58,10 @@ export default defineComponent({
       loadClients();
     });
 
-    const showClientModal = () => {
+    const showModal = (identifier: typeof ModalIdentifier) => {
       eventBus.emit(eventChannel.MODAL, {
         action: ModalAction.OPEN,
-        identifier: ModalIdentifier.CLIENT,
+        identifier: identifier,
       });
     };
 
@@ -87,27 +93,56 @@ export default defineComponent({
       saveInvoiceToStore();
     };
 
+    const editting = ref({
+      client: false,
+      seller: false,
+      items: false,
+    });
+    const toggleShow = (what: string) => {
+      switch (what) {
+        case "client":
+          editting.value.client = !editting.value.client;
+          editting.value.seller = false;
+          editting.value.items = false;
+          break;
+        case "seller":
+          editting.value.seller = !editting.value.seller;
+          editting.value.client = false;
+          editting.value.items = false;
+          break;
+        case "items":
+          editting.value.items = !editting.value.items;
+          editting.value.seller = false;
+          editting.value.client = false;
+          break;
+      }
+    };
+
     return {
       t,
       show,
-      block: "invoice-edit",
+      block: "invoice-form",
       bem,
       invoice: state.invoice,
       actions: {
         newEntry,
         saveInvoice,
       },
+      ModalIdentifier,
       showSaveClient,
       addClient,
       addNewClient,
       savedClients,
       savedInvoices,
-      showClientModal,
+      showModal,
       showSaveNewClient,
       switchLanguage,
       currencyOptions,
       ButtonType,
+      ButtonIcon,
       ButtonAlign,
+      editting,
+      toggleShow,
     };
   },
 });

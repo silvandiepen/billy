@@ -21,9 +21,15 @@
         :key="index"
       />
     </ul>
-    <Knop :class="bem(block,'add')" @click="actions.newEntry">
-      {{t('action.add-item')}}
-    </Knop>
+    <KnoppenBar :align="ButtonAlign.CENTER">
+      <Knop
+        :class="bem(block,'add')"
+        @click="actions.newEntry"
+        :icon="ButtonIcon.ADD"
+      >
+        {{t('action.add-item')}}
+      </Knop>
+    </KnoppenBar>
   </section>
 
   <section :class="bem(block,'section')">
@@ -31,11 +37,26 @@
       {{t('client')}}
       <div class="label">{{invoice.client.id}}</div>
     </h3>
-    <Knop @click="showClientModal">{{ t('action.show-clients')}}</Knop>
 
-    <InvoiceEntityForm :class="bem(block,'entity')" :entity="invoice.client" />
+    <InvoiceEntity
+      v-show="!editting.client"
+      @click="toggleShow('client')"
+      :entity="invoice.client"
+    />
+
+    <InvoiceEntityForm
+      v-show="editting.client"
+      :class="bem(block,'entity')"
+      :entity="invoice.client"
+    />
 
     <KnoppenBar>
+      <Knop @click="showModal(ModalIdentifier.CLIENTS_LIST)">
+        {{ t('action.show-clients')}}
+      </Knop>
+      <Knop @click="toggleShow('client')" :icon="ButtonIcon.EDIT"
+        >{{!editting.client ? 'Edit Client' : 'Stop Edit'}}</Knop
+      >
       <Knop @click="addClient" v-if="showSaveClient"> Save client </Knop>
       <Knop @click="addNewClient" v-if="showSaveNewClient">
         Save as new client
@@ -48,7 +69,22 @@
       Seller
       <div class="label">{{invoice.seller.id}}</div>
     </h3>
-    <InvoiceEntityForm :class="bem(block,'entity')" :entity="invoice.seller" />
+    <InvoiceEntity
+      v-show="!editting.seller"
+      @click="editting.seller = true"
+      :entity="invoice.seller"
+    />
+    <InvoiceEntityForm
+      v-show="editting.seller"
+      :class="bem(block,'entity')"
+      :entity="invoice.seller"
+    />
+
+    <KnoppenBar>
+      <Knop @click="toggleShow('seller')" :icon="ButtonIcon.EDIT"
+        >{{!editting.seller ? 'Edit Seller' : 'Stop Edit'}}</Knop
+      >
+    </KnoppenBar>
   </section>
 
   <section :class="bem(block,'section')">
@@ -57,4 +93,12 @@
       <Knop icon="arrow-down">Export</Knop>
     </KnoppenBar>
   </section>
+  <!-- 
+  <Modal :identifier="ModalIdentifier.ClIENT_FORM"> </Modal>
+
+  <Modal :identifier="ModalIdentifier.SELLER_FORM"> </Modal> -->
+
+  <Modal :identifier="ModalIdentifier.CLIENTS_LIST">
+    <Clients />
+  </Modal>
 </div>

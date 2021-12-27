@@ -6,38 +6,36 @@
       @click="goBack()"
     />
     <h3>{{ sidebarTitle }}</h3>
+    <Knop
+      v-if="showNext"
+      :type="ButtonType.ICON"
+      :icon="ButtonIcon.ARROW_RIGHT"
+      @click="goNext()"
+    />
   </section>
 
-  <div>
-    <transition name="fade">
-      <div v-show="show=='start'">
-        <section :class="bem(block,'section')">
-          <KnoppenBar>
-            <Knop :icon="ButtonIcon.NEW" @click="show = 'form'"
-              >{{t('action.new-invoice')}}</Knop
-            >
-          </KnoppenBar>
-        </section>
-        <section :class="bem(block,'section')">
-          <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
-        </section>
-        <section :class="bem(block,'section')">
-          <KnoppenBar>
-            <Knop :icon="ButtonIcon.FLAG_NL" @click="switchLanguage('nl')"
-              >{{t('language.nl')}}</Knop
-            >
-            <Knop :icon="ButtonIcon.FLAG_UK" @click="switchLanguage('en')"
-              >{{t('language.en')}}</Knop
-            >
-          </KnoppenBar>
-        </section>
-      </div>
-    </transition>
+  <div v-if="show=='start'">
+    <section :class="bem(block,'section')">
+      <KnoppenBar>
+        <Knop :icon="ButtonIcon.NEW" @click="show = 'form'"
+          >{{t('action.new-invoice')}}</Knop
+        >
+      </KnoppenBar>
+    </section>
+    <section :class="bem(block,'section')">
+      <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
+    </section>
+    <section :class="bem(block,'section')">
+      <KnoppenBar>
+        <Knop :icon="ButtonIcon.FLAG_NL" @click="switchLanguage('nl')"
+          >{{t('language.nl')}}</Knop
+        >
+        <Knop :icon="ButtonIcon.FLAG_UK" @click="switchLanguage('en')"
+          >{{t('language.en')}}</Knop
+        >
+      </KnoppenBar>
+    </section>
   </div>
 
-  <div>
-    <transition name="fade">
-      <InvoiceForm v-show="show == 'form'" />
-    </transition>
-  </div>
+  <InvoiceForm v-if="show == 'form'" />
 </div>

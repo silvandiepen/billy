@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed, watchEffect } from "vue";
 import { useInputValidator, minLength, maxLength } from "../form.helpers";
 import FormErrors from "../error/FormError.vue";
 import { bem } from "../../../../composables";
@@ -31,6 +31,8 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const block = "form-text";
+
     const validators = ref<Function[]>([]);
 
     if (props.minLength > 0) validators.value.push(minLength(props.minLength));
@@ -42,11 +44,24 @@ export default defineComponent({
       (value: string) => emit("update:modelValue", value)
     );
 
+    const hasValue = ref(false);
+
+    watchEffect(() => {
+      hasValue.value = input.value.length > 0;
+    });
+
+    const mainClasses = computed(() => [
+      bem(block),
+      "form-field",
+      hasValue.value ? bem(block, "", "has-value") : "",
+    ]);
+
     return {
-      block: "form-text",
+      block,
       input,
       errors,
       bem,
+      mainClasses,
     };
   },
 });

@@ -1,4 +1,4 @@
-.invoice-edit {
+.invoice-form {
   &__subheader {
     color: var(--primary);
     // padding: 1em;
@@ -12,14 +12,13 @@
 
   // entries
   &__item {
-    background-color: var(--foreground-90);
     position: relative;
-    padding: 1em;
+    // padding: 1em;
     border-radius: var(--border-radius);
-    margin: 0 -1em;
+    // margin: 0 -1em;
 
     & + & {
-      margin-top: 1em;
+      margin-top: 2em;
     }
   }
 }
