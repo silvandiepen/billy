@@ -29,7 +29,7 @@ export const getInvoiceTax = computed(() => {
 });
 
 export const getInvoiceTotal = computed(() => {
-  return getInvoiceSum.value + getInvoiceSum.value;
+  return getInvoiceSum.value + getInvoiceTax.value;
 });
 
 export const formatDate = (date: Date) => {

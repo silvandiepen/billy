@@ -4,6 +4,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  & + .form-field {
+    margin-top: 1em;
+  }
 }
 
 @mixin FormContainer($block: "") {
@@ -12,7 +16,7 @@
       display: flex,
       flex-direction: column-reverse,
       width: 100%,
-      border-radius: var(--border-radius),
+      border-radius: borderRadius,
       position: relative,
       z-index: 1,
     )
@@ -27,13 +31,13 @@
     left: 0;
     top: 0;
     // background-color: red;
-    border-radius: var(--border-radius);
+    border-radius: variable(borderRadius);
     z-index: -1;
     opacity: 0.25;
   }
   &:focus-within {
     &::before {
-      background-color: var(--primary);
+      background-color: variable(primary);
     }
   }
 }
@@ -44,7 +48,7 @@
   font-size: 1em;
   position: absolute;
   top: 50%;
-  color: var(--background);
+  color: variable(background);
   transform: translateY(-50%);
   transform-origin: 0 50%;
   font-weight: bold;
@@ -54,16 +58,16 @@
 }
 
 @mixin FormControl($block: "") {
-  border-radius: var(--border-radius);
+  border-radius: variable(borderRadius);
   font-family: inherit;
   font-size: 0.85em;
   padding: 1.25em 0.75em 0.5em 0.75em;
   border: none;
   width: 100%;
-  color: var(--background);
+  color: variable(background);
   line-height: 1;
   font-size: 1em;
-  background-color: var(--foreground-90);
+  background-color: variable(foreground90);
 
   #{$block}--has-value &,
   &:focus {

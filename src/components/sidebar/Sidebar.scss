@@ -1,13 +1,15 @@
+@import "@sil/themer/use";
+
 .sidebar {
   &__subheader {
-    color: var(--primary);
+    color: variable(primary);
     // padding: 1em;
   }
   &__title,
   &__section {
-    padding: var(--space);
+    padding: variable(space);
     & + & {
-      border-top: 1px solid var(--foreground-75);
+      border-top: 1px solid variable(foreground75);
     }
   }
 
@@ -16,6 +18,7 @@
     line-height: 2em;
     gap: 1em;
     justify-content: space-between;
+    align-items: center;
     h3 {
       width: 100%;
     }
@@ -24,10 +27,10 @@
   }
   // entries
   &__item {
-    background-color: var(--foreground-90);
+    background-color: variable(foreground90);
     position: relative;
     padding: 1em;
-    border-radius: var(--border-radius);
+    border-radius: variable(borderRadius);
     margin: 0 -1em;
 
     & + & {

@@ -8,7 +8,7 @@
       color: white,
       border-radius: borderRadius,
       border: none,
-      padding: calc(var(--space) / 4) calc(var(--space) / 2),
+      padding: calc(#{variable(space)} / 2) calc(#{variable(space)} / 1),
       display: flex,
     )
   );
@@ -53,7 +53,7 @@
     }
   }
   &--icon-only {
-    padding: calc(var(--space) / 4);
+    padding: calc(#{variable(space)} / 2);
   }
 
   // Color Modifiers
@@ -76,9 +76,9 @@
   }
 
   &--has-icon {
-    padding-left: calc(var(--space) / 4);
+    padding-left: calc(#{variable(space)} / 2);
     .button__icon {
-      margin-right: calc(var(--space) / 4);
+      margin-right: calc(#{variable(space)} / 2);
     }
   }
 

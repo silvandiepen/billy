@@ -76,7 +76,7 @@ export const defaultInvoice: Invoice = {
   },
   settings: {
     currency: InvoiceCurrency.EUR,
-    tax: 15,
+    tax: 0,
     terms: "",
     notes: [],
     payment: {

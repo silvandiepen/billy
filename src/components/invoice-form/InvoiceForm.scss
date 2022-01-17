@@ -1,12 +1,14 @@
+@import "@sil/themer/use";
+
 .invoice-form {
   &__subheader {
-    color: var(--primary);
+    color: variable(primary);
     // padding: 1em;
   }
   &__section {
-    padding: var(--space);
+    padding: variable(space);
     & + & {
-      border-top: 1px solid var(--foreground-75);
+      border-top: 1px solid variable(foreground75);
     }
   }
 
@@ -14,9 +16,8 @@
   &__item {
     position: relative;
     // padding: 1em;
-    border-radius: var(--border-radius);
+    border-radius: variable(borderRadius);
     // margin: 0 -1em;
-
     & + & {
       margin-top: 2em;
     }
