@@ -1,9 +1,9 @@
-<div :class="[bem(block),bem(block,'',isActive ? 'active' : 'inactive')]">
-  <div @click="closeModal" :class="bem(block,'background')"></div>
+<div :class="[style.bem(),style.bem('',isActive ? 'active' : 'inactive')]">
+  <div @click="closeModal" :class="style.bem('background')"></div>
 
-  <div :class="bem(block,'content')">
-    <Knop icon="close" :class="bem(block,'button')" @click="closeModal" />
-    <div :class="bem(block,'container')">
+  <div :class="style.bem('content')">
+    <Knop icon="close" :class="style.bem('button')" @click="closeModal" />
+    <div :class="style.bem('container')">
       <slot></slot>
     </div>
   </div>

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@sil/themer": "^0.1.8",
+    "@sil/tools": "^0.1.9",
     "date-fns": "^2.27.0",
     "mitt": "^3.0.0",
     "vue": "^3.2.16",

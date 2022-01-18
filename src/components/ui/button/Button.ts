@@ -1,4 +1,5 @@
 import { defineComponent, PropType, computed } from "vue";
+import { Style } from "@sil/tools";
 
 import {
   ButtonSize,
@@ -6,7 +7,6 @@ import {
   ButtonType,
   ButtonColor,
 } from "./Button.model";
-import { bem } from "../../../composables";
 
 export default defineComponent({
   props: {
@@ -29,20 +29,17 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    const block = "button";
-
+    const style = new Style("button");
     const iconOnly = props.type === ButtonType.ICON;
 
     const classes = computed(() => {
       let classNames = [];
 
-      classNames.push(bem(block));
-      classNames.push(bem(block, "", props.size));
-      classNames.push(bem(block, "", iconOnly ? "icon-only" : props.type));
-      classNames.push(bem(block, "", props.color));
-      classNames.push(
-        props.icon && !iconOnly ? bem(block, "", "has-icon") : ""
-      );
+      classNames.push(style.bem());
+      classNames.push(style.bem("", props.size));
+      classNames.push(style.bem("", iconOnly ? "icon-only" : props.type));
+      classNames.push(style.bem("", props.color));
+      classNames.push(props.icon && !iconOnly ? style.bem("", "has-icon") : "");
 
       return classNames;
     });
@@ -50,8 +47,7 @@ export default defineComponent({
     const hasSlot = (name: string) => !!slots[name];
 
     return {
-      block,
-      bem,
+      style,
       classes,
       iconOnly,
       hasSlot,

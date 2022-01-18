@@ -1,30 +1,68 @@
+@import "@sil/themer/use";
+
 // Layout
 
 .invoice {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: auto;
-  grid-template-areas:
-    "header header header header header"
-    "client client space seller seller"
-    "data data data data data"
-    "total total total total total";
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 
   &__header {
     grid-area: header;
+    height: fit-content;
   }
   &__data {
+    margin-top: calc(#{variable(space)} * 2);
     grid-area: data;
+    height: fit-content;
   }
   &__totals {
+    margin-top: calc(#{variable(space)} * 2);
     grid-area: total;
+    height: fit-content;
   }
   &__seller {
     grid-area: seller;
+    height: fit-content;
   }
   &__client {
     grid-area: client;
+    height: fit-content;
+  }
+  &__footer {
+    grid-area: footer;
+    height: fit-content;
+  }
+  &__notes {
+    grid-area: note;
+    max-height: fit-content;
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header header header header header"
+      "client client space seller seller";
+  }
+  &__middle {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "data data data data data"
+      "total total total total total";
+  }
+  &__bottom {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "note note note note note"
+      "footer footer footer footer footer";
   }
 }
 
@@ -32,7 +70,14 @@
 
 .invoice {
   &__header {
-    padding: 2em 0;
+    padding: 0 0 calc(#{variable(space)} * 3) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    svg {
+      max-width: 2cm;
+      max-height: 2cm;
+    }
   }
 }
 
@@ -78,7 +123,7 @@
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     & + & {
-      border-top: 1px solid var(--accent);
+      border-top: 1px solid variable(background90);
     }
   }
   &__item {
@@ -123,7 +168,7 @@
   &__total {
     font-weight: bold;
     &:last-child {
-      color: var(--primary);
+      color: variable(primary);
     }
 
     &--total {
@@ -154,4 +199,24 @@
   //       color: var(--primary);
   //     }
   //   }
+
+  &__notes {
+    display: flex;
+    gap: calc(variable(space) * 2);
+  }
+
+  &__note {
+    width: 100%;
+    &-title {
+      display: block;
+      font-weight: bold;
+      color: variable(primary);
+    }
+    &-description {
+      opacity: 0.75; // border: 1px solid green;
+    }
+  }
+  &__footer {
+    padding: calc(variable(space) * 2) 0;
+  }
 }

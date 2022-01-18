@@ -1,9 +1,9 @@
 <template>
-  <div :class="bem(block)">
-    <div :class="bem(block, 'company-name')" v-if="entity.companyName">
+  <div :class="style.bem()">
+    <div :class="style.bem('company-name')" v-if="entity.companyName">
       <strong>{{ entity.companyName }}</strong>
     </div>
-    <div :class="bem(block, 'name')" v-if="entity.firstName || entity.lastName">
+    <div :class="style.bem('name')" v-if="entity.firstName || entity.lastName">
       <component
         :is="entity.companyName ? 'span' : 'strong'"
         v-if="entity.firstName && entity.lastName"
@@ -20,46 +20,58 @@
         >{{ entity.lastName }}</component
       >
     </div>
-    <div :class="bem(block, 'street')" v-if="entity.street">
-      <span :class="bem(block, 'street-name')">{{ entity.street }}</span>
-      <span :class="bem(block, 'street-number')"> {{ entity.number }}</span>
+    <div :class="style.bem('street')" v-if="entity.street">
+      <span :class="style.bem('street-name')">{{ entity.street }}</span>
+      <span :class="style.bem('street-number')"> {{ entity.number }}</span>
     </div>
-    <br />
-    <div :class="bem(block, 'additional')" v-if="entity.additional">
+    <div :class="style.bem('additional')" v-if="entity.additional">
       {{ entity.additional }}
     </div>
-    <div :class="bem(block, 'postalcode')" v-if="entity.postalcode">
+    <div :class="style.bem('postalcode')" v-if="entity.postalcode">
       {{ entity.postalcode }}
     </div>
-    <div :class="bem(block, 'city')" v-if="entity.city">{{ entity.city }}</div>
-    <div :class="bem(block, 'country')" v-if="entity.country">
+    <div :class="style.bem('city')" v-if="entity.city">{{ entity.city }}</div>
+    <div :class="style.bem('country')" v-if="entity.country">
       {{ entity.country }}
     </div>
 
-    <div :class="bem(block, 'bank-name')" v-if="entity.bankName">
-      {{ entity.bankName }}
-    </div>
-    <div :class="bem(block, 'bank-swift')" v-if="entity.bankSwift">
-      {{ entity.bankSwift }}
-    </div>
-    <div :class="bem(block, 'bank-account')" v-if="entity.bankAccount">
-      {{ entity.bankAccount }}
-    </div>
+    <!-- <br
+      v-if="
+        entity.bankName ||
+        entity.bankSwift ||
+        entity.bankAccount ||
+        entity.taxId
+      "
+    /> -->
 
-    <div :class="bem(block, 'tax-id')" v-if="entity.taxId">
+    <!-- <div :class="style.bem('bank-name')" v-if="entity.bank.name">
+      {{ entity.bank.name }}
+    </div>
+    <div :class="style.bem('bank-swift')" v-if="entity.bank.swift">
+      {{ entity.bank.swift }}
+    </div>
+    <div :class="style.bem('bank-account')" v-if="entity.bank.account">
+      {{ entity.bank.account }}
+    </div>
+    <div :class="style.bem('bank-beneficiary')" v-if="entity.bank.beneficiary">
+      {{ entity.bank.beneficiary }}
+    </div>
+    <div :class="style.bem('tax-id')" v-if="entity.taxId">
       {{ entity.taxId }}
-    </div>
+    </div> -->
 
-    <div :class="bem(block, 'phone')" v-if="entity.phone">
+    <br v-if="entity.phone || entity.fax || entity.email || entity.website" />
+
+    <div :class="style.bem('phone')" v-if="entity.phone">
       {{ entity.phone }}
     </div>
-    <div :class="bem(block, 'fax')" v-if="entity.fax">
+    <div :class="style.bem('fax')" v-if="entity.fax">
       {{ entity.fax }}
     </div>
-    <div :class="bem(block, 'email')" v-if="entity.email">
+    <div :class="style.bem('email')" v-if="entity.email">
       {{ entity.email }}
     </div>
-    <div :class="bem(block, 'website')" v-if="entity.website">
+    <div :class="style.bem('website')" v-if="entity.website">
       {{ entity.website }}
     </div>
   </div>
@@ -67,8 +79,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { Style } from "@sil/tools";
+
 import { InvoiceEntity } from "./invoice.model";
-import { bem } from "../../composables";
 
 export default defineComponent({
   props: {
@@ -78,6 +91,8 @@ export default defineComponent({
     },
   },
   setup() {
+    const style = new Style("client-entity");
+
     let format = {
       en: [
         ["companyName"],
@@ -107,7 +122,7 @@ export default defineComponent({
       ],
     };
 
-    return { block: "client-entity", bem, format };
+    return { style, format };
   },
 });
 </script>

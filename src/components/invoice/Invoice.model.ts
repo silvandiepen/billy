@@ -12,6 +12,7 @@ export interface InvoiceItem {
   price: number;
   amount: number;
   discount: number;
+  tax?: number;
 }
 
 export interface InvoiceEntity {
@@ -31,12 +32,16 @@ export interface InvoiceEntity {
   fax: string;
   email: string;
   website: string;
-  bankAccount: string;
-  bankName: string;
-  bankSwift: string;
+  bank: {
+    name: string;
+    account: string;
+    swift: string;
+    beneficiary: string;
+  };
 }
 
-interface InvoiceNote {
+export interface InvoiceNote {
+  id: string;
   title: "";
   description: "";
 }
@@ -50,21 +55,44 @@ export interface Invoice {
     total: number;
   };
   settings: {
+    logo: string;
+    header: string;
+    footer: string;
     currency: InvoiceCurrency;
     tax: number;
     terms: "";
     notes: InvoiceNote[];
-    payment: {
-      bankname: "";
-      swift: "";
-      account: "";
-    };
   };
   seller: InvoiceEntity;
   client: InvoiceEntity;
 }
 
 const today = new Date();
+
+const entity = (): InvoiceEntity => ({
+  id: newId(),
+  companyName: "",
+  taxId: "",
+  firstName: "",
+  lastName: "",
+  street: "",
+  number: "",
+  additional: "",
+  postalcode: "",
+  city: "",
+  country: "",
+  vatNo: "",
+  phone: "",
+  fax: "",
+  email: "",
+  website: "",
+  bank: {
+    account: "",
+    name: "",
+    swift: "",
+    beneficiary: "",
+  },
+});
 
 export const defaultInvoice: Invoice = {
   current: {
@@ -75,56 +103,14 @@ export const defaultInvoice: Invoice = {
     total: 0,
   },
   settings: {
+    logo: "",
+    header: "",
+    footer: "",
     currency: InvoiceCurrency.EUR,
     tax: 0,
     terms: "",
     notes: [],
-    payment: {
-      bankname: "",
-      swift: "",
-      account: "",
-    },
   },
-  seller: {
-    id: newId(),
-    companyName: "",
-    taxId: "",
-    firstName: "",
-    lastName: "",
-    street: "",
-    number: "",
-    additional: "",
-    postalcode: "",
-    city: "",
-    country: "",
-    vatNo: "",
-    phone: "",
-    fax: "",
-    email: "",
-    website: "",
-    bankAccount: "",
-    bankName: "",
-    bankSwift: "",
-  },
-  client: {
-    id: newId(),
-    companyName: "",
-    taxId: "",
-    firstName: "",
-    lastName: "",
-    street: "",
-    number: "",
-    additional: "",
-    postalcode: "",
-    city: "",
-    country: "",
-    vatNo: "",
-    phone: "",
-    fax: "",
-    email: "",
-    website: "",
-    bankAccount: "",
-    bankName: "",
-    bankSwift: "",
-  },
+  seller: entity(),
+  client: entity(),
 };

@@ -1,13 +1,13 @@
 import { computed } from "vue";
-import { format, parseISO } from "date-fns";
 
-import { InvoiceItem } from "./invoice.model";
+import { InvoiceCurrency, InvoiceItem } from "./invoice.model";
 import { state } from "../../composables/state";
 
 export const discount = (value: number, discount: number) =>
   value - (value / 100) * discount;
 
 export const invoiceNumber = (number: Number) => {
+  // console.log(number);
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
   const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -16,12 +16,13 @@ export const invoiceNumber = (number: Number) => {
   return `${yyyy}${mm}${dd}-${`${number}`.padStart(3, "0")}`;
 };
 
-export const getInvoiceSum = computed(() =>
-  state.invoice.current.data.reduce(
-    (acc: number, cur: InvoiceItem) =>
-      acc + discount(cur.amount * cur.price, cur.discount ? cur.discount : 0),
-    0
-  )
+export const getInvoiceSum = computed(
+  () =>
+    state.invoice.current?.data.reduce(
+      (acc: number, cur: InvoiceItem) =>
+        acc + discount(cur.amount * cur.price, cur.discount ? cur.discount : 0),
+      0
+    ) || 0
 );
 
 export const getInvoiceTax = computed(() => {
@@ -32,11 +33,9 @@ export const getInvoiceTotal = computed(() => {
   return getInvoiceSum.value + getInvoiceTax.value;
 });
 
-export const formatDate = (date: Date) => {
-  return format(parseISO(`${date}`), "yyyy-MM-dd");
-};
-
-export const currencyCode = computed(() => state.invoice.settings.currency);
+export const currencyCode = computed(
+  () => state.invoice.settings.currency || InvoiceCurrency.EUR
+);
 
 export const formatNumber = (
   number: number | bigint,

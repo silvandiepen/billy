@@ -1,6 +1,7 @@
 import { defineComponent, PropType, ref } from "vue";
+import { Style } from "@sil/tools";
 
-import { bem, eventBus, eventChannel } from "../../../composables";
+import { eventBus, eventChannel } from "../../../composables";
 import { ModalProps, ModalEventArguments, ModalAction } from "./Modal.model";
 import Button from "../button/Button.vue";
 
@@ -20,6 +21,7 @@ export default defineComponent({
   },
   setup(props) {
     const isActive = ref(props.active);
+    const style = new Style("modal");
 
     // Actions
     const closeModal = () => (isActive.value = false);
@@ -46,9 +48,8 @@ export default defineComponent({
     });
 
     return {
-      block: "modal",
       isActive,
-      bem,
+      style,
       closeModal,
       openModal,
     };

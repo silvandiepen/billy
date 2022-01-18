@@ -1,37 +1,37 @@
 <template>
-  <component :is="tag" v-if="client" :class="bem(block)">
+  <component :is="tag" v-if="client" :class="style.bem()">
     <div
-      :class="bem(block, 'container')"
+      :class="style.bem('container')"
       @click="setClientToState(client?.id || '')"
     >
-      <h4 :class="bem(block, 'name')">
+      <h4 :class="style.bem('name')">
         {{ client.name }}
       </h4>
 
-      <div v-if="showDetails" :class="bem(block, 'details')">
-        <dl :class="bem(block, 'detail')">
-          <dt :class="bem(block, 'title')">ID</dt>
-          <dd :class="bem(block, 'description')">{{ client.id }}</dd>
+      <div v-if="showDetails" :class="style.bem('details')">
+        <dl :class="style.bem('detail')">
+          <dt :class="style.bem('title')">ID</dt>
+          <dd :class="style.bem('description')">{{ client.id }}</dd>
         </dl>
-        <dl :class="bem(block, 'detail')">
-          <dt :class="bem(block, 'title')">street</dt>
-          <dd :class="bem(block, 'description')">{{ client.street }}</dd>
-        </dl>
-        <dl>
-          <dt :class="bem(block, 'title')">number</dt>
-          <dd :class="bem(block, 'description')">{{ client.number }}</dd>
+        <dl :class="style.bem('detail')">
+          <dt :class="style.bem('title')">street</dt>
+          <dd :class="style.bem('description')">{{ client.street }}</dd>
         </dl>
         <dl>
-          <dt :class="bem(block, 'title')">postalcode</dt>
-          <dd :class="bem(block, 'description')">{{ client.postalcode }}</dd>
+          <dt :class="style.bem('title')">number</dt>
+          <dd :class="style.bem('description')">{{ client.number }}</dd>
         </dl>
         <dl>
-          <dt :class="bem(block, 'title')">city</dt>
-          <dd :class="bem(block, 'description')">{{ client.city }}</dd>
+          <dt :class="style.bem('title')">postalcode</dt>
+          <dd :class="style.bem('description')">{{ client.postalcode }}</dd>
         </dl>
         <dl>
-          <dt :class="bem(block, 'title')">country</dt>
-          <dd :class="bem(block, 'description')">{{ client.country }}</dd>
+          <dt :class="style.bem('title')">city</dt>
+          <dd :class="style.bem('description')">{{ client.city }}</dd>
+        </dl>
+        <dl>
+          <dt :class="style.bem('title')">country</dt>
+          <dd :class="style.bem('description')">{{ client.country }}</dd>
         </dl>
       </div>
       <Knoppen :align="ButtonAlign.CENTER">
@@ -54,7 +54,7 @@
       </Knoppen>
 
       <Knop
-        :class="bem(block, 'delete')"
+        :class="style.bem('delete')"
         :type="ButtonType.ICON"
         icon="delete"
         @click="removeClient(client?.id || '')"
@@ -65,9 +65,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
+import { Style } from "@sil/tools";
 
-import { bem } from "../../composables";
-import { removeClient, setClientToState } from "./Clients.helpers";
+import { Entity, removeEntity, setEntityToState } from "./Clients.helpers";
 
 import Button from "../ui/button/Button.vue";
 import ButtonGroup from "../ui/button/ButtonGroup.vue";
@@ -90,11 +90,18 @@ export default defineComponent({
   },
 
   setup() {
+    const style = new Style("client");
     const showDetails = ref(false);
 
+    const removeClient = (id: string) => {
+      removeEntity(Entity.CLIENT, id);
+    };
+    const setClientToState = (id: string) => {
+      setEntityToState(Entity.CLIENT, id);
+    };
+
     return {
-      block: "client",
-      bem,
+      style,
       removeClient,
       ButtonType,
       ButtonSize,

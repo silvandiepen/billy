@@ -1,6 +1,6 @@
 @import "@sil/themer/use";
 
-.sidebar {
+.control-panel {
   &__subheader {
     color: variable(primary);
     // padding: 1em;
@@ -36,5 +36,8 @@
     & + & {
       margin-top: 1em;
     }
+  }
+  &__invoices {
+    padding: variable(space);
   }
 }

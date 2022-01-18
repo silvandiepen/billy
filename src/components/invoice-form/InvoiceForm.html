@@ -1,5 +1,5 @@
 <div>
-  <section :class="bem(block,'section')">
+  <section :class="style.bem('section')" v-if="invoice.current">
     <FormNumber :label="`${t('invoice')} #`" v-model="invoice.current.number" />
     <FormNumber :label="t('vat')" v-model="invoice.settings.tax" />
     <FormSelect
@@ -7,15 +7,25 @@
       :options="currencyOptions"
       v-model="invoice.settings.currency"
     />
+    <FormText
+      :label="t('logo')"
+      v-model="invoice.settings.logo"
+      v-if="invoice.settings.logo.length < 100"
+    />
+    <FormTextArea
+      :label="t('logo')"
+      v-model="invoice.settings.logo"
+      v-if="invoice.settings.logo.length > 100"
+    />
   </section>
 
-  <section :class="bem(block,'section')">
-    <h3 :class="bem(block,'subheader')">{{t('item',2)}}</h3>
+  <section :class="style.bem('section')">
+    <h3 :class="style.bem('subheader')">{{t('item',2)}}</h3>
 
-    <ul :class="bem(block,'items')">
+    <ul :class="style.bem('items')">
       <InvoiceItemForm
         tag="li"
-        :class="bem(block,'item')"
+        :class="style.bem('item')"
         :item="item"
         v-for="(item,index) in invoice.current.data"
         :key="index"
@@ -23,7 +33,7 @@
     </ul>
     <KnoppenBar :align="ButtonAlign.CENTER">
       <Knop
-        :class="bem(block,'add')"
+        :class="style.bem('add')"
         @click="actions.newEntry"
         :icon="ButtonIcon.ADD"
       >
@@ -32,8 +42,8 @@
     </KnoppenBar>
   </section>
 
-  <section :class="bem(block,'section')">
-    <h3 :class="bem(block,'subheader')">
+  <section :class="style.bem('section')">
+    <h3 :class="style.bem('subheader')">
       {{t('client')}}
       <div class="label">{{invoice.client.id}}</div>
     </h3>
@@ -46,7 +56,7 @@
 
     <InvoiceEntityForm
       v-show="editting.client"
-      :class="bem(block,'entity')"
+      :class="style.bem('entity')"
       :entity="invoice.client"
     />
 
@@ -64,8 +74,8 @@
     </KnoppenBar>
   </section>
 
-  <section :class="bem(block,'section')">
-    <h3 :class="bem(block,'subheader')">
+  <section :class="style.bem('section')">
+    <h3 :class="style.bem('subheader')">
       Seller
       <div class="label">{{invoice.seller.id}}</div>
     </h3>
@@ -76,7 +86,7 @@
     />
     <InvoiceEntityForm
       v-show="editting.seller"
-      :class="bem(block,'entity')"
+      :class="style.bem('entity')"
       :entity="invoice.seller"
     />
 
@@ -84,13 +94,44 @@
       <Knop @click="toggleShow('seller')" :icon="ButtonIcon.EDIT"
         >{{!editting.seller ? 'Edit Seller' : 'Stop Edit'}}</Knop
       >
+      <Knop @click="addNewSeller" v-if="showSaveNewSeller">
+        Save as new seller
+      </Knop>
     </KnoppenBar>
   </section>
 
-  <section :class="bem(block,'section')">
+  <section :class="style.bem('section')">
+    <h3 :class="style.bem('subheader')">{{t('note',2)}}</h3>
+
+    <ul :class="style.bem('items')">
+      <InvoiceNoteForm
+        tag="li"
+        :class="style.bem('item')"
+        :item="item"
+        v-for="(item,index) in invoice.settings.notes"
+        :key="index"
+      />
+    </ul>
+    <KnoppenBar :align="ButtonAlign.CENTER">
+      <Knop
+        :class="style.bem('add')"
+        @click="actions.newNote"
+        :icon="ButtonIcon.ADD"
+      >
+        {{t('action.add-item')}}
+      </Knop>
+    </KnoppenBar>
+  </section>
+
+  <section :class="style.bem('section')">
+    <h3 :class="style.bem('subheader')">Footer</h3>
+    <FormTextArea v-model="invoice.settings.footer"></FormTextArea>
+  </section>
+
+  <section :class="style.bem('section')">
     <KnoppenBar>
       <Knop @click="actions.saveInvoice" icon="arrow-down">Save</Knop>
-      <Knop icon="arrow-down">Export</Knop>
+      <Knop @click="actions.export" icon="arrow-down">Export</Knop>
     </KnoppenBar>
   </section>
   <!-- 

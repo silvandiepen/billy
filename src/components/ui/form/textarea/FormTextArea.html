@@ -1,11 +1,10 @@
 <div :class="mainClasses">
   <div :class="style.bem('container')">
-    <input
+    <textarea
       :class="style.bem('control')"
       :placeholder="placeholder"
-      type="text"
       v-model="input"
-    />
+    ></textarea>
     <label :class="style.bem('label')">{{ label }}</label>
   </div>
 

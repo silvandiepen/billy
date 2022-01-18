@@ -9,15 +9,7 @@
     <!-- <div class="label">{{ item.id }}</div> -->
 
     <FormText :label="t('label.title')" v-model="item.title" />
-    <FormText :label="t('label.description')" v-model="item.description" />
-    <FormNumber :label="t('label.amount')" v-model="item.amount" />
-    <FormNumber :label="t('label.price')" v-model="item.price" />
-    <FormNumber :label="t('label.discount')" v-model="item.discount" />
-    <FormNumber
-      :label="t('vat')"
-      :placeholder="`${invoice.settings.tax}`"
-      v-model="item.tax"
-    />
+    <FormTextArea :label="t('label.description')" v-model="item.description" />
   </component>
 </template>
 
@@ -26,13 +18,14 @@ import { defineComponent, PropType } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
-import { InvoiceItem } from "../invoice/invoice.model";
+import { InvoiceNote } from "../invoice/invoice.model";
 import { ButtonType } from "../ui/button/Button.model";
-import { removeEntry } from "../../composables/state";
+import { removeNote } from "../../composables/state";
 
 import Button from "../ui/button/Button.vue";
 import FormText from "../ui/form/text/FormText.vue";
 import FormNumber from "../ui/form/number/FormNumber.vue";
+import FormTextArea from "../ui/form/textarea/FormTextArea.vue";
 
 import { state } from "../../composables/state";
 
@@ -41,10 +34,11 @@ export default defineComponent({
     Knop: Button,
     FormText,
     FormNumber,
+    FormTextArea,
   },
   props: {
     item: {
-      type: Object as PropType<InvoiceItem>,
+      type: Object as PropType<InvoiceNote>,
       default: () => {},
     },
     tag: {
@@ -54,14 +48,14 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n({});
-    const style = new Style("invoice-form-item");
+    const style = new Style("invoice-form-note");
 
     return {
       style,
       t,
       ButtonType,
       actions: {
-        removeEntry,
+        removeNote,
       },
       invoice: state.invoice,
     };
@@ -69,7 +63,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.invoice-form-item {
+.invoice-form-note {
   &__delete {
     position: absolute;
     right: 0;

@@ -1,25 +1,20 @@
-@import "theme";
+// // @import "@sil/themer/use";
+
 @import "@sil/themer/app";
 
-// body,
-// html {
-//   padding: 0;
-//   margin: 0;
+// #app {
+//   @include property(
+//     (
+//       position: relative,
+//       font-family:
+//         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+//       -webkit-font-smoothing: antialiased,
+//       -moz-osx-font-smoothing: grayscale,
+//       color: variable(foreground),
+//       background-color: variable(background10),
+//     )
+//   );
 // }
-
-#app {
-  @include property(
-    (
-      position: relative,
-      font-family:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      -webkit-font-smoothing: antialiased,
-      -moz-osx-font-smoothing: grayscale,
-      color: var(--foreground),
-      background-color: var(--accent),
-    )
-  );
-}
 :root {
   --space: 2em;
   --border-radius: 4px;
@@ -67,9 +62,9 @@ h6,
 .label {
   @include property(
     (
-      background-color: primary50,
-      border: 1px solid var(--primary),
-      color: var(--primary-50-text),
+      background-color: foreground75,
+      border: 1px solid variable(foreground50),
+      color: foreground75Text,
       font-weight: bold,
       display: inline-block,
       padding: 0.25em 0.5em,
@@ -94,4 +89,30 @@ hr {
       border: none,
     )
   );
+}
+
+.debug {
+  &--active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 4px;
+    padding: 2em;
+    max-width: 80vw;
+    max-height: 80vh;
+    overflow: scroll;
+  }
+  &--inactive {
+    position: absolute;
+
+    padding: 1em;
+    top: 0;
+    left: 0;
+  }
+  @media print {
+    display: none;
+  }
 }

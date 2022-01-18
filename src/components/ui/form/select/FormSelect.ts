@@ -1,6 +1,6 @@
+import { Style } from "@sil/tools";
 import { defineComponent, ref, PropType, computed } from "vue";
 import { useInputValidator } from "../form.helpers";
-import { bem } from "../../../../composables";
 import FormError from "../error/FormError.vue";
 
 interface FormSelectOption {
@@ -11,7 +11,7 @@ interface FormSelectOption {
 export default defineComponent({
   components: { FormError },
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
@@ -30,11 +30,11 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const block = "form-select";
+    const style = new Style("form-select");
     const validators = ref<Function[]>([]);
 
     const { input, errors } = useInputValidator(
-      props.value,
+      props.modelValue,
       validators.value,
       (value: string) => emit("update:modelValue", value)
     );
@@ -42,17 +42,16 @@ export default defineComponent({
     const hasValue = computed(() => input.value.length > 0);
 
     const mainClasses = computed(() => [
-      bem(block),
+      style.bem(),
       "form-field",
-      hasValue && bem(block, "", "has-value"),
+      hasValue && style.bem("", "has-value"),
     ]);
 
     return {
-      block,
       mainClasses,
       input,
       errors,
-      bem,
+      style,
     };
   },
 });

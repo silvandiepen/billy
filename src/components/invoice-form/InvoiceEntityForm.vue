@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="bem(block)">
+  <component :is="tag" :class="style.bem()">
     <FormText :label="t('label.companyName')" v-model="entity.companyName" />
     <FormText :label="t('label.firstName')" v-model="entity.firstName" />
     <FormText :label="t('label.lastName')" v-model="entity.lastName" />
@@ -20,17 +20,21 @@
     <FormText :label="t('label.email')" v-model="entity.email" />
     <FormText :label="t('label.website')" v-model="entity.website" />
     <hr />
-    <FormText :label="t('label.bankAccount')" v-model="entity.bankAccount" />
-    <FormText :label="t('label.bankName')" v-model="entity.bankName" />
-    <FormText :label="t('label.bankSwift')" v-model="entity.bankSwift" />
+    <FormText :label="t('label.bankAccount')" v-model="entity.bank.account" />
+    <FormText :label="t('label.bankName')" v-model="entity.bank.name" />
+    <FormText :label="t('label.bankSwift')" v-model="entity.bank.swift" />
+    <FormText
+      :label="t('label.bankBeneficiary')"
+      v-model="entity.bank.beneficiary"
+    />
   </component>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { useI18n } from "vue-i18n";
+import { Style } from "@sil/tools";
 
-import { bem } from "../../composables";
 import { InvoiceEntity } from "../invoice/invoice.model";
 
 import FormText from "../ui/form/text/FormText.vue";
@@ -53,9 +57,9 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n({});
+    const style = new Style("invoice-form-entity");
     return {
-      block: "invoice-form-entity",
-      bem,
+      style,
       t,
     };
   },

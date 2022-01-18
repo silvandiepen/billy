@@ -27,6 +27,10 @@ export enum ButtonAlign {
   CENTER = "center",
   RIGHT = "right",
 }
+export enum ButtonDirection {
+  ROW = "row",
+  COLUMN = "column",
+}
 
 export enum ButtonIcon {
   CLOSE = "close",

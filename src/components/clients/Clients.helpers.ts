@@ -1,65 +1,115 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-import { state } from "../../composables/state";
+import { state, setInvoiceEntity } from "../../composables/state";
 import { newId, equalObjects, store } from "../../composables";
 import { InvoiceEntity } from "../invoice/Invoice.model";
 
+export enum Entity {
+  SELLER = "billy:entity:seller",
+  CLIENT = "billy:entity:client",
+}
+
 export const savedClients = ref<InvoiceEntity[]>([]);
-export const currentClient = ref<InvoiceEntity>(state.invoice.client);
+export const savedSellers = ref<InvoiceEntity[]>([]);
+
+export const currentClient = computed(() => {
+  return state.invoice.client;
+});
+export const currentSeller = computed(() => {
+  return state.invoice.seller;
+});
 
 export const loadClients = (): void => {
-  savedClients.value = getClients();
+  savedClients.value = getEntities(Entity.CLIENT);
+};
+export const loadSellers = (): void => {
+  savedClients.value = getEntities(Entity.SELLER);
 };
 
-export const addClient = (): void => {
+export const loadEntity = (entity: Entity): void => {
+  entity == Entity.CLIENT ? loadClients() : loadSellers();
+};
+
+export const loadEntities = (): void => {
+  loadClients();
+  loadSellers();
+};
+
+export const addEntity = (entity: Entity): void => {
   console.log("add client");
-  savedClients.value.push(currentClient.value);
-  saveClients();
+  const saved = entity == Entity.CLIENT ? savedClients : savedSellers;
+  const current = entity == Entity.CLIENT ? currentClient : currentSeller;
+  saved.value.push(current.value);
+  saveEntities(entity);
 };
 
-export const getClient = (id: InvoiceEntity["id"]) =>
-  savedClients.value.find((clnt) => clnt.id == id);
-
-export const addNewClient = (): void => {
-  const newClient = JSON.parse(JSON.stringify(currentClient.value));
-  newClient.id = newId();
-  savedClients.value.push(newClient);
-
-  setTimeout(() => {
-    currentClient.value = newClient;
-  }, 0);
-
-  saveClients();
+export const getEntity = (entity: Entity, id: InvoiceEntity["id"]) => {
+  return entity == Entity.CLIENT
+    ? savedClients.value.find((clnt) => clnt.id == id)
+    : savedSellers.value.find((sllr) => sllr.id == id);
 };
 
-export const removeClient = (id: InvoiceEntity["id"]): void => {
-  savedClients.value = savedClients.value.filter((clnt) => clnt.id !== id);
-  saveClients();
+export const addNewEntity = (entity: Entity): void => {
+  const currentEntity =
+    entity === Entity.CLIENT ? currentClient : currentSeller;
+  const currentSaved = Entity.CLIENT ? savedClients : savedSellers;
+
+  const newEntity = JSON.parse(JSON.stringify(currentEntity.value));
+  newEntity.id = newId();
+  currentSaved.value.push(newEntity);
+
+  saveEntities(entity);
 };
 
-export const clientIDExists = (id: InvoiceEntity["id"]): boolean => {
-  return savedClients.value.some((clnt) => clnt.id === id);
+export const removeEntity = (entity: Entity, id: InvoiceEntity["id"]): void => {
+  const saved = entity == Entity.CLIENT ? savedClients : savedSellers;
+  saved.value = saved.value.filter((ent) => ent.id !== id);
+  saveEntities(entity);
 };
 
-export const clientExists = (cl: InvoiceEntity): boolean => {
-  return savedClients.value.some((clnt) => equalObjects(clnt, cl));
+export const entityIDExists = (
+  entity: Entity,
+  id: InvoiceEntity["id"]
+): boolean => {
+  const saved = entity == Entity.CLIENT ? savedClients : savedSellers;
+  return saved.value.some((ent) => ent.id === id);
 };
 
-export const getClients = (): InvoiceEntity[] => {
-  return JSON.parse(window.localStorage.getItem(store.CLIENTS) || "[]");
+export const entityExists = (entity: Entity, en: InvoiceEntity): boolean => {
+  const saved = entity == Entity.CLIENT ? savedClients : savedSellers;
+  return savedClients.value.some((ent) => equalObjects(ent, en));
 };
 
-export const saveClients = () =>
-  localStorage.setItem(store.CLIENTS, JSON.stringify(savedClients.value));
-
-export const setClientToState = (id: string) => {
-  let clnt: InvoiceEntity | undefined = savedClients.value.find(
-    (clt) => clt.id == id
+export const getEntities = (entity: Entity): InvoiceEntity[] => {
+  return JSON.parse(
+    window.localStorage.getItem(
+      entity == Entity.CLIENT ? store.CLIENTS : store.SELLERS
+    ) || "[]"
   );
-  if (clnt) state.invoice.client = clnt;
 };
 
-export const isClientChanged = (id: InvoiceEntity["id"]) => {
-  const savedClient = getClient(id) || {};
-  return equalObjects(savedClient, state.invoice.client);
+export const saveEntity = (entity: InvoiceEntity) => {};
+
+export const saveEntities = (entity: Entity) =>
+  entity == Entity.CLIENT
+    ? localStorage.setItem(store.CLIENTS, JSON.stringify(savedClients.value))
+    : localStorage.setItem(store.SELLERS, JSON.stringify(savedSellers.value));
+
+export const setEntityToState = (entity: Entity, id: string) => {
+  const saved = entity == Entity.CLIENT ? savedClients : savedSellers;
+
+  let entityData: InvoiceEntity | undefined = saved.value.find(
+    (ent) => ent.id == id
+  );
+  if (entityData) setInvoiceEntity(entity, entityData);
+};
+
+export const isEntityChanged = (
+  entity: Entity,
+  id: InvoiceEntity["id"]
+): boolean => {
+  const savedEntity = getEntity(entity, id) || {};
+  const currentEntity =
+    entity === Entity.CLIENT ? state.invoice.client : state.invoice.seller;
+  return equalObjects(savedEntity, currentEntity);
 };

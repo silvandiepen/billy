@@ -1,5 +1,5 @@
 import { ref, watch } from "vue";
-import { FormFieldError, FormValidatorOutput } from "./form.model";
+import { FormValidatorOutput } from "./form.model";
 
 export const minLength = (min: number): FormValidatorOutput => {
   return (input: string) =>

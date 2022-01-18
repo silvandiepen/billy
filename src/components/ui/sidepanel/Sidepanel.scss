@@ -18,7 +18,7 @@
         top: 0,
         pointer-events: all,
         right: 0,
-        margin: calc(var(--space) * 1) calc(var(--space) * 1.5),
+        margin: calc(#{variable(space)} * 1) calc(#{variable(space)} * 1.5),
         transform: translateX(0),
         transition: transform 0.3s ease-in-out,
       )
@@ -31,7 +31,7 @@
         height: 100%,
         max-height: 100vh,
         max-width: 320px,
-        clip-path: inset(0 0 0 calc(100% - var(--space))),
+        clip-path: inset(0 0 0 calc(100% - #{variable(space)})),
         transition: clip-path 0.3s ease-in-out,
         background-color: foreground,
         color: background,
@@ -84,7 +84,6 @@
       pointer-events: all;
     }
     #{$block}__background {
-      //opacity: 0.5;
       pointer-events: all;
     }
     #{$block}__container {
@@ -92,7 +91,7 @@
       transform: translateX(0%);
     }
     #{$block}__button {
-      transform: translateX(calc(-320px + var(--space)));
+      transform: translateX(calc(-320px + #{variable(space)}));
     }
 
     & + .preview {

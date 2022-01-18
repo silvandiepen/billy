@@ -1,0 +1,49 @@
+<div :class="style.bem()">
+  <section :class="style.bem('title')">
+    <Knop
+      :type="ButtonType.ICON"
+      :icon="ButtonIcon.ARROW_LEFT"
+      @click="goBack()"
+    />
+    <h3>{{ sidebarTitle }}</h3>
+    <Knop
+      v-if="showNext"
+      :type="ButtonType.ICON"
+      :icon="ButtonIcon.ARROW_RIGHT"
+      @click="editForm"
+    />
+  </section>
+
+  <div v-if="show=='start'">
+    <section :class="style.bem('section')">
+      <KnoppenGroup :direction="ButtonDirection.COLUMN">
+        <Knop :icon="ButtonIcon.NEW" @click="showForm"
+          >{{t('action.new-invoice')}}</Knop
+        >
+        <Knop :icon="ButtonIcon.EDIT" @click="editForm" v-if="hasInvoice"
+          >Continue {{invoiceName}}</Knop
+        >
+      </KnoppenGroup>
+    </section>
+    <section :class="style.bem('section')" v-if="savedInvoices.length > 0">
+      <h3 :class="style.bem('subheader')">
+        {{ t('saved-invoice', savedInvoices.length)}}
+      </h3>
+      <div :class="style.bem('invoices')">
+        <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
+      </div>
+    </section>
+    <!-- <section :class="style.bem('section')">
+      <KnoppenGroup>
+        <Knop :icon="ButtonIcon.FLAG_NL" @click="switchLanguage('nl')"
+          >{{t('language.nl')}}</Knop
+        >
+        <Knop :icon="ButtonIcon.FLAG_UK" @click="switchLanguage('en')"
+          >{{t('language.en')}}</Knop
+        >
+      </KnoppenGroup>
+    </section> -->
+  </div>
+
+  <InvoiceForm v-if="show == 'form'" />
+</div>

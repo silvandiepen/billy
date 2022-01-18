@@ -62,7 +62,7 @@
     @include property(
       (
         background-color: primary,
-        color: primary-text,
+        color: primaryText,
       )
     );
   }
@@ -70,7 +70,7 @@
     @include property(
       (
         background-color: secondary,
-        color: secondary-text,
+        color: secondaryText,
       )
     );
   }

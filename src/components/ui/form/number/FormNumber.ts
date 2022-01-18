@@ -1,14 +1,14 @@
+import { Style } from "@sil/tools";
 import { defineComponent, ref, computed } from "vue";
 import { useInputValidator, minLength, maxLength } from "../form.helpers";
 import FormError from "../error/FormError.vue";
-import { bem } from "../../../../composables";
 
 export default defineComponent({
   components: {
     FormError,
   },
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
@@ -31,32 +31,33 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const block = "form-number";
+    const style = new Style("form-number");
     const validators = ref<Function[]>([]);
 
     if (props.minLength > 0) validators.value.push(minLength(props.minLength));
     if (props.maxLength > 0) validators.value.push(maxLength(props.maxLength));
 
     const { input, errors } = useInputValidator(
-      props.value,
+      `${props.modelValue}`,
       validators.value,
-      (value: string) => emit("update:modelValue", value)
+      (value: string) => {
+        emit("update:modelValue", parseFloat(value));
+      }
     );
 
     const hasValue = computed(() => input.value.length > 0);
 
     const mainClasses = computed(() => [
-      bem(block),
+      style.bem(),
       "form-field",
-      hasValue && bem(block, "", "has-value"),
+      hasValue && style.bem("", "has-value"),
     ]);
 
     return {
-      block,
+      style,
       mainClasses,
       input,
       errors,
-      bem,
     };
   },
 });

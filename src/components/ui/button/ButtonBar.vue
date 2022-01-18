@@ -6,10 +6,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
+import { Style } from "@sil/tools";
 
 import { ButtonAlign } from "./Button.model";
-
-import { bem } from "../../../composables";
 
 export default defineComponent({
   props: {
@@ -19,18 +18,18 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const block = "button-bar";
+    const style = new Style("button-bar");
 
     const classes = computed(() => {
       let classNames = [];
 
-      classNames.push(bem(block));
-      classNames.push(bem(block, "", props.align));
+      classNames.push(style.bem());
+      classNames.push(style.bem("", props.align));
 
       return classNames;
     });
 
-    return { block, bem, classes };
+    return { classes };
   },
 });
 </script>

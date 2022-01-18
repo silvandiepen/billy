@@ -9,9 +9,12 @@ $theme-colors: (
   "success": rgb(63, 139, 63),
 );
 
+$theme-base: (
+  borderRadius: 4px,
+);
+
 $theme-settings: (
   prefix: "billy",
-  borderRadius: 4px,
   colors: (
     colorModes: false,
   ),

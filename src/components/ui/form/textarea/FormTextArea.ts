@@ -32,7 +32,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const style = new Style("form-text");
+    const style = new Style("form-text-area");
 
     const validators = ref<Function[]>([]);
 

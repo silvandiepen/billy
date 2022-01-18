@@ -6,9 +6,14 @@ interface keys {
   client: string;
   seller: string;
   item: string;
+  note: string;
   setting: string;
   currency: string;
   home: string;
+
+  header: string;
+  footer: string;
+  logo: string;
 
   "currency.eur": string;
   "currency.usd": string;
@@ -22,6 +27,7 @@ interface keys {
   "action.save": string;
   "action.export": string;
   "action.new-invoice": string;
+  "saved-invoice": string;
   "label.name": string;
   "label.companyName": string;
   "label.firstName": string;
@@ -44,6 +50,7 @@ interface keys {
   "label.bankName": string;
   "label.bankAccount": string;
   "label.bankSwift": string;
+  "label.bankBeneficiary": string;
 }
 
 export const en: keys = {
@@ -54,9 +61,14 @@ export const en: keys = {
   client: "Client | Clients",
   seller: "Seller | Sellers",
   item: "Item | Items",
+  note: "Note | Notes",
   setting: "Setting | Settings",
   currency: "Currency",
   home: "Home",
+
+  header: "Header",
+  footer: "Footer",
+  logo: "Logo",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
@@ -70,6 +82,7 @@ export const en: keys = {
   "action.save": "Save",
   "action.export": "Export",
   "action.new-invoice": "New Invoice",
+  "saved-invoice": "Saved Invoice | Saved Invoices",
   "label.name": "Name | Names",
   "label.companyName": "Company Name | Company Names",
   "label.firstName": "First Name | First Names",
@@ -89,9 +102,10 @@ export const en: keys = {
   "label.price": "Price",
   "label.discount": "Discount",
   "label.taxId": "Tax ID",
-  "label.bankName": "Bank naam",
+  "label.bankName": "Bank name",
   "label.bankAccount": "Bank Account",
-  "label.bankSwift": "Swift",
+  "label.bankSwift": "BIC/Swift",
+  "label.bankBeneficiary": "Beneficiary",
 };
 export const nl: keys = {
   invoice: "Factuur",
@@ -101,9 +115,14 @@ export const nl: keys = {
   client: "Klant | Klanten",
   seller: "Verkoper | Verkopers",
   item: "Item | Items",
+  note: "Notitie | Notities",
   setting: "Instelling | Instellingen",
   currency: "Currency",
   home: "Home",
+
+  header: "Header",
+  footer: "Footer",
+  logo: "Logo",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
@@ -117,6 +136,7 @@ export const nl: keys = {
   "action.save": "Opslaan",
   "action.export": "Exporteren",
   "action.new-invoice": "Nieuwe Factuur",
+  "saved-invoice": "Opgeslagen factuur | Opgeslagen facturen",
   "label.name": "Naam | Namen",
   "label.companyName": "Bedrijfsnaam | Bedrijfsnamen",
   "label.firstName": "Voornaam | Voornamen",
@@ -138,5 +158,6 @@ export const nl: keys = {
   "label.taxId": "BTW nummer",
   "label.bankName": "Bank naam",
   "label.bankAccount": "Bank Account",
-  "label.bankSwift": "Swift",
+  "label.bankSwift": "BIC/Swift",
+  "label.bankBeneficiary": "Beneficiary",
 };

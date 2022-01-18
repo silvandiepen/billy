@@ -1,16 +1,25 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { Style } from "@sil/tools";
 
-import { bem, eventBus, eventChannel } from "../../composables";
-import { ButtonType, ButtonAlign, ButtonIcon } from "../ui/button/Button.model";
+import { eventBus, eventChannel } from "../../composables";
+import {
+  ButtonType,
+  ButtonAlign,
+  ButtonIcon,
+  ButtonDirection,
+} from "../ui/button/Button.model";
 import {
   savedInvoices,
   loadSavedInvoices,
   hasCurrentInvoice,
+  getInvoiceID,
+  resetState,
 } from "../../composables/state";
 
 import Button from "../ui/button/Button.vue";
 import ButtonBar from "../ui/button/ButtonBar.vue";
+import ButtonGroup from "../ui/button/ButtonGroup.vue";
 import InvoiceForm from "../invoice-form/InvoiceForm.vue";
 import InvoiceItem from "../invoice/InvoiceItem.vue";
 import {
@@ -28,12 +37,14 @@ export default defineComponent({
   components: {
     Knop: Button,
     KnoppenBar: ButtonBar,
+    KnoppenGroup: ButtonGroup,
     InvoiceForm,
     InvoiceItem,
   },
   setup() {
     const { t } = useI18n({});
 
+    const style = new Style("control-panel");
     const show = ref(SidebarState.START);
 
     onMounted(() => {
@@ -72,11 +83,27 @@ export default defineComponent({
       return show.value === SidebarState.START && hasCurrentInvoice();
     });
 
+    const editForm = () => {
+      show.value = SidebarState.FORM;
+    };
+
+    const showForm = () => {
+      resetState();
+      show.value = SidebarState.FORM;
+    };
+
+    const invoiceName = computed(() => {
+      return getInvoiceID();
+    });
+
+    const hasInvoice = computed(() => {
+      return hasCurrentInvoice();
+    });
+
     return {
       t,
       show,
-      block: "sidebar",
-      bem,
+      style,
       goBack,
       showNext,
       savedInvoices,
@@ -85,7 +112,12 @@ export default defineComponent({
       sidebarTitle,
       ButtonType,
       ButtonAlign,
+      ButtonDirection,
       ButtonIcon,
+      showForm,
+      editForm,
+      hasInvoice,
+      invoiceName,
     };
   },
 });

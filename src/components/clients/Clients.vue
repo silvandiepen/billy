@@ -1,7 +1,7 @@
 <template>
-  <div :class="bem(block)">
+  <div :class="style.bem()">
     <h2>Clients</h2>
-    <ul :class="bem(block, 'list')">
+    <ul :class="style.bem('list')">
       <Client
         v-for="(client, index) in savedClients"
         :key="index"
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { bem } from "../../composables";
+import { Style } from "@sil/tools";
 
 import Button from "../ui/button/Button.vue";
 import ButtonGroup from "../ui/button/ButtonGroup.vue";
@@ -39,9 +39,9 @@ export default defineComponent({
     Client,
   },
   setup() {
+    const style = new Style("clients");
     return {
-      block: "clients",
-      bem,
+      style,
       ButtonColor,
       savedClients,
       loadClients,

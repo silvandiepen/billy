@@ -1,5 +1,7 @@
 import { defineComponent, PropType, ref } from "vue";
-import { bem, eventBus, eventChannel } from "../../../composables";
+import { Style } from "@sil/tools";
+
+import { eventBus, eventChannel } from "../../../composables";
 import { ButtonType, ButtonIcon } from "../button";
 import Button from "../button/Button.vue";
 import {
@@ -28,6 +30,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const style = new Style("sidepanel");
     const isActive = ref(props.active);
 
     // Adctions
@@ -58,9 +61,8 @@ export default defineComponent({
     });
 
     return {
-      block: "sidepanel",
+      style,
       isActive,
-      bem,
       closeSidepanel,
       openSidepanel,
       toggleSidepanel,

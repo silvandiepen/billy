@@ -3,7 +3,7 @@
 .invoice-form {
   &__subheader {
     color: variable(primary);
-    // padding: 1em;
+    padding: variable(space) 0;
   }
   &__section {
     padding: variable(space);

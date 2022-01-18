@@ -1,6 +1,6 @@
 <template>
-  <div :class="bem(block)" @click="loadInvoice">
-    <div :class="bem(block, 'title')">
+  <div :class="style.bem()" @click="loadInvoice">
+    <div :class="style.bem('title')">
       <p>
         <strong>#{{ invoiceNumber }}</strong
         ><br />
@@ -14,10 +14,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
+import { Style } from "@sil/tools";
+
 import { Invoice } from "./invoice.model";
-import { bem } from "../../composables";
-import { invoiceNumber, formatNumber, formatDate } from "./Invoice.helpers";
+import { invoiceNumber, formatNumber } from "./Invoice.helpers";
 import { setInvoice } from "../../composables/state";
+import { formatDate } from "../../composables";
 
 export default defineComponent({
   props: {
@@ -27,6 +29,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const style = new Style("invoice-item");
+
     const invoiceName = computed(() => {
       return props.invoice.client.companyName
         ? props.invoice.client.companyName
@@ -34,12 +38,12 @@ export default defineComponent({
     });
 
     const loadInvoice = () => {
+      console.log("set invoice:", props.invoice.current.id);
       setInvoice(props.invoice.current.id);
     };
     return {
       invoiceNumber: invoiceNumber(props.invoice.current.number),
-      block: "invoice-item",
-      bem,
+      style,
       formatNumber,
       formatDate,
       invoiceName,
@@ -49,15 +53,17 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+@import "@sil/themer/use";
+
 .invoice-item {
-  border-radius: var(--border-radius);
-  background-color: var(--foreground-75);
+  border-radius: variable(borderRadius);
+  background-color: variable(foreground75);
   padding: calc(var(--space) / 2);
   margin: 0 calc(var(--space) / 2 * -1);
 
   &:hover {
     cursor: pointer;
-    background-color: var(--primary);
+    background-color: variable(primary);
   }
 }
 </style>
