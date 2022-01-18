@@ -1,6 +1,6 @@
 import { computed } from "vue";
 
-import { InvoiceCurrency, InvoiceItem } from "./invoice.model";
+import { InvoiceCurrency, InvoiceItem } from "./Invoice.model";
 import { state } from "../../composables/state";
 
 export const discount = (value: number, discount: number) =>
