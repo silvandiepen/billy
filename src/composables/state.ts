@@ -1,4 +1,4 @@
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, watch, computed } from "vue";
 import { newId } from "./helpers";
 
 import {
@@ -7,14 +7,13 @@ import {
   InvoiceEntity,
   InvoiceItem,
   InvoiceNote,
-} from "../components/invoice/Invoice.model";
-
-import {
   getInvoiceTotal,
-  invoiceNumber,
-} from "../components/invoice/Invoice.helpers";
+  getInvoiceNumber,
+  InvoiceCurrency,
+} from "../components/Invoice";
+
 import { store } from ".";
-import { Entity } from "../components/clients/Clients.helpers";
+import { Entity } from "../components/Entity";
 
 interface State {
   invoice: Invoice;
@@ -30,7 +29,7 @@ const getState = (): Invoice => {
   return localState ? (JSON.parse(localState) as Invoice) : defaultInvoice;
 };
 
-export const state: State = reactive({
+const state: State = reactive({
   invoice: getState(),
 });
 /*
@@ -100,11 +99,34 @@ export const removeNote = (id: string): void => {
   );
 };
 
+/**
+ * Entities
+ */
+
+export const getInvoiceClient = (): InvoiceEntity => {
+  return state.invoice.client;
+};
+export const getInvoiceSeller = (): InvoiceEntity => {
+  return state.invoice.seller;
+};
+
 /*
 
   Invoices
 
   */
+
+export const getInvoice = (): State["invoice"] => {
+  return state.invoice;
+};
+
+export const getTax = (): number => {
+  return state.invoice.settings.tax;
+};
+export const getCurrency = (): InvoiceCurrency => {
+  return state.invoice.settings.currency;
+};
+
 export const savedInvoices = ref<Invoice[]>([]);
 
 export const loadSavedInvoices = () => {
@@ -112,27 +134,35 @@ export const loadSavedInvoices = () => {
   savedInvoices.value = invoices;
 };
 
-export const getInvoices = () => {
-  const invoices = JSON.parse(localStorage.getItem(store.INVOICES) || "[]");
-  savedInvoices.value = invoices;
-  return invoices.value;
-};
+export const getInvoices = computed(() => {
+  return savedInvoices;
+});
 
-export const getInvoice = (id: string): unknown => {
+export const getInvoiceById = (id: string): unknown => {
   const invoice = savedInvoices.value.filter(
     (inv: Invoice) => inv.current.id == id
   );
   if (invoice) return invoice[0];
 };
+
+export const isInvoice = (data: Invoice): data is Invoice => {
+  return (<Invoice>data).current !== undefined;
+};
+export const setInvoiceData = (data: Invoice): void => {
+  if (isInvoice(data)) {
+    state.invoice = data;
+  }
+};
+
 export const setInvoice = (id: string) => {
-  const currentInvoice = getInvoice(id) as Invoice;
+  const currentInvoice = getInvoiceById(id) as Invoice;
 
   if (currentInvoice) {
     state.invoice = currentInvoice;
   }
 };
 export const getInvoiceID = () => {
-  return invoiceNumber(state.invoice.current.number);
+  return getInvoiceNumber(state.invoice.current.number);
 };
 
 export const setInvoiceEntity = (entity: Entity, data: InvoiceEntity) => {
@@ -147,8 +177,14 @@ export const setInvoiceEntity = (entity: Entity, data: InvoiceEntity) => {
 };
 
 export const hasCurrentInvoice = (): boolean => {
-  console.log(state.invoice.current);
-  return !!state.invoice.current?.number;
+  const hasItems = state.invoice.current.data.length > 0;
+  const hasClient =
+    state.invoice.client.companyName || state.invoice.client.firstName;
+  const hasSeller =
+    state.invoice.seller.companyName || state.invoice.seller.firstName;
+  const hasNumber = state.invoice.current.number;
+
+  return !!hasItems || !!hasClient || !!hasSeller || !!hasNumber;
 };
 
 export const getCurrentInvoiceData = (): string => {
@@ -156,38 +192,35 @@ export const getCurrentInvoiceData = (): string => {
 };
 
 export const invoiceIDExists = (id: string) => {
-  const tempInvoices: Invoice[] = getInvoices() || [];
+  const tempInvoices: Invoice[] = savedInvoices.value || [];
   return !!tempInvoices.find((inv) => inv.current.id == id);
 };
 
 export const getInvoiceByID = (id: string): Invoice | undefined => {
-  const tempInvoices: Invoice[] = getInvoices() || [];
+  const tempInvoices: Invoice[] = savedInvoices.value || [];
   return tempInvoices.find((inv) => inv.current.id == id);
 };
+export const getInvoiceIndexByID = (id: string): number | undefined => {
+  const tempInvoices: Invoice[] = savedInvoices.value || [];
+  return tempInvoices.findIndex((inv) => inv.current.id === id);
+};
 
-export const saveInvoiceToStore = (): void => {
-  const tempInvoices: Invoice[] = getInvoices() || [];
-  const tempInvoice: Invoice = JSON.parse(JSON.stringify(state.invoice));
+export const saveInvoice = (): void => {
+  savedInvoices.value.push(getInvoice());
+  saveToLocalStorage();
+};
 
-  tempInvoice.current.total = getInvoiceTotal.value;
-
-  const isNew = Object.keys(savedInvoices.value)
-    ? true
-    : invoiceIDExists(tempInvoice.current.id);
-
-  if (isNew) {
-    console.log(tempInvoices.length, tempInvoices);
-    tempInvoices.push(tempInvoice);
-
-    localStorage.setItem(store.INVOICES, JSON.stringify(tempInvoices));
-    console.log(tempInvoices.length, tempInvoices);
+export const updateInvoice = (): void => {
+  let currentIndex = getInvoiceIndexByID(getInvoice().current.id);
+  if (currentIndex && currentIndex > -1) {
+    savedInvoices.value[currentIndex] = getInvoice();
   } else {
-    const currentIndex = tempInvoices.findIndex(
-      (inv: Invoice) => inv.current.id == tempInvoice.current.id
-    );
-    tempInvoices[currentIndex] = tempInvoice;
-    localStorage.setItem(store.INVOICES, JSON.stringify(tempInvoices));
+    saveInvoice();
   }
+  saveToLocalStorage();
+};
 
-  loadSavedInvoices();
+export const saveToLocalStorage = () => {
+  const invoices = JSON.stringify(savedInvoices.value);
+  localStorage.setItem(store.INVOICES, invoices);
 };

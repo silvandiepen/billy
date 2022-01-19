@@ -1,1 +1,2 @@
-export * from "./Settings.vue";
+import ControlPanelComponent from "./ControlPanel.vue";
+export { ControlPanelComponent };

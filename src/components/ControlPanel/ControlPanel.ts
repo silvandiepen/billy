@@ -3,12 +3,21 @@ import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
 import { eventBus, eventChannel } from "../../composables";
+
+import ButtonComponent from "../ui/Button/Button.vue";
+import ButtonBarComponent from "../ui/Button/ButtonBar.vue";
+import ButtonGroupComponent from "../ui/Button/ButtonGroup.vue";
+
 import {
   ButtonType,
   ButtonAlign,
   ButtonIcon,
   ButtonDirection,
-} from "../ui/button/Button.model";
+  SidepanelAction,
+  SidepanelEventArguments,
+  SidepanelIdentfier,
+} from "../ui";
+
 import {
   savedInvoices,
   loadSavedInvoices,
@@ -17,16 +26,8 @@ import {
   resetState,
 } from "../../composables/state";
 
-import Button from "../ui/button/Button.vue";
-import ButtonBar from "../ui/button/ButtonBar.vue";
-import ButtonGroup from "../ui/button/ButtonGroup.vue";
-import InvoiceForm from "../invoice-form/InvoiceForm.vue";
-import InvoiceItem from "../invoice/InvoiceItem.vue";
-import {
-  SidepanelAction,
-  SidepanelEventArguments,
-  SidepanelIdentfier,
-} from "../ui/sidepanel/Sidepanel.model";
+import InvoiceFormComponent from "../InvoiceForm/InvoiceForm.vue";
+import InvoiceItemComponent from "../Invoice/InvoiceItem.vue";
 
 export enum SidebarState {
   START = "start",
@@ -35,11 +36,11 @@ export enum SidebarState {
 
 export default defineComponent({
   components: {
-    Knop: Button,
-    KnoppenBar: ButtonBar,
-    KnoppenGroup: ButtonGroup,
-    InvoiceForm,
-    InvoiceItem,
+    Knop: ButtonComponent,
+    KnoppenBar: ButtonBarComponent,
+    KnoppenGroup: ButtonGroupComponent,
+    InvoiceForm: InvoiceFormComponent,
+    InvoiceItem: InvoiceItemComponent,
   },
   setup() {
     const { t } = useI18n({});

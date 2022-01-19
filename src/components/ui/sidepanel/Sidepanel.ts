@@ -2,8 +2,10 @@ import { defineComponent, PropType, ref } from "vue";
 import { Style } from "@sil/tools";
 
 import { eventBus, eventChannel } from "../../../composables";
-import { ButtonType, ButtonIcon } from "../button";
-import Button from "../button/Button.vue";
+
+import { ButtonType, ButtonIcon } from "../Button";
+import ButtonComponent from "../button/Button.vue";
+
 import {
   SidepanelPosition,
   SidepanelProps,
@@ -13,7 +15,7 @@ import {
 
 export default defineComponent({
   components: {
-    Knop: Button,
+    Knop: ButtonComponent,
   },
   props: {
     identifier: {

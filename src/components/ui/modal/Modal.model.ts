@@ -20,4 +20,6 @@ export enum ModalIdentifier {
   CLIENTS_LIST = "[Modal] ClientsList",
   SELLER_FORM = "[Modal] SellerForm",
   SELLERS_LIST = "[Modal] SellersList",
+  UPLOAD_INVOICE = "[Modal] UploadInvoice",
+  DEBUG = "[Modal] Debug",
 }

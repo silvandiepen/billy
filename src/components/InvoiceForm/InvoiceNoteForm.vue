@@ -4,9 +4,8 @@
       icon="delete"
       :type="ButtonType.ICON"
       :class="style.bem('delete')"
-      @click="actions.removeEntry(item.id)"
+      @click="actions.removeNote(item.id)"
     />
-    <!-- <div class="label">{{ item.id }}</div> -->
 
     <FormText :label="t('label.title')" v-model="item.title" />
     <FormTextArea :label="t('label.description')" v-model="item.description" />
@@ -14,27 +13,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
-import { InvoiceNote } from "../invoice/invoice.model";
-import { ButtonType } from "../ui/button/Button.model";
-import { removeNote } from "../../composables/state";
+import { InvoiceNote } from "../Invoice";
 
-import Button from "../ui/button/Button.vue";
-import FormText from "../ui/form/text/FormText.vue";
-import FormNumber from "../ui/form/number/FormNumber.vue";
-import FormTextArea from "../ui/form/textarea/FormTextArea.vue";
+import {
+  ButtonType,
+  ButtonComponent,
+  FormTextComponent,
+  FormNumberComponent,
+  FormTextAreaComponent,
+} from "../ui";
 
-import { state } from "../../composables/state";
+import { getInvoice, removeNote } from "../../composables/state";
 
 export default defineComponent({
   components: {
-    Knop: Button,
-    FormText,
-    FormNumber,
-    FormTextArea,
+    Knop: ButtonComponent,
+    FormText: FormTextComponent,
+    FormNumber: FormNumberComponent,
+    FormTextArea: FormTextAreaComponent,
   },
   props: {
     item: {
@@ -50,6 +50,10 @@ export default defineComponent({
     const { t } = useI18n({});
     const style = new Style("invoice-form-note");
 
+    const invoice = computed(() => {
+      return getInvoice();
+    });
+
     return {
       style,
       t,
@@ -57,7 +61,7 @@ export default defineComponent({
       actions: {
         removeNote,
       },
-      invoice: state.invoice,
+      invoice,
     };
   },
 });

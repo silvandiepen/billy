@@ -6,15 +6,15 @@
         v-if="invoice.settings?.logo"
         v-html="invoice.settings?.logo"
       ></div>
-      <h3>Invoice #{{invoiceNumber(invoice.current.number)}}</h3>
+      <h3>Invoice #{{getInvoiceNumber(invoice.current.number)}}</h3>
     </header>
 
     <section :class="style.bem('client')">
-      <InvoiceEntity :entity="invoice.client" />
+      <InvoiceEntity :entity="Entity.CLIENT" />
     </section>
 
     <section :class="style.bem('seller')">
-      <InvoiceEntity :entity="invoice.seller" />
+      <InvoiceEntity :entity="Entity.SELLER" />
     </section>
   </div>
 

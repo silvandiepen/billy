@@ -1,12 +1,12 @@
 import { computed } from "vue";
 
 import { InvoiceCurrency, InvoiceItem } from "./Invoice.model";
-import { state } from "../../composables/state";
+import { getCurrency, getInvoice, getTax } from "../../composables/state";
 
 export const discount = (value: number, discount: number) =>
   value - (value / 100) * discount;
 
-export const invoiceNumber = (number: Number) => {
+export const getInvoiceNumber = (number: Number) => {
   // console.log(number);
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -18,7 +18,7 @@ export const invoiceNumber = (number: Number) => {
 
 export const getInvoiceSum = computed(
   () =>
-    state.invoice.current?.data.reduce(
+    getInvoice().current?.data.reduce(
       (acc: number, cur: InvoiceItem) =>
         acc + discount(cur.amount * cur.price, cur.discount ? cur.discount : 0),
       0
@@ -26,7 +26,7 @@ export const getInvoiceSum = computed(
 );
 
 export const getInvoiceTax = computed(() => {
-  return (getInvoiceSum.value / 100) * state.invoice.settings.tax;
+  return (getInvoiceSum.value / 100) * getTax();
 });
 
 export const getInvoiceTotal = computed(() => {
@@ -34,7 +34,7 @@ export const getInvoiceTotal = computed(() => {
 });
 
 export const currencyCode = computed(
-  () => state.invoice.settings.currency || InvoiceCurrency.EUR
+  () => getCurrency() || InvoiceCurrency.EUR
 );
 
 export const formatNumber = (

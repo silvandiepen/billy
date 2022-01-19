@@ -48,30 +48,11 @@
       <div class="label">{{invoice.client.id}}</div>
     </h3>
 
-    <InvoiceEntity
-      v-show="!editting.client"
-      @click="toggleShow('client')"
-      :entity="invoice.client"
-    />
-
     <InvoiceEntityForm
-      v-show="editting.client"
       :class="style.bem('entity')"
-      :entity="invoice.client"
+      :entityData="invoice.client"
+      :entity="Entity.CLIENT"
     />
-
-    <KnoppenBar>
-      <Knop @click="showModal(ModalIdentifier.CLIENTS_LIST)">
-        {{ t('action.show-clients')}}
-      </Knop>
-      <Knop @click="toggleShow('client')" :icon="ButtonIcon.EDIT"
-        >{{!editting.client ? 'Edit Client' : 'Stop Edit'}}</Knop
-      >
-      <Knop @click="addClient" v-if="showSaveClient"> Save client </Knop>
-      <Knop @click="addNewClient" v-if="showSaveNewClient">
-        Save as new client
-      </Knop>
-    </KnoppenBar>
   </section>
 
   <section :class="style.bem('section')">
@@ -79,25 +60,12 @@
       Seller
       <div class="label">{{invoice.seller.id}}</div>
     </h3>
-    <InvoiceEntity
-      v-show="!editting.seller"
-      @click="editting.seller = true"
-      :entity="invoice.seller"
-    />
-    <InvoiceEntityForm
-      v-show="editting.seller"
-      :class="style.bem('entity')"
-      :entity="invoice.seller"
-    />
 
-    <KnoppenBar>
-      <Knop @click="toggleShow('seller')" :icon="ButtonIcon.EDIT"
-        >{{!editting.seller ? 'Edit Seller' : 'Stop Edit'}}</Knop
-      >
-      <Knop @click="addNewSeller" v-if="showSaveNewSeller">
-        Save as new seller
-      </Knop>
-    </KnoppenBar>
+    <InvoiceEntityForm
+      :class="style.bem('entity')"
+      :entityData="invoice.seller"
+      :entity="Entity.SELLER"
+    />
   </section>
 
   <section :class="style.bem('section')">
@@ -134,12 +102,4 @@
       <Knop @click="actions.export" icon="arrow-down">Export</Knop>
     </KnoppenBar>
   </section>
-  <!-- 
-  <Modal :identifier="ModalIdentifier.ClIENT_FORM"> </Modal>
-
-  <Modal :identifier="ModalIdentifier.SELLER_FORM"> </Modal> -->
-
-  <Modal :identifier="ModalIdentifier.CLIENTS_LIST">
-    <Clients />
-  </Modal>
 </div>

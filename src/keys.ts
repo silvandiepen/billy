@@ -11,6 +11,9 @@ interface keys {
   currency: string;
   home: string;
 
+  "billy:entity:client": string;
+  "billy:entity:seller": string;
+
   header: string;
   footer: string;
   logo: string;
@@ -29,6 +32,7 @@ interface keys {
   "action.new-invoice": string;
   "saved-invoice": string;
   "label.name": string;
+  "label.id": string;
   "label.companyName": string;
   "label.firstName": string;
   "label.lastName": string;
@@ -47,6 +51,7 @@ interface keys {
   "label.price": string;
   "label.discount": string;
   "label.taxId": string;
+  "label.bank": string;
   "label.bankName": string;
   "label.bankAccount": string;
   "label.bankSwift": string;
@@ -66,6 +71,9 @@ export const en: keys = {
   currency: "Currency",
   home: "Home",
 
+  "billy:entity:client": "Client",
+  "billy:entity:seller": "Seller",
+
   header: "Header",
   footer: "Footer",
   logo: "Logo",
@@ -83,6 +91,7 @@ export const en: keys = {
   "action.export": "Export",
   "action.new-invoice": "New Invoice",
   "saved-invoice": "Saved Invoice | Saved Invoices",
+  "label.id": "ID | IDs",
   "label.name": "Name | Names",
   "label.companyName": "Company Name | Company Names",
   "label.firstName": "First Name | First Names",
@@ -102,6 +111,7 @@ export const en: keys = {
   "label.price": "Price",
   "label.discount": "Discount",
   "label.taxId": "Tax ID",
+  "label.bank": "Bank",
   "label.bankName": "Bank name",
   "label.bankAccount": "Bank Account",
   "label.bankSwift": "BIC/Swift",
@@ -120,6 +130,9 @@ export const nl: keys = {
   currency: "Currency",
   home: "Home",
 
+  "billy:entity:client": "Klant",
+  "billy:entity:seller": "Verkoper",
+
   header: "Header",
   footer: "Footer",
   logo: "Logo",
@@ -137,6 +150,7 @@ export const nl: keys = {
   "action.export": "Exporteren",
   "action.new-invoice": "Nieuwe Factuur",
   "saved-invoice": "Opgeslagen factuur | Opgeslagen facturen",
+  "label.id": "ID | IDs",
   "label.name": "Naam | Namen",
   "label.companyName": "Bedrijfsnaam | Bedrijfsnamen",
   "label.firstName": "Voornaam | Voornamen",
@@ -156,6 +170,7 @@ export const nl: keys = {
   "label.price": "Prijs",
   "label.discount": "Korting",
   "label.taxId": "BTW nummer",
+  "label.bank": "Bank",
   "label.bankName": "Bank naam",
   "label.bankAccount": "Bank Account",
   "label.bankSwift": "BIC/Swift",

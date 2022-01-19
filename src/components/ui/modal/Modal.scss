@@ -1,3 +1,5 @@
+@import "@sil/themer/use";
+
 .modal {
   $block: &;
 
@@ -17,10 +19,10 @@
     pointer-events: all;
     right: 0;
     transform: translate(100%, -100%) scale(0);
-    background-color: var(--foreground);
-    color: var(--background);
+    background-color: variable(foreground);
+    color: variable(background);
     padding: 1em;
-    border-radius: var(--border-radius);
+    border-radius: variable(borderRadius);
     border: none;
     font-size: 1em;
   }
@@ -38,7 +40,7 @@
   }
 
   &__background {
-    background-color: var(--foreground);
+    background-color: variable(foreground);
     position: absolute;
     left: 0;
     top: 0;
@@ -49,13 +51,13 @@
   }
 
   &__container {
-    background-color: var(--background);
-    border-radius: var(--border-radius);
-    color: var(--foreground);
+    background-color: variable(background);
+    border-radius: variable(borderRadius);
+    color: variable(foreground);
     transition: opacity 0.3s ease-in-out;
-    transform: translateX(calc(50%));
+    transform: scale(0.8);
     opacity: 0;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
   }
 
   &--active {
@@ -73,7 +75,7 @@
     }
     #{$block}__container {
       opacity: 1;
-      transform: translateX(0%);
+      transform: scale(1);
     }
   }
   @media print {

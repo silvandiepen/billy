@@ -1,0 +1,17 @@
+<Modal :identifier="ModalIdentifier.UPLOAD_INVOICE">
+  <UploadInvoice></UploadInvoice>
+</Modal>
+<Modal :identifier="ModalIdentifier.CLIENTS_LIST">
+  <Entities :entity="Entity.CLIENT" />
+</Modal>
+<Modal :identifier="ModalIdentifier.SELLERS_LIST">
+  <Entities :entity="Entity.SELLER" />
+</Modal>
+
+<div class="toolbar">
+  <ButtonGroup :align="ButtonAlign.ROW">
+    <ButtonComponent @click="action.sellers()">Sellers</ButtonComponent>
+    <ButtonComponent @click="action.clients()">Clients</ButtonComponent>
+    <ButtonComponent @click="action.upload()">Open File</ButtonComponent>
+  </ButtonGroup>
+</div>

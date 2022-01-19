@@ -16,8 +16,8 @@
 import { defineComponent, PropType, computed } from "vue";
 import { Style } from "@sil/tools";
 
-import { Invoice } from "./invoice.model";
-import { invoiceNumber, formatNumber } from "./Invoice.helpers";
+import { Invoice } from "./Invoice.model";
+import { getInvoiceNumber, formatNumber } from "./Invoice.helpers";
 import { setInvoice } from "../../composables/state";
 import { formatDate } from "../../composables";
 
@@ -42,7 +42,7 @@ export default defineComponent({
       setInvoice(props.invoice.current.id);
     };
     return {
-      invoiceNumber: invoiceNumber(props.invoice.current.number),
+      invoiceNumber: getInvoiceNumber(props.invoice.current.number),
       style,
       formatNumber,
       formatDate,

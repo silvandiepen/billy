@@ -1,11 +1,11 @@
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed, ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
-import { state, getInvoiceID } from "../../composables/state";
+import { getInvoiceID, getInvoice } from "../../composables/state";
 import {
   discount,
-  invoiceNumber,
+  getInvoiceNumber,
   getInvoiceSum,
   getInvoiceTax,
   getInvoiceTotal,
@@ -14,6 +14,8 @@ import {
 
 import InvoiceItem from "./InvoiceItem.vue";
 import InvoiceEntity from "./InvoiceEntity.vue";
+import { Entity } from "../Entity";
+import { Replacers, replaceStrings } from "../../composables";
 
 export default defineComponent({
   components: {
@@ -26,7 +28,7 @@ export default defineComponent({
     const style = new Style("invoice");
 
     const invoice = computed(() => {
-      return state.invoice;
+      return getInvoice();
     });
     const currentData = computed(() =>
       invoice.value.current.data.filter(
@@ -42,45 +44,30 @@ export default defineComponent({
       return getInvoiceID();
     });
 
-    const replaceValues = computed(() => ({
-      "bank.account": invoice.value.seller.bank.account,
-      "bank.swift": invoice.value.seller.bank.swift,
-      "bank.name": invoice.value.seller.bank.name,
-      "bank.beneficiary": invoice.value.seller.bank.beneficiary,
-      email: invoice.value.seller.email,
-      phone: invoice.value.seller.phone,
-      total: total.value,
-      "invoice.number": invoiceId.value,
-    }));
-
-    const templator = (str: string) => {
-      const re = new RegExp(
-        Object.keys(replaceValues.value)
-          .map((s) => (s = `{${s}}`))
-          .join("|"),
-        "gi"
-      );
-
-      return str.replace(
-        re,
-        (matched) =>
-          replaceValues.value[
-            Object.keys(replaceValues.value).find(
-              (key) => key === matched.replace("{", "").replace("}", "")
-            )
-          ] || `[Couldn't find ${matched}]`
-      );
-    };
+    const replaceValues: ComputedRef<Replacers> = computed(
+      (): Replacers => ({
+        "bank.account": invoice.value.seller.bank.account,
+        "bank.swift": invoice.value.seller.bank.swift,
+        "bank.name": invoice.value.seller.bank.name,
+        "bank.beneficiary": invoice.value.seller.bank.beneficiary,
+        email: invoice.value.seller.email,
+        phone: invoice.value.seller.phone,
+        total: `${total.value}`,
+        "invoice.number": invoiceId.value,
+      })
+    );
+    const templator = (str: string) => replaceStrings(str, replaceValues.value);
 
     return {
       t,
+      Entity,
       style,
       invoice,
       total,
       tax: getInvoiceTax,
       sum: getInvoiceSum,
       currentData,
-      invoiceNumber,
+      getInvoiceNumber,
       formatNumber,
       discount,
       templator,

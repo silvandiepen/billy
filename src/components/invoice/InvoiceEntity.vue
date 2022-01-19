@@ -1,38 +1,43 @@
 <template>
   <div :class="style.bem()">
-    <div :class="style.bem('company-name')" v-if="entity.companyName">
-      <strong>{{ entity.companyName }}</strong>
+    <div :class="style.bem('company-name')" v-if="entityData.companyName">
+      <strong>{{ entityData.companyName }}</strong>
     </div>
-    <div :class="style.bem('name')" v-if="entity.firstName || entity.lastName">
+    <div
+      :class="style.bem('name')"
+      v-if="entityData.firstName || entityData.lastName"
+    >
       <component
         :is="entity.companyName ? 'span' : 'strong'"
-        v-if="entity.firstName && entity.lastName"
-        >{{ entity.firstName }} {{ entity.lastName }}</component
+        v-if="entityData.firstName && entityData.lastName"
+        >{{ entityData.firstName }} {{ entityData.lastName }}</component
       >
       <component
         :is="entity.companyName ? 'span' : 'strong'"
         v-else-if="entity.firstName"
-        >{{ entity.firstName }}</component
+        >{{ entityData.firstName }}</component
       >
       <component
         :is="entity.companyName ? 'span' : 'strong'"
         v-else-if="entity.lastName"
-        >{{ entity.lastName }}</component
+        >{{ entityData.lastName }}</component
       >
     </div>
-    <div :class="style.bem('street')" v-if="entity.street">
-      <span :class="style.bem('street-name')">{{ entity.street }}</span>
-      <span :class="style.bem('street-number')"> {{ entity.number }}</span>
+    <div :class="style.bem('street')" v-if="entityData.street">
+      <span :class="style.bem('street-name')">{{ entityData.street }}</span>
+      <span :class="style.bem('street-number')"> {{ entityData.number }}</span>
     </div>
-    <div :class="style.bem('additional')" v-if="entity.additional">
-      {{ entity.additional }}
+    <div :class="style.bem('additional')" v-if="entityData.additional">
+      {{ entityData.additional }}
     </div>
-    <div :class="style.bem('postalcode')" v-if="entity.postalcode">
-      {{ entity.postalcode }}
+    <div :class="style.bem('postalcode')" v-if="entityData.postalcode">
+      {{ entityData.postalcode }}
     </div>
-    <div :class="style.bem('city')" v-if="entity.city">{{ entity.city }}</div>
-    <div :class="style.bem('country')" v-if="entity.country">
-      {{ entity.country }}
+    <div :class="style.bem('city')" v-if="entityData.city">
+      {{ entityData.city }}
+    </div>
+    <div :class="style.bem('country')" v-if="entityData.country">
+      {{ entityData.country }}
     </div>
 
     <!-- <br
@@ -45,52 +50,69 @@
     /> -->
 
     <!-- <div :class="style.bem('bank-name')" v-if="entity.bank.name">
-      {{ entity.bank.name }}
+      {{ entityData.bank.name }}
     </div>
     <div :class="style.bem('bank-swift')" v-if="entity.bank.swift">
-      {{ entity.bank.swift }}
+      {{ entityData.bank.swift }}
     </div>
     <div :class="style.bem('bank-account')" v-if="entity.bank.account">
-      {{ entity.bank.account }}
+      {{ entityData.bank.account }}
     </div>
     <div :class="style.bem('bank-beneficiary')" v-if="entity.bank.beneficiary">
-      {{ entity.bank.beneficiary }}
+      {{ entityData.bank.beneficiary }}
     </div>
     <div :class="style.bem('tax-id')" v-if="entity.taxId">
-      {{ entity.taxId }}
+      {{ entityData.taxId }}
     </div> -->
 
-    <br v-if="entity.phone || entity.fax || entity.email || entity.website" />
+    <br
+      v-if="
+        entityData.phone ||
+        entityData.fax ||
+        entityData.email ||
+        entityData.website
+      "
+    />
 
-    <div :class="style.bem('phone')" v-if="entity.phone">
-      {{ entity.phone }}
+    <div :class="style.bem('phone')" v-if="entityData.phone">
+      {{ entityData.phone }}
     </div>
-    <div :class="style.bem('fax')" v-if="entity.fax">
-      {{ entity.fax }}
+    <div :class="style.bem('fax')" v-if="entityData.fax">
+      {{ entityData.fax }}
     </div>
-    <div :class="style.bem('email')" v-if="entity.email">
-      {{ entity.email }}
+    <div :class="style.bem('email')" v-if="entityData.email">
+      {{ entityData.email }}
     </div>
-    <div :class="style.bem('website')" v-if="entity.website">
-      {{ entity.website }}
+    <div :class="style.bem('website')" v-if="entityData.website">
+      {{ entityData.website }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, computed } from "vue";
 import { Style } from "@sil/tools";
 
-import { InvoiceEntity } from "./invoice.model";
+import { Entity } from "../Entity";
+
+import { getInvoiceClient, getInvoiceSeller } from "../../composables/state";
+import { InvoiceEntity } from "../Invoice";
 
 export default defineComponent({
   props: {
     entity: {
-      type: Object as PropType<InvoiceEntity>,
-      default: () => {},
+      type: String as PropType<Entity>,
+      default: "",
+      required: true,
     },
   },
-  setup() {
+  setup(props) {
+    const entityData = computed<InvoiceEntity>(() => {
+      return props.entity === Entity.CLIENT
+        ? getInvoiceClient()
+        : getInvoiceSeller();
+    });
+
     const style = new Style("client-entity");
 
     let format = {
@@ -122,7 +144,7 @@ export default defineComponent({
       ],
     };
 
-    return { style, format };
+    return { style, format, entityData };
   },
 });
 </script>

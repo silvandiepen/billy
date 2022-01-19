@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { InvoiceEntity } from "../components/Invoice";
 
 export const newId = () => {
   let s4 = () => {
@@ -27,4 +27,35 @@ export const downloadFile = (fileName: string, fileData: string): void => {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+};
+
+export type ReplacerKey = string;
+export interface Replacers {
+  [key: ReplacerKey]: string;
+}
+
+export const replaceStrings = (str: string, obj: Replacers): string => {
+  const re = new RegExp(
+    Object.keys(obj)
+      .map((s) => (s = `{${s}}`))
+      .join("|"),
+    "gi"
+  );
+  return str.replace(re, (matched) => {
+    const key = Object.keys(obj).find(
+      (key) => key === `${matched}`.replace("{", "").replace("}", "")
+    ) as ReplacerKey;
+
+    return obj[key] || `[Couldn't find ${matched}]`;
+  });
+};
+
+export const getName = (entity: InvoiceEntity): string => {
+  let value = ``;
+  if (entity.companyName) {
+    value += entity.companyName;
+  } else if (entity.firstName && entity.lastName) {
+    return (value += entity.firstName + " " + entity.lastName);
+  }
+  return value;
 };

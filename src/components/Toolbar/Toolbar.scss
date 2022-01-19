@@ -1,0 +1,21 @@
+@import "@sil/themer/use";
+
+.toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+
+  border-radius: variable(borderRadius) variable(borderRadius) 0 0;
+  background-color: variable(foreground);
+  transform: translateX(-50%) translateY(50%);
+  color: variable(foregroundText);
+  padding: variable(space);
+  // margin: variable(space);
+  opacity: 0.1;
+  transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 5;
+  &:hover {
+    transform: translateX(-50%) translateY(0%);
+    opacity: 1;
+  }
+}
