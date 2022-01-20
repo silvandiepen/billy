@@ -40,7 +40,6 @@ export default defineComponent({
     });
 
     const loadInvoice = () => {
-      console.log("set invoice:", props.invoice.current.id);
       setInvoice(props.invoice.current.id);
     };
     return {

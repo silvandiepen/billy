@@ -104,20 +104,22 @@ export default defineComponent({
     });
 
     const removeEntryAlert = (id: string) => {
-      createAlert(instance, {
-        title: "Are you sure?",
-        description: "You are deleting ",
-        buttons: [
-          {
-            label: "Sure",
-            action: () => removeEntry(id),
-          },
-          {
-            label: "No",
-            action: () => {},
-          },
-        ],
-      });
+      removeEntry(id);
+
+      // createAlert(instance, {
+      //   title: "Are you sure?",
+      //   description: "You are deleting ",
+      //   buttons: [
+      //     {
+      //       label: "Sure",
+      //       action: () => removeEntry(id),
+      //     },
+      //     {
+      //       label: "No",
+      //       action: () => {},
+      //     },
+      //   ],
+      // });
     };
 
     return {
