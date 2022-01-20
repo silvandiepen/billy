@@ -46,6 +46,7 @@ import {
   ButtonGroupComponent,
 } from "../ui";
 import { InvoiceEntity } from "../Invoice";
+import { closeEntityModal } from "../../services";
 
 export default defineComponent({
   components: {
@@ -53,8 +54,13 @@ export default defineComponent({
     Knoppen: ButtonGroupComponent,
   },
   props: {
+    entity: {
+      type: String as PropType<Entity>,
+      required: true,
+    },
     entityData: {
       type: Object as PropType<InvoiceEntity>,
+      required: true,
     },
     tag: {
       type: String,
@@ -69,12 +75,12 @@ export default defineComponent({
     const showDetails = ref(false);
 
     const removeClient = (id: string) => {
-      console.log("removing", id);
-      removeEntity(Entity.CLIENT, id);
+      removeEntity(props.entity, id);
     };
 
     const setClientToState = (id: string) => {
-      setEntityToState(Entity.CLIENT, id);
+      setEntityToState(props.entity, id);
+      closeEntityModal(props.entity);
     };
 
     return {
@@ -94,15 +100,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 .entity {
   position: relative;
   padding: calc(#{variable(space)} / 2);
   background-color: variable(foreground90);
   color: variable(foreground90Text);
   border-radius: variable(borderRadius);
-
   width: 100%;
+
   & + & {
     margin-top: 1em;
   }

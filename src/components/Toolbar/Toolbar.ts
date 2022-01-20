@@ -1,5 +1,4 @@
 import { defineComponent } from "vue";
-import { eventBus, eventChannel } from "../../composables";
 
 import { EntitiesComponent, Entity } from "../Entity";
 import {
@@ -8,10 +7,13 @@ import {
   ModalIdentifier,
   ButtonGroupComponent,
   ButtonAlign,
-  ModalEventArguments,
-  ModalAction,
 } from "../ui";
 import { UploadInvoiceComponent } from "../UploadInvoice";
+import {
+  openSellersModal,
+  openClientsModal,
+  openUploadModal,
+} from "../../services";
 
 export default defineComponent({
   components: {
@@ -22,29 +24,11 @@ export default defineComponent({
     ButtonGroup: ButtonGroupComponent,
   },
   setup() {
-    const openSellers = () => {
-      eventBus.emit(eventChannel.MODAL, {
-        identifier: ModalIdentifier.SELLERS_LIST,
-        action: ModalAction.OPEN,
-      } as ModalEventArguments);
-    };
-    const openClients = () => {
-      eventBus.emit(eventChannel.MODAL, {
-        identifier: ModalIdentifier.CLIENTS_LIST,
-        action: ModalAction.OPEN,
-      } as ModalEventArguments);
-    };
-    const openUpload = () => {
-      eventBus.emit(eventChannel.MODAL, {
-        identifier: ModalIdentifier.UPLOAD_INVOICE,
-        action: ModalAction.OPEN,
-      } as ModalEventArguments);
-    };
     return {
       action: {
-        sellers: openSellers,
-        clients: openClients,
-        upload: openUpload,
+        sellers: openSellersModal,
+        clients: openClientsModal,
+        upload: openUploadModal,
       },
       Entity,
       ModalIdentifier,

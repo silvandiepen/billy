@@ -44,5 +44,3 @@ export default defineComponent({
   </Preview>
   <Toolbar />
 </template>
-
-<style lang="scss" src="./style/app.scss"></style>

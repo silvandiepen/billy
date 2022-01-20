@@ -1,4 +1,4 @@
-// // @import "@sil/themer/use";
+// // // @import "@sil/themer/use";
 
 @import "@sil/themer/app";
 
@@ -54,18 +54,18 @@ h6,
   & + h4,
   & + h5,
   & + h6,
-  & + .form-field {
+  & + .form-field,
+  & + .button {
     margin-top: 1em;
   }
 }
 
-.label {
+.id-label {
   @include property(
     (
-      background-color: foreground75,
-      border: 1px solid variable(foreground50),
-      color: foreground75Text,
-      font-weight: bold,
+      background-color: foreground,
+      border: 1px solid variable(foreground90),
+      color: foreground75,
       display: inline-block,
       padding: 0.25em 0.5em,
       border-radius: borderRadius,
@@ -114,5 +114,26 @@ hr {
   }
   @media print {
     display: none;
+  }
+}
+
+.data-list {
+  dt {
+    display: block;
+    font-weight: block;
+    opacity: 0.5;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    font-weight: bold;
+    & + dd {
+      margin-top: 0.25em;
+    }
+  }
+  dd {
+    display: block;
+  }
+
+  & + & {
+    margin-top: 1em;
   }
 }

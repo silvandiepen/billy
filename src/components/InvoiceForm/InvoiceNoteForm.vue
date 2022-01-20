@@ -1,19 +1,34 @@
 <template>
   <component :is="tag" :class="style.bem()">
-    <Knop
+    <UIButton
       icon="delete"
+      :size="ButtonSize.SMALL"
       :type="ButtonType.ICON"
       :class="style.bem('delete')"
       @click="actions.removeNote(item.id)"
     />
-
-    <FormText :label="t('label.title')" v-model="item.title" />
-    <FormTextArea :label="t('label.description')" v-model="item.description" />
+    <div
+      :class="style.bem('preview')"
+      v-if="!isEditting"
+      @click="isEditting = !isEditting"
+    >
+      <strong>{{ item.title }}</strong
+      ><br />
+      <p>{{ item.description }}</p>
+    </div>
+    <div :class="style.bem('form')" v-if="isEditting">
+      <FormText :label="t('label.title')" v-model="item.title" />
+      <FormTextArea
+        :label="t('label.description')"
+        v-model="item.description"
+      />
+      <UIButton @click="isEditting = !isEditting">{{ t("done") }}</UIButton>
+    </div>
   </component>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from "vue";
+import { defineComponent, PropType, computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
@@ -21,6 +36,7 @@ import { InvoiceNote } from "../Invoice";
 
 import {
   ButtonType,
+  ButtonSize,
   ButtonComponent,
   FormTextComponent,
   FormNumberComponent,
@@ -31,7 +47,7 @@ import { getInvoice, removeNote } from "../../composables/state";
 
 export default defineComponent({
   components: {
-    Knop: ButtonComponent,
+    UIButton: ButtonComponent,
     FormText: FormTextComponent,
     FormNumber: FormNumberComponent,
     FormTextArea: FormTextAreaComponent,
@@ -46,9 +62,16 @@ export default defineComponent({
       default: "div",
     },
   },
-  setup() {
+  setup(props) {
     const { t } = useI18n({});
     const style = new Style("invoice-form-note");
+    const isEditting = ref(false);
+
+    onMounted(() => {
+      if (props.item.title == "" && props.item.description == "") {
+        isEditting.value = true;
+      }
+    });
 
     const invoice = computed(() => {
       return getInvoice();
@@ -58,10 +81,12 @@ export default defineComponent({
       style,
       t,
       ButtonType,
+      ButtonSize,
       actions: {
         removeNote,
       },
       invoice,
+      isEditting,
     };
   },
 });
@@ -73,6 +98,11 @@ export default defineComponent({
     right: 0;
     top: 0;
     z-index: 2;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+  }
+  &__preview {
+    @include displayBlock();
   }
 }
 </style>

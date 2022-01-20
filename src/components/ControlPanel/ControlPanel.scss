@@ -1,6 +1,16 @@
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 
 .control-panel {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background-color: variable(foreground);
+    border-bottom: 1px solid variable(foreground75);
+  }
   &__subheader {
     color: variable(primary);
     // padding: 1em;
@@ -38,6 +48,9 @@
     }
   }
   &__invoices {
-    padding: variable(space);
+    margin-top: variable(space);
+  }
+  &__main {
+    // border: 2px solid green;
   }
 }

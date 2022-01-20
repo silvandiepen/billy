@@ -19,6 +19,7 @@ import {
   InvoiceItemFormComponent,
   InvoiceEntityFormComponent,
   InvoiceNoteFormComponent,
+  InvoiceSettingsFormComponent,
 } from ".";
 
 import { InvoiceItemComponent, InvoiceEntityComponent } from "../Invoice";
@@ -39,19 +40,16 @@ import { loadClients, Entity } from "../Entity";
 
 export default defineComponent({
   components: {
+    UIButton: ButtonComponent,
+    UIButtonBar: ButtonBarComponent,
+    UIButtonGroup: ButtonGroupComponent,
+    UIFormTextArea: FormTextAreaComponent,
     InvoiceItem: InvoiceItemComponent,
-    Knop: ButtonComponent,
-    Knoppen: ButtonGroupComponent,
-    KnoppenBar: ButtonBarComponent,
-    FormText: FormTextComponent,
-    FormSelect: FormSelectComponent,
-    FormNumber: FormNumberComponent,
-    FormTextArea: FormTextAreaComponent,
     InvoiceItemForm: InvoiceItemFormComponent,
     InvoiceNoteForm: InvoiceNoteFormComponent,
+    InvoiceSettingsForm: InvoiceSettingsFormComponent,
     InvoiceEntityForm: InvoiceEntityFormComponent,
     InvoiceEntity: InvoiceEntityComponent,
-    Modal: ModalComponent,
     Entities: EntitiesComponent,
   },
   setup() {
@@ -61,11 +59,6 @@ export default defineComponent({
     onMounted(() => {
       loadClients();
     });
-
-    const currencyOptions = [
-      { value: "EUR", label: t("currency.eur") },
-      { value: "USD", label: t("currency.usd") },
-    ];
 
     const invoice = computed(() => {
       return getInvoice();
@@ -84,10 +77,26 @@ export default defineComponent({
       downloadFile(fileName, fileData);
     };
 
+    const showExport = computed(() => {
+      return true;
+    });
+    const showSave = computed(() => {
+      return true;
+    });
+    const showActions = computed(() => {
+      return false;
+      // return showExport || showSave;
+    });
+
     return {
       t,
       style,
       invoice,
+      show: {
+        actions: showActions,
+        export: showExport,
+        save: showSave,
+      },
       actions: {
         newEntry,
         saveInvoice,
@@ -97,7 +106,6 @@ export default defineComponent({
       Entity,
       ModalIdentifier,
       savedInvoices,
-      currencyOptions,
       ButtonType,
       ButtonIcon,
       ButtonAlign,

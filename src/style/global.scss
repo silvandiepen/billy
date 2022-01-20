@@ -1,0 +1,25 @@
+@import "./theme.scss";
+@import "@sil/themer/use";
+
+@mixin displayBlock {
+  position: relative;
+  background-color: variable(foreground90);
+  color: variable(foreground90Text);
+  padding: variable(space);
+  border-radius: variable(borderRadius);
+
+  .id-label {
+    position: absolute;
+    top: 0;
+    left: variable(space);
+    transform: translateY(-50%);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: variable(secondary);
+    .label {
+      background-color: variable(secondary75);
+    }
+  }
+}

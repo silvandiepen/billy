@@ -1,7 +1,7 @@
 import { Style } from "@sil/tools";
 import { defineComponent, ref, computed, watchEffect } from "vue";
 
-import { useInputValidator, minLength, maxLength } from "../form.helpers";
+import { useInputValidator, minLength, maxLength } from "../Form.helpers";
 import FormErrors from "../error/FormError.vue";
 
 export default defineComponent({

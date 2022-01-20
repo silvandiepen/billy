@@ -1,27 +1,34 @@
 <div :class="style.bem()">
-  <section :class="style.bem('title')">
-    <Knop
-      :type="ButtonType.ICON"
-      :icon="ButtonIcon.ARROW_LEFT"
-      @click="goBack()"
-    />
-    <h3>{{ sidebarTitle }}</h3>
-    <Knop
-      v-if="showNext"
-      :type="ButtonType.ICON"
-      :icon="ButtonIcon.ARROW_RIGHT"
-      @click="editForm"
-    />
-  </section>
+  <header :class="style.bem('header')">
+    <section :class="style.bem('title')">
+      <Knop
+        :type="ButtonType.ICON"
+        :icon="ButtonIcon.ARROW_LEFT"
+        @click="goBack()"
+      />
+      <h3>{{ sidebarTitle }}</h3>
+      <Knop
+        v-if="showNext"
+        :type="ButtonType.ICON"
+        :icon="ButtonIcon.ARROW_RIGHT"
+        @click="editForm"
+      />
+    </section>
+  </header>
 
-  <div v-if="show=='start'">
+  <main :class="style.bem('main')" v-if="show=='start'">
     <section :class="style.bem('section')">
       <KnoppenGroup :direction="ButtonDirection.COLUMN">
-        <Knop :icon="ButtonIcon.NEW" @click="showForm"
+        <Knop :icon="ButtonIcon.NEW" @click="showForm" :size="ButtonSize.LARGE"
           >{{t('action.new-invoice')}}</Knop
         >
-        <Knop :icon="ButtonIcon.EDIT" @click="editForm" v-if="hasInvoice"
-          >Continue {{invoiceName}}</Knop
+        <Knop
+          :size="ButtonSize.LARGE"
+          :icon="ButtonIcon.EDIT"
+          @click="editForm"
+          v-if="hasInvoice"
+          type="secondary"
+          >{{invoiceName}}</Knop
         >
       </KnoppenGroup>
     </section>
@@ -30,7 +37,11 @@
         {{ t('saved-invoice', savedInvoices.length)}}
       </h3>
       <div :class="style.bem('invoices')">
-        <InvoiceItem v-for="invoice in savedInvoices" :invoice="invoice" />
+        <InvoiceItem
+          @click="editForm"
+          v-for="invoice in savedInvoices"
+          :invoice="invoice"
+        />
       </div>
     </section>
     <!-- <section :class="style.bem('section')">
@@ -43,7 +54,9 @@
         >
       </KnoppenGroup>
     </section> -->
-  </div>
+  </main>
 
-  <InvoiceForm v-if="show == 'form'" />
+  <main :class="style.bem('main')" v-if="show=='form'">
+    <InvoiceForm />
+  </main>
 </div>

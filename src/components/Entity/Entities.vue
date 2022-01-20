@@ -6,6 +6,7 @@
         :class="style.bem('item')"
         v-for="(data, index) in entities"
         :key="index"
+        :entity="entity"
         :entityData="data"
         tag="li"
       />
@@ -69,7 +70,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 
 .entities {
   background-color: variable(foreground);

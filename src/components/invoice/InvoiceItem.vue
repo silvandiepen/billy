@@ -53,17 +53,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "@sil/themer/use";
-
 .invoice-item {
-  border-radius: variable(borderRadius);
-  background-color: variable(foreground75);
-  padding: calc(var(--space) / 2);
-  margin: 0 calc(var(--space) / 2 * -1);
+  @include displayBlock();
 
-  &:hover {
-    cursor: pointer;
-    background-color: variable(primary);
+  & + & {
+    margin-top: variable(space);
   }
 }
 </style>

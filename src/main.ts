@@ -3,7 +3,7 @@ import { createI18n } from "vue-i18n";
 import { en, nl } from "./keys";
 import { eventBus, eventChannel, store } from "./composables";
 
-// import "./style/app.scss";
+import "./style/app.scss";
 
 // call with I18n option
 const i18n = createI18n({

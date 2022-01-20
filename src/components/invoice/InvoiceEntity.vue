@@ -1,5 +1,8 @@
 <template>
-  <div :class="style.bem()">
+  <div :class="[style.bem(), isForm && style.bem('', 'is-form')]">
+    <div class="id-label">
+      {{ entityData.id }}
+    </div>
     <div :class="style.bem('company-name')" v-if="entityData.companyName">
       <strong>{{ entityData.companyName }}</strong>
     </div>
@@ -105,6 +108,10 @@ export default defineComponent({
       default: "",
       required: true,
     },
+    isForm: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const entityData = computed<InvoiceEntity>(() => {
@@ -113,7 +120,7 @@ export default defineComponent({
         : getInvoiceSeller();
     });
 
-    const style = new Style("client-entity");
+    const style = new Style("invoice-entity");
 
     let format = {
       en: [
@@ -148,3 +155,16 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss">
+.invoice-entity {
+  .id-label {
+    display: none;
+  }
+  &--is-form {
+    .id-label {
+      display: block;
+    }
+    @include displayBlock();
+  }
+}
+</style>

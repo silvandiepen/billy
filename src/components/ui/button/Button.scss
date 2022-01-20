@@ -1,4 +1,4 @@
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 
 .button {
   $block: &;
@@ -49,7 +49,12 @@
   &--ghost {
     &#{$block}--primary {
       background-color: transparent;
-      color: var(--primary);
+      color: variable(primary);
+      box-shadow: 0 0 0 1px variable(primary) inset;
+      &:hover {
+        background-color: variable(primary);
+        color: variable(primaryText);
+      }
     }
   }
   &--icon-only {
@@ -73,6 +78,14 @@
         color: secondaryText,
       )
     );
+    &:hover {
+      @include property(
+        (
+          background-color: secondary75,
+          color: secondary75Text,
+        )
+      );
+    }
   }
 
   &--has-icon {

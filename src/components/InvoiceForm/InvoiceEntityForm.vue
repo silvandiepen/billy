@@ -1,59 +1,99 @@
 <template>
   <component :is="tag" :class="style.bem()">
+    <header :class="style.bem('header')">
+      <div :class="style.bem('header-container')">
+        <h3 :class="style.bem('subheader')">{{ t(entity) }}</h3>
+        <div :class="style.bem('actions')">
+          <UIButtonGroup>
+            <UIButton
+              @click="actions.update"
+              v-if="showUpdate"
+              :size="ButtonSize.SMALL"
+              :type="ButtonType.GHOST"
+            >
+              Update
+            </UIButton>
+            <UIButton
+              @click="actions.add"
+              v-if="showAdd"
+              :size="ButtonSize.SMALL"
+              :type="ButtonType.GHOST"
+            >
+              Save</UIButton
+            >
+            <UIButton
+              @click="actions.addNew"
+              v-if="showAddNew"
+              :size="ButtonSize.SMALL"
+              :type="ButtonType.GHOST"
+            >
+              Save as New</UIButton
+            >
+            <UIButton
+              @click="actions.pickEntity"
+              :size="ButtonSize.SMALL"
+              :type="ButtonType.GHOST"
+            >
+              {{ t("load") }} {{ t(entity) }}</UIButton
+            >
+          </UIButtonGroup>
+        </div>
+      </div>
+    </header>
     <div :class="style.bem('view')" v-if="!isEditting">
-      <InvoiceEntityComponent @click="isEditting = true" :entity="entity" />
+      <InvoiceEntityComponent
+        :isForm="true"
+        @click="isEditting = true"
+        :entity="entity"
+      />
     </div>
     <div :class="style.bem('form')" v-if="isEditting">
-      <FormText
+      <UIFormText
         :label="t('label.companyName')"
         v-model="entityData.companyName"
       />
-      <FormText :label="t('label.firstName')" v-model="entityData.firstName" />
-      <FormText :label="t('label.lastName')" v-model="entityData.lastName" />
-      <FormText
+      <UIFormText
+        :label="t('label.firstName')"
+        v-model="entityData.firstName"
+      />
+      <UIFormText :label="t('label.lastName')" v-model="entityData.lastName" />
+      <UIFormText
         v-if="entityData.companyName"
         :label="t('label.taxId')"
         v-model="entityData.taxId"
       />
       <hr />
-      <FormText :label="t('label.street')" v-model="entityData.street" />
-      <FormText :label="t('label.number')" v-model="entityData.number" />
-      <FormText
+      <UIFormText :label="t('label.street')" v-model="entityData.street" />
+      <UIFormText :label="t('label.number')" v-model="entityData.number" />
+      <UIFormText
         :label="t('label.additional')"
         v-model="entityData.additional"
       />
-      <FormText
+      <UIFormText
         :label="t('label.postalcode')"
         v-model="entityData.postalcode"
       />
-      <FormText :label="t('label.city')" v-model="entityData.city" />
-      <FormText :label="t('label.country')" v-model="entityData.country" />
+      <UIFormText :label="t('label.city')" v-model="entityData.city" />
+      <UIFormText :label="t('label.country')" v-model="entityData.country" />
       <hr />
-      <FormText :label="t('label.phone')" v-model="entityData.phone" />
-      <FormText :label="t('label.email')" v-model="entityData.email" />
-      <FormText :label="t('label.website')" v-model="entityData.website" />
+      <UIFormText :label="t('label.phone')" v-model="entityData.phone" />
+      <UIFormText :label="t('label.email')" v-model="entityData.email" />
+      <UIFormText :label="t('label.website')" v-model="entityData.website" />
       <hr />
-      <FormText
+      <UIFormText
         :label="t('label.bankAccount')"
         v-model="entityData.bank.account"
       />
-      <FormText :label="t('label.bankName')" v-model="entityData.bank.name" />
-      <FormText :label="t('label.bankSwift')" v-model="entityData.bank.swift" />
-      <FormText
+      <UIFormText :label="t('label.bankName')" v-model="entityData.bank.name" />
+      <UIFormText
+        :label="t('label.bankSwift')"
+        v-model="entityData.bank.swift"
+      />
+      <UIFormText
         :label="t('label.bankBeneficiary')"
         v-model="entityData.bank.beneficiary"
       />
-      <KnoppenGroup> </KnoppenGroup>
-    </div>
-    <div :class="style.bem('actions')">
-      <KnoppenGroup>
-        <Knop @click="isEditting = !isEditting">
-          {{ isEditting ? "Stop Edit" : "Edit" }}
-        </Knop>
-        <Knop @click="actions.update" v-if="showUpdate"> Update </Knop>
-        <Knop @click="actions.add" v-if="showAdd"> Save</Knop>
-        <Knop @click="actions.addNew" v-if="showAddNew"> Save as New</Knop>
-      </KnoppenGroup>
+      <UIButton @click="isEditting = !isEditting">{{ t("done") }}</UIButton>
     </div>
   </component>
 </template>
@@ -80,16 +120,19 @@ import {
   ButtonGroupComponent,
   FormTextComponent,
   FormNumberComponent,
+  ButtonSize,
+  ButtonType,
 } from "../ui";
 
 import { InvoiceEntityComponent } from "../Invoice";
+import { openEntityModal } from "../../services";
 
 export default defineComponent({
   components: {
-    FormText: FormTextComponent,
-    FormNumber: FormNumberComponent,
-    Knop: ButtonComponent,
-    KnoppenGroup: ButtonGroupComponent,
+    UIFormText: FormTextComponent,
+    UIFormNumber: FormNumberComponent,
+    UIButton: ButtonComponent,
+    UIButtonGroup: ButtonGroupComponent,
     InvoiceEntityComponent,
   },
   props: {
@@ -155,6 +198,11 @@ export default defineComponent({
       addAsNewEntity(props.entity);
     };
 
+    const pickEntity = () => {
+      console.log(props.entity);
+      openEntityModal(props.entity);
+    };
+
     return {
       style,
       t,
@@ -166,8 +214,45 @@ export default defineComponent({
         update,
         add,
         addNew,
+        pickEntity,
       },
+      ButtonSize,
+      ButtonType,
     };
   },
 });
 </script>
+<style lang="scss">
+.invoice-form-entity {
+  &__header {
+    color: variable(primary);
+
+    position: relative;
+    width: calc(100% + #{variable(space)});
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      overflow: scroll;
+      gap: variable(space);
+      padding: variable(space) variable(space) variable(space) 0;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      z-index: 10;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: linear-gradient(
+        to right,
+        transparent,
+        #{variable(foreground)}
+      );
+      width: #{variable(space)};
+      height: 100%;
+    }
+  }
+}
+</style>

@@ -18,6 +18,11 @@ interface keys {
   footer: string;
   logo: string;
 
+  load: string;
+  save: string;
+  export: string;
+  done: string;
+
   "currency.eur": string;
   "currency.usd": string;
 
@@ -25,6 +30,7 @@ interface keys {
   "language.nl": string;
 
   "action.add-item": string;
+  "action.add-note": string;
   "action.show-clients": string;
   "action.load-clients": string;
   "action.save": string;
@@ -56,6 +62,9 @@ interface keys {
   "label.bankAccount": string;
   "label.bankSwift": string;
   "label.bankBeneficiary": string;
+  "label.logo": string;
+  "label.tax": string;
+  "label.currency": string;
 }
 
 export const en: keys = {
@@ -78,6 +87,11 @@ export const en: keys = {
   footer: "Footer",
   logo: "Logo",
 
+  load: "Load",
+  save: "Save",
+  export: "Export",
+  done: "Done",
+
   "currency.eur": "Euro",
   "currency.usd": "USD",
 
@@ -85,6 +99,7 @@ export const en: keys = {
   "language.nl": "Dutch",
 
   "action.add-item": "Add Item",
+  "action.add-note": "Add Note",
   "action.show-clients": "Show clients",
   "action.load-clients": "Load clients",
   "action.save": "Save",
@@ -116,6 +131,9 @@ export const en: keys = {
   "label.bankAccount": "Bank Account",
   "label.bankSwift": "BIC/Swift",
   "label.bankBeneficiary": "Beneficiary",
+  "label.logo": "Logo",
+  "label.tax": "Tax",
+  "label.currency": "Currency",
 };
 export const nl: keys = {
   invoice: "Factuur",
@@ -137,6 +155,11 @@ export const nl: keys = {
   footer: "Footer",
   logo: "Logo",
 
+  load: "Laad",
+  save: "Opslaan",
+  export: "Exporteren",
+  done: "Klaar",
+
   "currency.eur": "Euro",
   "currency.usd": "USD",
 
@@ -144,6 +167,7 @@ export const nl: keys = {
   "language.nl": "Nederlands",
 
   "action.add-item": "Item toevoegen",
+  "action.add-note": "Notitie toevoegen",
   "action.show-clients": "Show klanten",
   "action.load-clients": "Laad klanten",
   "action.save": "Opslaan",
@@ -175,4 +199,7 @@ export const nl: keys = {
   "label.bankAccount": "Bank Account",
   "label.bankSwift": "BIC/Swift",
   "label.bankBeneficiary": "Beneficiary",
+  "label.logo": "Logo",
+  "label.tax": "Btw",
+  "label.currency": "Valuta",
 };
