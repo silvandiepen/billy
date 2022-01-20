@@ -18,7 +18,7 @@ export const getInvoiceNumber = (number: Number) => {
 
 export const getInvoiceSum = computed(
   () =>
-    getInvoice().current?.data.reduce(
+    getInvoice.value.current?.data.reduce(
       (acc: number, cur: InvoiceItem) =>
         acc + discount(cur.amount * cur.price, cur.discount ? cur.discount : 0),
       0

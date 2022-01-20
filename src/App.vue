@@ -22,7 +22,7 @@ export default defineComponent({
   },
   setup() {
     const invoice = computed(() => {
-      return getInvoice();
+      return getInvoice.value;
     });
     const debug = ref(false);
     return {

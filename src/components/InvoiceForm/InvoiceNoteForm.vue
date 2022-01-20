@@ -14,7 +14,7 @@
     >
       <strong>{{ item.title }}</strong
       ><br />
-      <p>{{ item.description }}</p>
+      <div v-html="description"></div>
     </div>
     <div :class="style.bem('form')" v-if="isEditting">
       <FormText :label="t('label.title')" v-model="item.title" />
@@ -44,6 +44,7 @@ import {
 } from "../ui";
 
 import { getInvoice, removeNote } from "../../composables/state";
+import { renderMarkdown } from "../../services";
 
 export default defineComponent({
   components: {
@@ -73,19 +74,20 @@ export default defineComponent({
       }
     });
 
-    const invoice = computed(() => {
-      return getInvoice();
+    const description = computed(() => {
+      return renderMarkdown(props.item.description);
     });
 
     return {
       style,
       t,
+      description,
       ButtonType,
       ButtonSize,
       actions: {
         removeNote,
       },
-      invoice,
+      invoice: getInvoice.value,
       isEditting,
     };
   },

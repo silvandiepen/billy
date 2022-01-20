@@ -10,11 +10,14 @@
     "@sil/themer": "^0.1.8",
     "@sil/tools": "^0.1.9",
     "date-fns": "^2.27.0",
+    "markdown-it": "^12.3.2",
     "mitt": "^3.0.0",
+    "mount-vue-component": "^0.10.1",
     "vue": "^3.2.16",
     "vue-i18n": "^9.2.0-beta.23"
   },
   "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
     "@vitejs/plugin-vue": "^1.9.3",
     "sass": "^1.44.0",
     "typescript": "^4.5.2",

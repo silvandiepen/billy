@@ -29,7 +29,7 @@
     border-radius: variable(borderRadius);
     // margin: 0 -1em;
     & + & {
-      margin-top: 2em;
+      margin-top: variable(space);
     }
   }
 }

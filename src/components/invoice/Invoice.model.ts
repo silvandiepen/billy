@@ -53,6 +53,8 @@ export interface Invoice {
     number: number;
     data: InvoiceItem[];
     total: number;
+    created: Date;
+    lastUpdate: Date;
   };
   settings: {
     logo: string;
@@ -101,6 +103,8 @@ export const defaultInvoice: Invoice = {
     number: 0,
     data: [],
     total: 0,
+    created: today,
+    lastUpdate: today,
   },
   settings: {
     logo: "",

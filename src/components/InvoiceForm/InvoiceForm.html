@@ -72,13 +72,16 @@
 
 <section
   :class="[style.bem('section'),style.bem('actions')]"
-  v-if="show.actions"
+  v-if="showActions"
 >
   <UIButtonGroup>
-    <UIButton @click="actions.saveInvoice" v-if="show.save" icon="arrow-down">
+    <UIButton @click="actions.saveInvoice" v-if="showSave" icon="arrow-down">
       {{t('save')}}
     </UIButton>
-    <UIButton @click="actions.export" v-if="show.export" icon="arrow-down"
+    <UIButton @click="actions.saveInvoice" v-if="showUpdate" icon="arrow-down">
+      {{t('save')}}
+    </UIButton>
+    <UIButton @click="actions.export" v-if="showExport" icon="arrow-down"
       >{{t('export')}}</UIButton
     >
   </UIButtonGroup>

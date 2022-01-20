@@ -2,7 +2,7 @@ import { defineComponent, computed, ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
-import { getInvoiceID, getInvoice } from "../../composables/state";
+import { getInvoiceID, getInvoice as invoice } from "../../composables/state";
 import {
   discount,
   getInvoiceNumber,
@@ -17,6 +17,8 @@ import InvoiceEntity from "./InvoiceEntity.vue";
 import { Entity } from "../Entity";
 import { Replacers, replaceStrings } from "../../composables";
 
+import { renderMarkdown } from "../../services";
+
 export default defineComponent({
   components: {
     InvoiceEntity,
@@ -27,9 +29,6 @@ export default defineComponent({
 
     const style = new Style("invoice");
 
-    const invoice = computed(() => {
-      return getInvoice();
-    });
     const currentData = computed(() =>
       invoice.value.current.data.filter(
         (item) => item.title || item.description
@@ -52,11 +51,12 @@ export default defineComponent({
         "bank.beneficiary": invoice.value.seller.bank.beneficiary,
         email: invoice.value.seller.email,
         phone: invoice.value.seller.phone,
-        total: `${total.value}`,
+        total: formatNumber(total.value),
         "invoice.number": invoiceId.value,
       })
     );
-    const templator = (str: string) => replaceStrings(str, replaceValues.value);
+    const templator = (str: string) =>
+      renderMarkdown(replaceStrings(str, replaceValues.value));
 
     return {
       t,

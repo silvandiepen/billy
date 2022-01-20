@@ -22,4 +22,5 @@ export enum ModalIdentifier {
   SELLERS_LIST = "[Modal] SellersList",
   UPLOAD_INVOICE = "[Modal] UploadInvoice",
   DEBUG = "[Modal] Debug",
+  ALERT = "[Modal] Alert",
 }

@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, computed } from "vue";
+import { defineComponent, onMounted, computed, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
@@ -11,6 +11,8 @@ import {
   getInvoiceID,
   getCurrentInvoiceData,
   getInvoice,
+  getInvoiceStatus,
+  invoiceStatus,
 } from "../../composables/state";
 import { ModalIdentifier } from "../ui/Modal/Modal.model";
 import { ButtonType, ButtonAlign, ButtonIcon } from "../ui/Button/Button.model";
@@ -29,11 +31,7 @@ import {
   ButtonComponent,
   ButtonGroupComponent,
   ButtonBarComponent,
-  FormTextComponent,
-  FormSelectComponent,
-  FormNumberComponent,
   FormTextAreaComponent,
-  ModalComponent,
 } from "../ui";
 
 import { loadClients, Entity } from "../Entity";
@@ -60,10 +58,6 @@ export default defineComponent({
       loadClients();
     });
 
-    const invoice = computed(() => {
-      return getInvoice();
-    });
-
     /*
 
       Actions
@@ -80,23 +74,34 @@ export default defineComponent({
     const showExport = computed(() => {
       return true;
     });
-    const showSave = computed(() => {
-      return true;
+
+    watch(
+      () => invoiceStatus.isChanged,
+      () => {
+        console.log("state changed - in component", showSave.value);
+      }
+    );
+
+    const showUpdate = computed(() => {
+      return invoiceStatus.isChanged;
     });
+
+    const showSave = computed(() => {
+      return invoiceStatus.isNew;
+    });
+
     const showActions = computed(() => {
-      return false;
-      // return showExport || showSave;
+      return showExport || showSave;
     });
 
     return {
       t,
       style,
-      invoice,
-      show: {
-        actions: showActions,
-        export: showExport,
-        save: showSave,
-      },
+      invoice: getInvoice.value,
+      showActions,
+      showExport,
+      showSave,
+      showUpdate,
       actions: {
         newEntry,
         saveInvoice,

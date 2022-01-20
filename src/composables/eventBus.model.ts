@@ -3,4 +3,5 @@ export enum eventChannel {
   GET_LANGUAGE = "[BILLY] get-language",
   MODAL = "[BILLY] modal",
   SIDEPANEL = "[BILLY] sidepanel",
+  ALERT = "[BILLY] alert",
 }

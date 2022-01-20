@@ -60,7 +60,6 @@ import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
 import { InvoiceNote } from "../Invoice";
-
 import {
   ButtonType,
   ButtonComponent,
@@ -69,7 +68,6 @@ import {
   FormTextAreaComponent,
   FormSelectComponent,
 } from "../ui";
-
 import { getInvoice, removeNote } from "../../composables/state";
 
 export default defineComponent({
@@ -95,10 +93,6 @@ export default defineComponent({
     const style = new Style("invoice-form-settings");
     const isEditting = ref(false);
 
-    const invoice = computed(() => {
-      return getInvoice();
-    });
-
     const currencyOptions = [
       { value: "EUR", label: t("currency.eur") },
       { value: "USD", label: t("currency.usd") },
@@ -111,8 +105,9 @@ export default defineComponent({
       actions: {
         removeNote,
       },
-      invoice,
+      invoice: getInvoice.value,
       isEditting,
+      currencyOptions,
     };
   },
 });

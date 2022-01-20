@@ -1,0 +1,14 @@
+<UIModal :identifier="ModalIdentifier.ALERT">
+  <div class="alert">
+    <h3>{{content.title}}</h3>
+    <template v-html="content.description"></template>
+    <UIButtonGroup>
+      <UIButton
+        v-for="button,index in content.buttons"
+        :key="index"
+        @click="invokeAction(button.action)"
+        >{{button.label}}</UIButton
+      >
+    </UIButtonGroup>
+  </div>
+</UIModal>

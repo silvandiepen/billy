@@ -6,7 +6,9 @@
         ><br />
         {{ invoiceName }}
         {{ formatDate(invoice.current.date) }}<br />
-        {{ formatNumber(invoice.current.total, invoice.settings.currency) }}
+        {{ formatNumber(invoice.current.total, invoice.settings.currency)
+        }}<br />
+        update: {{ formatDate(invoice.current.lastUpdate) }}
       </p>
     </div>
   </div>

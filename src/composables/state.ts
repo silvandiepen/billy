@@ -7,7 +7,6 @@ import {
   InvoiceEntity,
   InvoiceItem,
   InvoiceNote,
-  getInvoiceTotal,
   getInvoiceNumber,
   InvoiceCurrency,
 } from "../components/Invoice";
@@ -32,6 +31,27 @@ const getState = (): Invoice => {
 const state: State = reactive({
   invoice: getState(),
 });
+
+export const invoiceStatus = reactive({
+  isNew: false,
+  isChanged: false,
+});
+
+export const getInvoiceStatus = computed(() => {
+  return invoiceStatus;
+});
+
+watch(
+  () => state.invoice,
+  () => {
+    invoiceStatus.isChanged = isInvoiceChanged();
+    invoiceStatus.isNew = isInvoiceNew();
+    console.log("state has changed");
+    console.log(invoiceStatus);
+  },
+  { deep: true }
+);
+
 /*
 
   Keep the state
@@ -41,7 +61,6 @@ const state: State = reactive({
 watch(
   () => state.invoice,
   () => {
-    console.log("Saved state");
     saveState();
   },
   { deep: true }
@@ -62,8 +81,6 @@ export const resetState = () => {
   */
 
 export const newEntry = (): void => {
-  console.log("adding new entry");
-
   const entry: InvoiceItem = {
     id: newId(),
     title: "",
@@ -76,8 +93,6 @@ export const newEntry = (): void => {
   state.invoice.current.data.push(entry);
 };
 export const newNote = (): void => {
-  console.log("adding new note");
-
   const note: InvoiceNote = {
     id: newId(),
     title: "",
@@ -116,9 +131,9 @@ export const getInvoiceSeller = (): InvoiceEntity => {
 
   */
 
-export const getInvoice = (): State["invoice"] => {
+export const getInvoice = computed<State["invoice"]>(() => {
   return state.invoice;
-};
+});
 
 export const getTax = (): number => {
   return state.invoice.settings.tax;
@@ -200,24 +215,61 @@ export const getInvoiceByID = (id: string): Invoice | undefined => {
   const tempInvoices: Invoice[] = savedInvoices.value || [];
   return tempInvoices.find((inv) => inv.current.id == id);
 };
-export const getInvoiceIndexByID = (id: string): number | undefined => {
+export const getInvoiceIndexByID = (id: string): number => {
   const tempInvoices: Invoice[] = savedInvoices.value || [];
-  return tempInvoices.findIndex((inv) => inv.current.id === id);
+
+  const findInvoiceIndex = tempInvoices.findIndex(
+    (inv) => inv.current.id === id
+  );
+  return findInvoiceIndex > -1 ? findInvoiceIndex : -1;
+};
+
+export const isInvoiceNew = (): boolean => {
+  return !invoiceIDExists(state.invoice.current.id);
+};
+
+const setLastUpdate = () => {
+  console.log(state.invoice.current.lastUpdate);
+  state.invoice.current.lastUpdate = new Date();
 };
 
 export const saveInvoice = (): void => {
-  savedInvoices.value.push(getInvoice());
+  setLastUpdate();
+
+  if (invoiceStatus.isNew) {
+    savedInvoices.value.push(getInvoice.value);
+  } else {
+    updateInvoice();
+  }
   saveToLocalStorage();
 };
 
+export const isInvoiceChanged = (): boolean => {
+  if (invoiceStatus.isNew) return false;
+
+  const newData = JSON.stringify(state.invoice);
+  const existingData = JSON.stringify(getInvoiceById(state.invoice.current.id));
+
+  const sameLength = newData.length == existingData.length;
+  const sameString = newData === existingData;
+
+  let isChanged = false;
+  if (!sameLength) isChanged = true;
+  if (!sameString) isChanged = true;
+
+  return isChanged;
+};
+
 export const updateInvoice = (): void => {
-  let currentIndex = getInvoiceIndexByID(getInvoice().current.id);
-  if (currentIndex && currentIndex > -1) {
-    savedInvoices.value[currentIndex] = getInvoice();
-  } else {
-    saveInvoice();
+  setLastUpdate();
+
+  let currentIndex = getInvoiceIndexByID(getInvoice.value.current.id);
+  console.log(currentIndex, getInvoice.value.current.id);
+  if (currentIndex > -1) {
+    console.log("is actually gonna update it");
+    savedInvoices.value[currentIndex] = getInvoice.value;
+    saveToLocalStorage();
   }
-  saveToLocalStorage();
 };
 
 export const saveToLocalStorage = () => {

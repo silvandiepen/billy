@@ -5,7 +5,7 @@
       :size="ButtonSize.SMALL"
       :type="ButtonType.ICON"
       :class="style.bem('delete')"
-      @click="actions.removeEntry(item.id)"
+      @click="actions.removeEntryAlert(item.id)"
     />
 
     <div
@@ -45,10 +45,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref, onMounted } from "vue";
+import {
+  defineComponent,
+  PropType,
+  computed,
+  ref,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
 
+import { createAlert } from "../ui/Alert";
 import { InvoiceItem } from "../Invoice";
 
 import { removeEntry } from "../../composables/state";
@@ -85,15 +93,32 @@ export default defineComponent({
 
     const isEditting = ref(false);
 
-    const invoice = computed(() => {
-      return getInvoice();
-    });
+    let instance: any = null;
 
     onMounted(() => {
+      instance = getCurrentInstance();
+
       if (props.item.title == "" && props.item.description == "") {
         isEditting.value = true;
       }
     });
+
+    const removeEntryAlert = (id: string) => {
+      createAlert(instance, {
+        title: "Are you sure?",
+        description: "You are deleting ",
+        buttons: [
+          {
+            label: "Sure",
+            action: () => removeEntry(id),
+          },
+          {
+            label: "No",
+            action: () => {},
+          },
+        ],
+      });
+    };
 
     return {
       style,
@@ -101,9 +126,9 @@ export default defineComponent({
       ButtonType,
       ButtonSize,
       actions: {
-        removeEntry,
+        removeEntryAlert,
       },
-      invoice,
+      invoice: getInvoice.value,
       isEditting,
     };
   },
