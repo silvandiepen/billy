@@ -23,6 +23,11 @@
   }
 
   // entries
+  &__items {
+    & + .button-group {
+      margin-top: variable(space);
+    }
+  }
   &__item {
     position: relative;
     // padding: 1em;

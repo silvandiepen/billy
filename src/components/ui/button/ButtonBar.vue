@@ -37,8 +37,21 @@ export default defineComponent({
 <style lang="scss">
 .button-bar {
   display: flex;
-  gap: 0.5em;
-  padding: 1em 0;
+  gap: 1px;
+
+  .button {
+    --roundness: calc(#{variable(borderRadius)} * 3);
+    --inner-roundness: #{variable(borderRadius)};
+    border-radius: var(--inner-roundness);
+    &:first-child {
+      border-radius: var(--roundness) var(--inner-roundness)
+        var(--inner-roundness) var(--roundness);
+    }
+    &:last-child {
+      border-radius: var(--inner-roundness) var(--roundness) var(--roundness)
+        var(--inner-roundness);
+    }
+  }
   &--left {
     justify-content: flex-start;
   }

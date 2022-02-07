@@ -1,0 +1,13 @@
+<div :class="mainClasses">
+  <div :class="style.bem('container')">
+    <input
+      :class="style.bem('control')"
+      :placeholder="placeholder"
+      type="date"
+      v-model="input"
+    />
+    <label :class="style.bem('label')">{{ label }}</label>
+  </div>
+
+  <FormErrors :errors="errors" />
+</div>

@@ -1,24 +1,32 @@
 <div class="invoice" v-if="invoice.settings">
   <div :class="style.bem('top')">
-    <header :class="style.bem('header')">
-      <div
-        :class="style.bem('logo')"
-        v-if="invoice.settings?.logo"
-        v-html="invoice.settings?.logo"
-      ></div>
+    <!-- <header :class="style.bem('header')">
       <h3>Invoice #{{getInvoiceNumber(invoice.current.number)}}</h3>
-    </header>
+    </header> -->
 
+    <div
+      :class="style.bem('logo-background')"
+      v-if="invoice.settings?.logo"
+      v-html="invoice.settings?.logo"
+    ></div>
     <section :class="style.bem('client')">
       <InvoiceEntity :entity="Entity.CLIENT" />
     </section>
 
     <section :class="style.bem('seller')">
+      <div
+        :class="style.bem('logo')"
+        v-if="invoice.settings?.logo"
+        v-html="invoice.settings?.logo"
+      ></div>
       <InvoiceEntity :entity="Entity.SELLER" />
     </section>
   </div>
 
   <div :class="style.bem('middle')">
+    <h2 :class="style.bem('title')">
+      {{t('invoice-no')}}<br />{{invoiceNumber}}
+    </h2>
     <section :class="style.bem('data')">
       <ul :class="style.bem('list')">
         <li :class="style.bem('item')" v-for="entry in currentData">
@@ -50,6 +58,9 @@
           </p>
           <span :class="style.bem('item','discount')" v-if="entry.discount">
             - {{entry.discount}}% discount
+          </span>
+          <span :class="style.bem('item','tax')" v-if="entry.tax">
+            - {{t('vat', entry.tax)}}
           </span>
         </li>
       </ul>
@@ -109,7 +120,15 @@
       </dl>
     </section>
     <footer :class="style.bem('footer')" v-if="invoice.settings.footer">
-      <p>{{invoice.settings.footer}}</p>
+      <div
+        :class="style.bem('line')"
+        v-html="templator(invoice.settings.footer)"
+      ></div>
+      <div
+        :class="style.bem('logo')"
+        v-if="invoice.settings?.logo"
+        v-html="invoice.settings?.logo"
+      ></div>
     </footer>
   </div>
 </div>

@@ -101,7 +101,13 @@ export default defineComponent({
     top: 0;
     z-index: 2;
     border-radius: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(50%, -50%) scale(0);
+    transition: transform 0.25s ease-in-out;
+  }
+  &:hover {
+    .invoice-form-note__delete {
+      transform: translate(50%, -50%) scale(1);
+    }
   }
   &__preview {
     @include displayBlock();

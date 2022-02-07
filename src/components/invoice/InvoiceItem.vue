@@ -43,7 +43,10 @@ export default defineComponent({
       setInvoice(props.invoice.current.id);
     };
     return {
-      invoiceNumber: getInvoiceNumber(props.invoice.current.number),
+      invoiceNumber: getInvoiceNumber(
+        props.invoice.current.number,
+        props.invoice.current.date
+      ),
       style,
       formatNumber,
       formatDate,

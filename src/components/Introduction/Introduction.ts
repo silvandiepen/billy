@@ -4,7 +4,7 @@ export default defineComponent({
   setup() {
     const style = new Style("introduction");
     return {
-      bem: style.bem,
+      style,
     };
   },
 });

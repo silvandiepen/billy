@@ -14,12 +14,10 @@
     height: fit-content;
   }
   &__data {
-    margin-top: calc(#{variable(space)} * 2);
     grid-area: data;
     height: fit-content;
   }
   &__totals {
-    margin-top: calc(#{variable(space)} * 2);
     grid-area: total;
     height: fit-content;
   }
@@ -39,8 +37,12 @@
     grid-area: note;
     max-height: fit-content;
   }
+  &__title {
+    grid-area: title;
+  }
 
   &__top {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
@@ -50,11 +52,12 @@
   }
   &__middle {
     display: grid;
+    height: 100%;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-      "data data data data data"
-      "total total total total total";
+      "title title data data data"
+      "x x total total total";
   }
   &__bottom {
     display: grid;
@@ -74,13 +77,79 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  &__logo {
     svg {
       max-width: 2cm;
       max-height: 2cm;
     }
   }
+  &__logo-background {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+    height: 100%;
+    overflow: hidden;
+    svg {
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      transform: scale(1.5) translateX(10%) translateY(0%);
+      path {
+        // fill: variable(primary25);
+        stroke: variable(background);
+        stroke-width: 1px;
+        fill: transparent;
+        // fill: variable(background);
+      }
+    }
+  }
 }
 
+.invoice {
+  &__top {
+    background-color: variable(primary10);
+    padding: 4em;
+  }
+  &__middle {
+    padding: 4em;
+  }
+  &__notes {
+    border-top: 1px solid variable(primary25);
+    padding: 4em;
+  }
+
+  &__footer {
+    position: relative;
+    background-color: variable(foreground);
+    color: variable(foregroundText);
+    overflow: hidden;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .invoice__logo {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      display: block;
+      transform: translateY(-50%);
+      svg {
+        transform: rotate(-45deg);
+        --size: 30em;
+        max-width: var(--size);
+        max-height: var(--size);
+        height: var(--size);
+        width: var(--size);
+      }
+      svg path {
+        fill: variable(primary);
+      }
+    }
+  }
+}
 // Entities
 .invoice {
   &__seller,
@@ -102,13 +171,21 @@
     }
   }
   &__seller {
+    position: relative;
+    z-index: 1;
     text-align: right;
+  }
+
+  &__client {
+    font-size: 1.25em;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 }
 
 // Data
 .invoice {
-  padding: 4em;
   font-size: 0.3cm;
 
   @media print {
@@ -116,7 +193,8 @@
   }
 
   .cell {
-    padding: 0.5em 0;
+    padding: 0;
+    line-height: 3;
   }
 
   &__total,
@@ -126,11 +204,22 @@
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     & + & {
-      border-top: 1px solid variable(background90);
+      // border-style: solid;
+      // border-image-slice: 1;
+      // border-width: 1px 0 0 0;
+      // border-image-source: linear-gradient(
+      //   to right,
+      //   transparent,
+      //   variable(primary25)
+      // );
+      border-top: 1px solid variable(primary25);
     }
   }
   &__item {
-    padding: 1em 0;
+    padding-bottom: 2em;
+    & + .invoice__item {
+      padding-top: 2em;
+    }
     &--title {
       grid-area: title;
       font-size: 1em;
@@ -170,6 +259,7 @@
 
   &__total {
     font-weight: bold;
+
     &:last-child {
       color: variable(primary);
     }
@@ -224,6 +314,6 @@
     }
   }
   &__footer {
-    padding: calc(variable(space) * 2) 0;
+    padding: calc(variable(space) * 2) 4em;
   }
 }

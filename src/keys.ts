@@ -1,5 +1,6 @@
 interface keys {
   invoice: string;
+  "invoice-no": string;
   sum: string;
   vat: string;
   total: string;
@@ -22,6 +23,8 @@ interface keys {
   save: string;
   export: string;
   done: string;
+
+  taxId: string;
 
   "currency.eur": string;
   "currency.usd": string;
@@ -69,6 +72,7 @@ interface keys {
 
 export const en: keys = {
   invoice: "Invoice",
+  "invoice-no": "Invoice No.",
   sum: "Sum",
   vat: "Vat {count}%",
   total: "Total",
@@ -91,6 +95,8 @@ export const en: keys = {
   save: "Save",
   export: "Export",
   done: "Done",
+
+  taxId: "tax ID {msg}",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
@@ -137,6 +143,7 @@ export const en: keys = {
 };
 export const nl: keys = {
   invoice: "Factuur",
+  "invoice-no": "Factuur nr.",
   sum: "Subtotaal",
   vat: "BTW {count}%",
   total: "Totaal",
@@ -159,6 +166,8 @@ export const nl: keys = {
   save: "Opslaan",
   export: "Exporteren",
   done: "Klaar",
+
+  taxId: "BTW nummer {msg}",
 
   "currency.eur": "Euro",
   "currency.usd": "USD",

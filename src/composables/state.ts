@@ -32,6 +32,8 @@ const state: State = reactive({
   invoice: getState(),
 });
 
+const isPristine = ref(true);
+
 export const invoiceStatus = reactive({
   isNew: false,
   isChanged: false,
@@ -62,6 +64,7 @@ watch(
   () => state.invoice,
   () => {
     saveState();
+    isPristine.value = false;
   },
   { deep: true }
 );
@@ -71,6 +74,7 @@ const saveState = () => {
 };
 
 export const resetState = () => {
+  isPristine.value = true;
   state.invoice = defaultInvoice;
 };
 
@@ -131,6 +135,10 @@ export const getInvoiceSeller = (): InvoiceEntity => {
 
   */
 
+export const isPristineInvoice = (): boolean => {
+  return isPristine.value;
+};
+
 export const getInvoice = computed<State["invoice"]>(() => {
   return state.invoice;
 });
@@ -177,7 +185,10 @@ export const setInvoice = (id: string) => {
   }
 };
 export const getInvoiceID = () => {
-  return getInvoiceNumber(state.invoice.current.number);
+  return getInvoiceNumber(
+    state.invoice.current.number,
+    state.invoice.current.date
+  );
 };
 
 export const setInvoiceEntity = (entity: Entity, data: InvoiceEntity) => {
@@ -250,7 +261,10 @@ export const isInvoiceChanged = (): boolean => {
   const newData = JSON.stringify(state.invoice);
   const existingData = JSON.stringify(getInvoiceById(state.invoice.current.id));
 
-  const sameLength = newData.length == existingData.length;
+  if (!newData || !existingData) {
+    return true;
+  }
+  const sameLength = newData.length === existingData.length;
   const sameString = newData === existingData;
 
   let isChanged = false;

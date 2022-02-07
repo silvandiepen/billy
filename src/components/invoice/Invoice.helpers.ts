@@ -1,19 +1,15 @@
 import { computed } from "vue";
-
+import { format, parseISO } from "date-fns";
 import { InvoiceCurrency, InvoiceItem } from "./Invoice.model";
 import { getCurrency, getInvoice, getTax } from "../../composables/state";
 
 export const discount = (value: number, discount: number) =>
   value - (value / 100) * discount;
 
-export const getInvoiceNumber = (number: Number) => {
-  // console.log(number);
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, "0");
-  const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  const yyyy = today.getFullYear();
+export const getInvoiceNumber = (number: Number, date: Date) => {
+  const dateStr = format(parseISO(`${date}`), "yyyyMMdd");
 
-  return `${yyyy}${mm}${dd}-${`${number}`.padStart(3, "0")}`;
+  return `${dateStr}-${`${number}`.padStart(3, "0")}`;
 };
 
 export const getInvoiceSum = computed(

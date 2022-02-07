@@ -43,6 +43,10 @@
       {{ entityData.country }}
     </div>
 
+    <div :class="style.bem('tax-id')" v-if="entityData.taxId">
+      {{ t("taxId", { msg: entityData.taxId }) }}
+    </div>
+
     <!-- <br
       v-if="
         entity.bankName ||
@@ -95,7 +99,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
 import { Style } from "@sil/tools";
-
+import { useI18n } from "vue-i18n";
 import { Entity } from "../Entity";
 
 import { getInvoiceClient, getInvoiceSeller } from "../../composables/state";
@@ -114,6 +118,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t } = useI18n({});
+
     const entityData = computed<InvoiceEntity>(() => {
       return props.entity === Entity.CLIENT
         ? getInvoiceClient()
@@ -151,7 +157,7 @@ export default defineComponent({
       ],
     };
 
-    return { style, format, entityData };
+    return { t, style, format, entityData };
   },
 });
 </script>

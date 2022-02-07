@@ -93,10 +93,10 @@ export default defineComponent({
 
     const isEditting = ref(false);
 
-    let instance: any = null;
+    // let instance: any = null;
 
     onMounted(() => {
-      instance = getCurrentInstance();
+      // instance = getCurrentInstance();
 
       if (props.item.title == "" && props.item.description == "") {
         isEditting.value = true;
@@ -146,7 +146,13 @@ export default defineComponent({
     top: 0;
     z-index: 2;
     border-radius: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(50%, -50%) scale(0);
+    transition: transform 0.25s ease-in-out;
+  }
+  &:hover {
+    .invoice-form-item__delete {
+      transform: translate(50%, -50%) scale(1);
+    }
   }
   &__preview {
     @include displayBlock();

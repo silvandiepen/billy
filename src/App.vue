@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed } from "vue";
 
 import { ControlPanelComponent } from "./components/ControlPanel";
 import { PreviewComponent } from "./components/Preview";
@@ -10,8 +10,9 @@ import {
   ModalIdentifier,
 } from "./components/ui";
 
-import { getInvoice } from "./composables/state";
-import ToolbarComponent from "./components/Toolbar/Toolbar.vue";
+import { isPristineInvoice } from "./composables/state";
+import { ToolbarComponent } from "./components/Toolbar";
+import { IntroductionComponent } from "./components/Introduction";
 export default defineComponent({
   components: {
     Toolbar: ToolbarComponent,
@@ -19,18 +20,13 @@ export default defineComponent({
     ControlPanel: ControlPanelComponent,
     Sidepanel: SidepanelComponent,
     Invoice: InvoiceComponent,
+    Introduction: IntroductionComponent,
   },
   setup() {
-    const invoice = computed(() => {
-      return getInvoice.value;
+    const showIntroduction = computed(() => {
+      return isPristineInvoice();
     });
-    const debug = ref(false);
-    return {
-      SidepanelIdentfier,
-      invoice,
-      debug,
-      ModalIdentifier,
-    };
+    return { showIntroduction, SidepanelIdentfier, ModalIdentifier };
   },
 });
 </script>
@@ -40,7 +36,8 @@ export default defineComponent({
     <ControlPanel />
   </Sidepanel>
   <Preview>
-    <Invoice />
+    <Introduction v-if="showIntroduction" />
+    <Invoice v-else />
   </Preview>
   <Toolbar />
 </template>

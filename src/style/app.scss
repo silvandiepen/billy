@@ -137,3 +137,8 @@ hr {
     margin-top: 1em;
   }
 }
+
+.html2pdf__overlay {
+  pointer-events: none;
+  // opacity: 1 !important;
+}

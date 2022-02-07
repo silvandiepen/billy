@@ -10,6 +10,10 @@
         <dl>{{ invoice.current.number }}</dl>
       </dl>
       <dl :class="[style.bem('list'), 'data-list']">
+        <dt>{{ t("label.date") }}</dt>
+        <dl>{{ invoice.current.date }}</dl>
+      </dl>
+      <dl :class="[style.bem('list'), 'data-list']">
         <dt>{{ t("label.tax") }}</dt>
         <dl>{{ invoice.settings.tax }}</dl>
       </dl>
@@ -34,6 +38,7 @@
         v-model="invoice.current.number"
       />
       <FormNumber :label="t('vat')" v-model="invoice.settings.tax" />
+      <FormDate :label="t('date')" v-model="invoice.current.date" />
       <FormSelect
         :label="t('currency')"
         :options="currencyOptions"
@@ -64,6 +69,7 @@ import {
   ButtonType,
   ButtonComponent,
   FormTextComponent,
+  FormDateComponent,
   FormNumberComponent,
   FormTextAreaComponent,
   FormSelectComponent,
@@ -74,6 +80,7 @@ export default defineComponent({
   components: {
     Knop: ButtonComponent,
     FormText: FormTextComponent,
+    FormDate: FormDateComponent,
     FormNumber: FormNumberComponent,
     FormTextArea: FormTextAreaComponent,
     FormSelect: FormSelectComponent,

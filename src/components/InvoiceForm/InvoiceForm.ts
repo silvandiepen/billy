@@ -1,6 +1,12 @@
 import { defineComponent, onMounted, computed, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { Style } from "@sil/tools";
+// import * as createDocument from "@sil/create-document";
+// import * as html2canvasWrong from "html2canvas";
+// const html2canvas = html2canvasWrong as any as (
+//   element: HTMLElement,
+//   options?: Partial<html2canvasWrong.Options>
+// ) => Promise<HTMLCanvasElement>;
 
 import { downloadFile } from "../../composables";
 import {
@@ -11,7 +17,6 @@ import {
   getInvoiceID,
   getCurrentInvoiceData,
   getInvoice,
-  getInvoiceStatus,
   invoiceStatus,
 } from "../../composables/state";
 import { ModalIdentifier } from "../ui/Modal/Modal.model";
@@ -94,6 +99,32 @@ export default defineComponent({
       return showExport || showSave;
     });
 
+    const toPdf = async () => {
+      const element: HTMLElement = document.querySelector(
+        "#invoice-document"
+      ) as HTMLElement;
+
+      // console.log(createDocument);
+      // if (element) {
+      //   await createDocument({
+      //     element: element,
+      //   });
+      // }
+      // var opt = {
+      //   margin: 1,
+      //   filename: "myfile.pdf",
+      //   image: { type: "jpeg", quality: 0.98 },
+      //   html2canvas: { scale: 2 },
+      //   jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      //   html2canvas: html2canvas,
+      // };
+
+      // // New Promise-based usage:
+      // const pdf = html2pdf().from(element).set(opt).save();
+
+      console.log("does something");
+    };
+
     return {
       t,
       style,
@@ -106,6 +137,7 @@ export default defineComponent({
         newEntry,
         saveInvoice,
         newNote,
+        toPdf,
         export: exportInvoice,
       },
       Entity,

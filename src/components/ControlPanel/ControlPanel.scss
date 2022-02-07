@@ -21,6 +21,9 @@
     & + & {
       border-top: 1px solid variable(foreground75);
     }
+    .button {
+      margin: 0;
+    }
   }
 
   &__title {

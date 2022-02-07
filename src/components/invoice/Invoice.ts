@@ -67,7 +67,10 @@ export default defineComponent({
       tax: getInvoiceTax,
       sum: getInvoiceSum,
       currentData,
-      getInvoiceNumber,
+      invoiceNumber: getInvoiceNumber(
+        invoice.value.current.number,
+        invoice.value.current.date
+      ),
       formatNumber,
       discount,
       templator,

@@ -2,6 +2,7 @@
   <div
     :class="[style.bem('paper'),allowZoom ?  'allow-zoom' : 'no-zoom']"
     @click="allowZoom = !allowZoom"
+    id="invoice-document"
   >
     <slot></slot>
   </div>

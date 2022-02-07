@@ -15,7 +15,7 @@
       :key="index"
     />
   </ul>
-  <UIButtonBar :align="ButtonAlign.CENTER">
+  <UIButtonGroup :align="ButtonAlign.CENTER">
     <UIButton
       :class="style.bem('add')"
       @click="actions.newEntry"
@@ -23,7 +23,7 @@
     >
       {{t('action.add-item')}}
     </UIButton>
-  </UIButtonBar>
+  </UIButtonGroup>
 </section>
 
 <section :class="style.bem('section')">
@@ -54,7 +54,7 @@
       :key="index"
     />
   </ul>
-  <UIButtonBar :align="ButtonAlign.CENTER">
+  <UIButtonGroup :align="ButtonAlign.CENTER">
     <UIButton
       :class="style.bem('add')"
       @click="actions.newNote"
@@ -62,7 +62,7 @@
     >
       {{t('action.add-note')}}
     </UIButton>
-  </UIButtonBar>
+  </UIButtonGroup>
 </section>
 
 <section :class="style.bem('section')">
@@ -75,6 +75,9 @@
   v-if="showActions"
 >
   <UIButtonGroup>
+    <UIButton @click="actions.saveInvoice" v-if="!showSave" icon="arrow-down">
+      {{t('force-save')}}
+    </UIButton>
     <UIButton @click="actions.saveInvoice" v-if="showSave" icon="arrow-down">
       {{t('save')}}
     </UIButton>
@@ -84,5 +87,8 @@
     <UIButton @click="actions.export" v-if="showExport" icon="arrow-down"
       >{{t('export')}}</UIButton
     >
+    <UIButton @click="actions.toPdf" v-if="showExport" icon="arrow-down">
+      {{t('to-pdf')}}
+    </UIButton>
   </UIButtonGroup>
 </section>

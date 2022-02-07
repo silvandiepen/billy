@@ -9,30 +9,34 @@
   border-radius: variable(borderRadius);
 
   .id-label {
+    white-space: nowrap;
     position: absolute;
-    top: 0;
-    left: variable(space);
-    transform: translateY(-50%);
+    bottom: 0;
+    left: 50%;
+    transform: translateY(50%) translateX(-50%);
+    z-index: 2;
   }
 
   &::before,
   &::after {
     content: "";
-    width: 100%;
-    height: 100%;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
     opacity: 0;
     z-index: 1;
     pointer-events: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    transform: translate(-50%, -50%);
   }
   &::before {
     background-color: variable(secondary);
-    border-radius: variable(borderRadius);
   }
   &::after {
-    content: "";
+    content: "\270E";
+    font-size: 1.5em;
     color: variable(secondaryText);
     display: flex;
     align-items: center;
@@ -42,10 +46,10 @@
 
   &:hover {
     cursor: pointer;
-    background-color: variable(secondary);
+    // background-color: variable(secondary);
 
     &::before {
-      opacity: 0.5;
+      opacity: 1;
     }
     &::after {
       opacity: 1;

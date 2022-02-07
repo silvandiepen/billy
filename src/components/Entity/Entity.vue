@@ -129,6 +129,13 @@ export default defineComponent({
     right: 0;
     top: 0;
     margin: calc(var(--space) / 2);
+    transform: translate(50%, -50%) scale(0);
+    transition: transform 0.25s ease-in-out;
+  }
+  &:hover {
+    .entity__delete {
+      transform: translate(50%, -50%) scale(1);
+    }
   }
   &__details {
     flex-wrap: nowrap;

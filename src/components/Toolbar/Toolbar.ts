@@ -5,7 +5,7 @@ import {
   ButtonComponent,
   ModalComponent,
   ModalIdentifier,
-  ButtonGroupComponent,
+  ButtonBarComponent,
   ButtonAlign,
 } from "../ui";
 import { UploadInvoiceComponent } from "../UploadInvoice";
@@ -21,7 +21,7 @@ export default defineComponent({
     UploadInvoice: UploadInvoiceComponent,
     Modal: ModalComponent,
     ButtonComponent,
-    ButtonGroup: ButtonGroupComponent,
+    ButtonBar: ButtonBarComponent,
   },
   setup() {
     return {

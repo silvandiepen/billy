@@ -2,20 +2,22 @@
 
 .toolbar {
   position: fixed;
-  bottom: 0;
+  bottom: variable(space);
   left: 50%;
 
-  border-radius: variable(borderRadius) variable(borderRadius) 0 0;
+  border-radius: calc(variable(borderRadius) * 5);
   background-color: variable(foreground);
   transform: translateX(-50%) translateY(50%);
   color: variable(foregroundText);
-  padding: variable(space);
-  // margin: variable(space);
-  opacity: 0.1;
-  transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
+  padding: calc(variable(space) / 2);
+  transform: translateX(-50%) translateY(0%);
+  opacity: 1;
   z-index: 5;
-  &:hover {
-    transform: translateX(-50%) translateY(0%);
-    opacity: 1;
+  // &:hover {
+  //   transform: translateX(-50%) translateY(0%);
+  //   opacity: 1;
+  // }
+  @media print {
+    display: none;
   }
 }
