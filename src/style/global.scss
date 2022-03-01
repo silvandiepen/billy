@@ -3,10 +3,10 @@
 
 @mixin displayBlock {
   position: relative;
-  background-color: variable(foreground90);
-  color: variable(foreground90Text);
-  padding: variable(space);
-  border-radius: variable(borderRadius);
+  background-color: v(foreground90);
+  color: v(foreground90Text);
+  padding: v(space-s);
+  border-radius: v(borderRadius);
 
   .id-label {
     white-space: nowrap;
@@ -32,7 +32,7 @@
     transform: translate(-50%, -50%);
   }
   &::before {
-    background-color: variable(secondary);
+    background-color: v(secondary);
   }
   &::after {
     content: "\270E";
@@ -46,7 +46,6 @@
 
   &:hover {
     cursor: pointer;
-    // background-color: variable(secondary);
 
     &::before {
       opacity: 1;
@@ -56,7 +55,7 @@
     }
 
     .label {
-      background-color: variable(secondary75);
+      background-color: v(secondary75);
     }
   }
 }

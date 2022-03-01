@@ -1,5 +1,6 @@
 import { defineComponent, PropType, computed } from "vue";
 import { Style } from "@sil/tools";
+import { IconComponent } from "../Icon";
 
 import {
   ButtonSize,
@@ -9,6 +10,7 @@ import {
 } from "./Button.model";
 
 export default defineComponent({
+  components: { Icon: IconComponent },
   props: {
     size: {
       type: String as PropType<ButtonProps["size"]>,

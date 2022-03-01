@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@sil/create-document": "^0.0.3",
-    "@sil/themer": "^0.1.8",
+    "@sil/themer": "^0.3.1",
     "@sil/tools": "^0.1.9",
     "date-fns": "^2.27.0",
     "html2pdf.js": "^0.10.1",

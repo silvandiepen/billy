@@ -1,3 +1,5 @@
+import { IconList } from "../Icon/Icon.model";
+
 export enum ButtonSize {
   SMALL = "small",
   MEDIUM = "medium",
@@ -31,18 +33,5 @@ export enum ButtonDirection {
   ROW = "row",
   COLUMN = "column",
 }
-
-export enum ButtonIcon {
-  CLOSE = "close",
-  REMOVE = "close",
-  DELETE = "close",
-  NEW = "new",
-  ADD = "add",
-  EDIT = "edit",
-  ARROW_LEFT = "arrow-left",
-  ARROW_UP = "arrow-up",
-  ARROW_RIGHT = "arrow-right",
-  ARROW_DOWN = "arrow-down",
-  FLAG_UK = "flag-uk",
-  FLAG_NL = "flag-nl",
-}
+export const ButtonIcon = IconList;
+// export enum ButtonIcon {}

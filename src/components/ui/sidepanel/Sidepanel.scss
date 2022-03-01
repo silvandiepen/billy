@@ -1,4 +1,4 @@
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 
 .sidepanel {
   $block: &;
@@ -20,8 +20,8 @@
         top: 0,
         pointer-events: all,
         right: 0,
-        margin: calc(#{variable(space)} * 1) calc(#{variable(space)} * 1.5),
-        transform: translateX(0),
+        margin: v(space-s) calc(#{variable(space-s)} * 1.5),
+        transform: translateX(calc(v(space-s) * -1.5)),
         transition: transform 0.3s ease-in-out,
       )
     );
@@ -93,7 +93,7 @@
       transform: translateX(0%);
     }
     #{$block}__button {
-      transform: translateX(calc(-320px + #{variable(space)}));
+      transform: translateX(calc(-320px + #{variable(space-xs)}));
     }
 
     & + .preview {

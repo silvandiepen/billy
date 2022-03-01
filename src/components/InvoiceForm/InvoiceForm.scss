@@ -13,10 +13,10 @@
   }
   &__subheader {
     color: variable(primary);
-    padding: variable(space) 0;
+    padding: variable(space-s) 0;
   }
   &__section {
-    padding: variable(space);
+    padding: variable(space-s);
     & + & {
       border-top: 1px solid variable(foreground75);
     }
@@ -25,7 +25,7 @@
   // entries
   &__items {
     & + .button-group {
-      margin-top: variable(space);
+      margin-top: variable(space-xs);
     }
   }
   &__item {
@@ -34,7 +34,7 @@
     border-radius: variable(borderRadius);
     // margin: 0 -1em;
     & + & {
-      margin-top: variable(space);
+      margin-top: variable(space-s);
     }
   }
 }

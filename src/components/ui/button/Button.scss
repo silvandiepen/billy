@@ -8,7 +8,7 @@
       color: white,
       border-radius: borderRadius,
       border: none,
-      padding: calc(#{variable(space)} / 2) calc(#{variable(space)} / 1),
+      padding: v(space-xs) v(space-xs),
       display: flex,
     )
   );
@@ -49,16 +49,16 @@
   &--ghost {
     &#{$block}--primary {
       background-color: transparent;
-      color: variable(primary);
-      box-shadow: 0 0 0 1px variable(primary) inset;
+      color: v(primary);
+      box-shadow: 0 0 0 1px v(primary) inset;
       &:hover {
-        background-color: variable(primary);
-        color: variable(primaryText);
+        background-color: v(primary);
+        color: v(primaryText);
       }
     }
   }
   &--icon-only {
-    padding: calc(#{variable(space)} / 2);
+    padding: v(space-xs);
   }
 
   // Color Modifiers
@@ -89,164 +89,11 @@
   }
 
   &--has-icon {
-    padding-left: calc(#{variable(space)} / 2);
-    .button__icon {
-      margin-right: calc(#{variable(space)} / 2);
+    padding-left: v(space-xs);
+    .icon {
+      margin-right: v(space-xs);
     }
   }
 
   // icons
-
-  &__icon {
-    width: 1em;
-    height: 1em;
-    display: block;
-    line-height: 1em;
-    &--delete,
-    &--remove,
-    &--close {
-      &::before {
-        font-weight: bold;
-        content: "\2715";
-      }
-    }
-    &--arrow-right {
-      &::before {
-        content: "\2794";
-      }
-    }
-    &--arrow-left {
-      transform: rotate(180deg);
-      &::before {
-        content: "\2794";
-      }
-    }
-    &--arrow-up {
-      transform: rotate(270deg);
-      &::before {
-        content: "\2794";
-      }
-    }
-    &--arrow-down {
-      transform: rotate(90deg);
-      &::before {
-        content: "\2794";
-      }
-    }
-    &--new {
-      &::before {
-        content: "\FF0A";
-      }
-    }
-    &--add {
-      &::before {
-        content: "\002B";
-      }
-    }
-    &--edit {
-      &::before {
-        content: "\270E";
-      }
-    }
-    &--flag-nl {
-      &::before {
-        content: "";
-        width: 1em;
-        height: 1em;
-        border-radius: 50%;
-        display: block;
-        background-image: linear-gradient(
-          to bottom,
-          red,
-          red 33.33%,
-          white 33.33%,
-          white 66.66%,
-          blue 66.66%,
-          blue
-        );
-      }
-    }
-    &--flag-uk {
-      &::before {
-        content: "";
-        width: 1em;
-        height: 1em;
-        display: block;
-        border-radius: 50%;
-        background-color: blue;
-        background-image: linear-gradient(
-            to right,
-            transparent,
-            transparent calc(50% - 0.05em),
-            red calc(50% - 0.05em),
-            red calc(50% + 0.05em),
-            transparent calc(50% + 0.05em),
-            transparent
-          ),
-          linear-gradient(
-            to bottom,
-            transparent,
-            transparent calc(50% - 0.05em),
-            red calc(50% - 0.05em),
-            red calc(50% + 0.05em),
-            transparent calc(50% + 0.05em),
-            transparent
-          ),
-          linear-gradient(
-            to top,
-            transparent,
-            transparent calc(50% - 0.1em),
-            white calc(50% - 0.1em),
-            white calc(50% + 0.1em),
-            transparent calc(50% + 0.1em),
-            transparent
-          ),
-          linear-gradient(
-            to right,
-            transparent,
-            transparent calc(50% - 0.1em),
-            white calc(50% - 0.1em),
-            white calc(50% + 0.1em),
-            transparent calc(50% + 0.1em),
-            transparent
-          ),
-          linear-gradient(
-            to right bottom,
-            transparent,
-            transparent calc(50% - 0.025em),
-            red calc(50% - 0.025em),
-            red calc(50% + 0.025em),
-            transparent calc(50% + 0.025em),
-            transparent
-          ),
-          linear-gradient(
-            to left bottom,
-            transparent,
-            transparent calc(50% - 0.025em),
-            red calc(50% - 0.025em),
-            red calc(50% + 0.025em),
-            transparent calc(50% + 0.025em),
-            transparent
-          ),
-          linear-gradient(
-            to right bottom,
-            transparent,
-            transparent calc(50% - 0.05em),
-            white calc(50% - 0.05em),
-            white calc(50% + 0.05em),
-            transparent calc(50% + 0.05em),
-            transparent
-          ),
-          linear-gradient(
-            to left bottom,
-            transparent,
-            transparent calc(50% - 0.05em),
-            white calc(50% - 0.05em),
-            white calc(50% + 0.05em),
-            transparent calc(50% + 0.05em),
-            transparent
-          );
-      }
-    }
-  }
 }

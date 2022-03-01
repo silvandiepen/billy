@@ -1,5 +1,5 @@
 <button :class="classes">
-  <span v-if="icon" :class="[style.bem('icon'), style.bem('icon',icon)]"></span>
+  <Icon v-if="icon" :name="icon" />
   <span v-if="!iconOnly" :class="style.bem('text')">
     <slot></slot>
   </span>
