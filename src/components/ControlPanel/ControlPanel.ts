@@ -1,6 +1,6 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { eventBus, eventChannel } from "../../composables";
 
@@ -46,7 +46,8 @@ export default defineComponent({
   setup() {
     const { t } = useI18n({});
 
-    const style = new Style("control-panel");
+    const bemm = useBemm("control-panel");
+  
     const show = ref(SidebarState.START);
 
     onMounted(() => {
@@ -105,7 +106,7 @@ export default defineComponent({
     return {
       t,
       show,
-      style,
+      bemm,
       goBack,
       showNext,
       savedInvoices,

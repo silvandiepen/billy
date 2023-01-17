@@ -1,11 +1,11 @@
 <div :class="mainClasses">
-  <div :class="style.bem('container')">
+  <div :class="bemm('container')">
     <textarea
-      :class="style.bem('control')"
+      :class="bemm('control')"
       :placeholder="placeholder"
       v-model="input"
     ></textarea>
-    <label :class="style.bem('label')">{{ label }}</label>
+    <label :class="bemm('label')">{{ label }}</label>
   </div>
 
   <FormErrors :errors="errors" />

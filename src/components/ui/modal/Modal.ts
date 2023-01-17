@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { eventBus, eventChannel } from "../../../composables";
 import { ModalProps, ModalEventArguments, ModalAction } from "./Modal.model";
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   setup(props) {
     const isActive = ref(props.active);
-    const style = new Style("modal");
+    const bemm = useBemm("modal");
 
     // Actions
     const closeModal = () => (isActive.value = false);
@@ -49,7 +49,7 @@ export default defineComponent({
 
     return {
       isActive,
-      style,
+      bemm,
       closeModal,
       openModal,
     };

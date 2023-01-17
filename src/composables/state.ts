@@ -240,7 +240,7 @@ export const isInvoiceNew = (): boolean => {
 };
 
 const setLastUpdate = () => {
-  console.log(state.invoice.current.lastUpdate);
+  // console.log(state.invoice.current.lastUpdate);
   state.invoice.current.lastUpdate = new Date();
 };
 
@@ -278,7 +278,7 @@ export const updateInvoice = (): void => {
   setLastUpdate();
 
   let currentIndex = getInvoiceIndexByID(getInvoice.value.current.id);
-  console.log(currentIndex, getInvoice.value.current.id);
+  // console.log(currentIndex, getInvoice.value.current.id);
   if (currentIndex > -1) {
     console.log("is actually gonna update it");
     savedInvoices.value[currentIndex] = getInvoice.value;

@@ -1,12 +1,12 @@
 import { defineComponent, ref } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { setInvoiceData } from "../../composables/state";
 import { eventBus, eventChannel } from "../../composables";
 import { ModalAction, ModalIdentifier } from "../ui";
 
 export default defineComponent({
   setup() {
-    const style = new Style("upload-invoice");
+    const bemm = useBemm("upload-invoice");
     const fileInput = ref<HTMLInputElement | null>(null);
 
     const reader = new FileReader();
@@ -32,7 +32,7 @@ export default defineComponent({
       }
     };
     return {
-      style,
+      bemm,
       fileInput,
       handleFileUpload,
     };

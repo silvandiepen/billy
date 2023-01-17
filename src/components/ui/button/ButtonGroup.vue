@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Style } from "@sil/tools";
+import { useClasses } from "bemm";
 import { defineComponent, PropType, computed } from "vue";
-import { ButtonAlign, ButtonDirection } from "./Button.model";
+import { ButtonAlign, ButtonDirection } from "../Button";
 
 export default defineComponent({
   props: {
@@ -21,16 +21,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const style = new Style("button-group");
+    const cls = useClasses("button-group");
 
     const classes = computed(() => {
-      let classNames = [];
-
-      classNames.push(style.bem());
-      classNames.push(style.bem("", props.align));
-      classNames.push(style.bem("", props.direction));
-
-      return classNames;
+      return cls("", { m: props.align }, { m: props.direction });
     });
 
     return { classes };
@@ -42,6 +36,10 @@ export default defineComponent({
 .button-group {
   display: flex;
   gap: 0.5em;
+
+  .button {
+    margin: 0;
+  }
 
   &--column {
     flex-direction: column;

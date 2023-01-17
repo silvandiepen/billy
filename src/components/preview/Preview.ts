@@ -1,13 +1,13 @@
 import { defineComponent, ref } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm} from "bemm";
 
 export default defineComponent({
   setup() {
     const allowZoom = ref(true);
-    const style = new Style("preview");
+    const bemm = useBemm("preview");
     return {
       allowZoom,
-      style,
+      bemm,
     };
   },
 });

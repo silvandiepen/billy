@@ -1,4 +1,4 @@
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { defineComponent, ref, PropType, computed } from "vue";
 import { useInputValidator } from "../form.helpers";
 import FormError from "../error/FormError.vue";
@@ -30,7 +30,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const style = new Style("form-select");
+    const bemm = useBemm("form-select");
     const validators = ref<Function[]>([]);
 
     const { input, errors } = useInputValidator(
@@ -42,16 +42,16 @@ export default defineComponent({
     const hasValue = computed(() => input.value.length > 0);
 
     const mainClasses = computed(() => [
-      style.bem(),
+      bemm(),
       "form-field",
-      hasValue && style.bem("", "has-value"),
+      hasValue && bemm("", "has-value"),
     ]);
 
     return {
       mainClasses,
       input,
       errors,
-      style,
+      bemm,
     };
   },
 });

@@ -37,8 +37,8 @@
     grid-area: note;
     max-height: fit-content;
   }
-  &__title {
-    grid-area: title;
+  &__invoice-info {
+    grid-area: invoice-info;
   }
 
   &__top {
@@ -56,7 +56,7 @@
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-      "title title data data data"
+      "invoice-info invoice-info data data data"
       "x x total total total";
   }
   &__bottom {
@@ -197,6 +197,14 @@
     line-height: 3;
   }
 
+  &__title {
+    font-size: 0.5cm;
+  }
+  &__date {
+    color: v(primary);
+    font-size: 0.33cm;
+  }
+
   &__total,
   &__item {
     display: grid;
@@ -295,7 +303,7 @@
 
   &__notes {
     display: flex;
-    gap: calc(variable(space) * 2);
+    gap: v(space);
   }
 
   &__note {

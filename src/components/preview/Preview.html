@@ -1,6 +1,6 @@
-<div :class="style.bem()">
+<div :class="bemm()">
   <div
-    :class="[style.bem('paper'),allowZoom ?  'allow-zoom' : 'no-zoom']"
+    :class="[bemm('paper'),allowZoom ?  'allow-zoom' : 'no-zoom']"
     @click="allowZoom = !allowZoom"
     id="invoice-document"
   >

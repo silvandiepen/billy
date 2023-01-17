@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { IconList } from "./Icon.model";
 
 export default defineComponent({
@@ -10,9 +10,9 @@ export default defineComponent({
     },
   },
   setup() {
-    const style = new Style("icon");
+    const bemm = useBemm("icon");
     return {
-      style,
+      bemm,
     };
   },
 });

@@ -3,8 +3,8 @@
 
 @mixin displayBlock {
   position: relative;
-  background-color: v(foreground90);
-  color: v(foreground90Text);
+  background-color: v(foreground10);
+  color: v(foreground10-text);
   padding: v(space-s);
   border-radius: v(borderRadius);
 

@@ -1,21 +1,17 @@
-<div class="invoice" v-if="invoice.settings">
-  <div :class="style.bem('top')">
-    <!-- <header :class="style.bem('header')">
-      <h3>Invoice #{{getInvoiceNumber(invoice.current.number)}}</h3>
-    </header> -->
-
+<div :class="bemm()" v-if="invoice.settings">
+  <div :class="bemm('top')">
     <div
-      :class="style.bem('logo-background')"
+      :class="bemm('logo-background')"
       v-if="invoice.settings?.logo"
       v-html="invoice.settings?.logo"
     ></div>
-    <section :class="style.bem('client')">
+    <section :class="bemm('client')">
       <InvoiceEntity :entity="Entity.CLIENT" />
     </section>
 
-    <section :class="style.bem('seller')">
+    <section :class="bemm('seller')">
       <div
-        :class="style.bem('logo')"
+        :class="bemm('logo')"
         v-if="invoice.settings?.logo"
         v-html="invoice.settings?.logo"
       ></div>
@@ -23,109 +19,114 @@
     </section>
   </div>
 
-  <div :class="style.bem('middle')">
-    <h2 :class="style.bem('title')">
-      {{t('invoice-no')}}<br />{{invoiceNumber}}
-    </h2>
-    <section :class="style.bem('data')">
-      <ul :class="style.bem('list')">
-        <li :class="style.bem('item')" v-for="entry in currentData">
-          <h5 :class="[style.bem('item','title'), 'cell']" v-if="entry.title">
+  <div :class="bemm('middle')">
+    <div :class="bemm('invoice-info')">
+      <h2 :class="bemm('title')">
+        {{t('invoice-no')}}<br />{{invoiceNumber}}
+      </h2>
+      <div :class="bemm('date')" v-if="invoice.current.date">
+        {{t('invoice-date')}}<br />{{ formatDate(invoice.current.date) }}
+      </div>
+    </div>
+    <section :class="bemm('data')">
+      <ul :class="bemm('list')">
+        <li :class="bemm('item')" v-for="entry in currentData">
+          <h5 :class="[bemm('item','title'), 'cell']" v-if="entry.title">
             {{entry.title}}
           </h5>
           <span
-            :class="[style.bem('item','amount'), 'cell']"
+            :class="[bemm('item','amount'), 'cell']"
             v-if="entry.amount"
             >{{entry.amount}}</span
           >
           <span
-            :class="[style.bem('item','total'), 'cell',  entry.discount && style.bem('item','has-discount')]"
+            :class="[bemm('item','total'), 'cell',  entry.discount && bemm('item','has-discount')]"
             v-if="entry.price"
           >
             <span>{{formatNumber(entry.amount * entry.price)}}</span>
             <span
-              :class="style.bem('item','total-discount')"
+              :class="bemm('item','total-discount')"
               v-if="entry.discount"
               >{{formatNumber(discount(entry.amount * entry.price,
               entry.discount))}}</span
             >
           </span>
           <p
-            :class="[style.bem('item','description'), 'cell']"
+            :class="[bemm('item','description'), 'cell']"
             v-if="entry.description"
           >
             {{entry.description}}
           </p>
-          <span :class="style.bem('item','discount')" v-if="entry.discount">
+          <span :class="bemm('item','discount')" v-if="entry.discount">
             - {{entry.discount}}% discount
           </span>
-          <span :class="style.bem('item','tax')" v-if="entry.tax">
+          <span :class="bemm('item','tax')" v-if="entry.tax">
             - {{t('vat', entry.tax)}}
           </span>
         </li>
       </ul>
-    </section>
+    </section> 
 
-    <section :class="style.bem('totals')">
-      <ul :class="style.bem('list')">
-        <li :class="[style.bem('total')]">
-          <span :class="style.bem('total','space')"></span>
-          <span :class="[style.bem('total','label'), 'cell']"
+    <section :class="bemm('totals')">
+      <ul :class="bemm('list')">
+        <li :class="[bemm('total')]">
+          <span :class="bemm('total','space')"></span>
+          <span :class="[bemm('total','label'), 'cell']"
             >{{t('sum')}}</span
           >
-          <span :class="[style.bem('total','total'), 'cell']">
+          <span :class="[bemm('total','total'), 'cell']">
             {{ formatNumber(sum) }}
           </span>
         </li>
-        <li :class="style.bem('total')">
-          <span :class="style.bem('total','space')"></span>
-          <span :class="[style.bem('total','label'), 'cell']"
+        <li :class="bemm('total')">
+          <span :class="bemm('total','space')"></span>
+          <span :class="[bemm('total','label'), 'cell']"
             >{{t('vat', invoice.settings.tax)}}
           </span>
-          <span :class="[style.bem('total','total'), 'cell']">
+          <span :class="[bemm('total','total'), 'cell']">
             {{ formatNumber(tax) }}
           </span>
         </li>
-        <li :class="style.bem('total')">
-          <span :class="style.bem('total','space')"></span>
-          <span :class="[style.bem('total','label'), 'cell']"
+        <li :class="bemm('total')">
+          <span :class="bemm('total','space')"></span>
+          <span :class="[bemm('total','label'), 'cell']"
             >{{t('total')}}</span
           >
-          <span :class="[style.bem('total','total'), 'cell']">
+          <span :class="[bemm('total','total'), 'cell']">
             {{ formatNumber(total) }}
           </span>
         </li>
       </ul>
     </section>
-  </div>
+  </div> 
 
-  <div :class="style.bem('bottom')">
-    <section :class="style.bem('payment')">
-      <dl :class="style.bem('payment')"></dl>
+  <div :class="bemm('bottom')">
+    <section :class="bemm('payment')">
+      <dl :class="bemm('payment')"></dl>
     </section>
-    <section :class="style.bem('notes')">
+    <section :class="bemm('notes')">
       <dl
-        :class="style.bem('note')"
+        :class="bemm('note')"
         v-for="(note,index) in invoice.settings.notes"
         :key="index"
       >
-        <dt :class="style.bem('note-title')" v-if="note.title">
+        <dt :class="bemm('note-title')" v-if="note.title">
           {{note.title}}
         </dt>
         <dd
-          :class="style.bem('note-description')"
+          :class="bemm('note-description')"
           v-if="note.description"
           v-html="templator(note.description)"
         ></dd>
       </dl>
     </section>
-    <footer :class="style.bem('footer')" v-if="invoice.settings.footer">
+    <footer :class="bemm('footer')" v-if="invoice.settings.footer">
       <div
-        :class="style.bem('line')"
+        :class="bemm('line')"
         v-html="templator(invoice.settings.footer)"
       ></div>
       <div
-        :class="style.bem('logo')"
+        :class="bemm('logo')"
         v-if="invoice.settings?.logo"
         v-html="invoice.settings?.logo"
       ></div>

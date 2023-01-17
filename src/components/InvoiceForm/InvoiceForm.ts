@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, computed, watch, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 // import * as createDocument from "@sil/create-document";
 // import * as html2canvasWrong from "html2canvas";
 // const html2canvas = html2canvasWrong as any as (
@@ -57,7 +57,7 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n({});
-    const style = new Style("invoice-form");
+    const bemm = useBemm("invoice-form");
 
     onMounted(() => {
       loadClients();
@@ -127,7 +127,7 @@ export default defineComponent({
 
     return {
       t,
-      style,
+      bemm,
       invoice: getInvoice.value,
       showActions,
       showExport,

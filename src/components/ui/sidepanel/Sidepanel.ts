@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { eventBus, eventChannel } from "../../../composables";
 
@@ -32,7 +32,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const style = new Style("sidepanel");
+    const bemm = useBemm("sidepanel");
     const isActive = ref(props.active);
 
     // Adctions
@@ -63,7 +63,7 @@ export default defineComponent({
     });
 
     return {
-      style,
+      bemm,
       isActive,
       closeSidepanel,
       openSidepanel,

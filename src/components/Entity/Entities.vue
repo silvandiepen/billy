@@ -1,9 +1,9 @@
 <template>
-  <div :class="style.bem()">
+  <div :class="bemm()">
     <h2>{{ t(entity) }}</h2>
-    <ul :class="style.bem('list')">
+    <ul :class="bemm('list')">
       <Entity
-        :class="style.bem('item')"
+        :class="bemm('item')"
         v-for="(data, index) in entities"
         :key="index"
         :entity="entity"
@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { useI18n } from "vue-i18n";
 
 import {
@@ -49,7 +49,7 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n({});
 
-    const style = new Style("entities");
+    const bemm = useBemm("entities");
 
     const entities = computed(() => {
       return props.entity === Entity.CLIENT
@@ -60,7 +60,7 @@ export default defineComponent({
     return {
       t,
       Entity,
-      style,
+      bemm,
       ButtonColor,
       entities,
       loadClients: loadEntity(props.entity),

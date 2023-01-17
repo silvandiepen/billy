@@ -1,6 +1,6 @@
 <template>
-  <div :class="style.bem()" @click="loadInvoice">
-    <div :class="style.bem('title')">
+  <div :class="bemm()" @click="loadInvoice">
+    <div :class="bemm('title')">
       <p>
         <strong>#{{ invoiceNumber }}</strong
         ><br />
@@ -16,10 +16,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
-import { Invoice } from "./Invoice.model";
-import { getInvoiceNumber, formatNumber } from "./Invoice.helpers";
+import { Invoice, getInvoiceNumber, formatNumber } from "../Invoice";
 import { setInvoice } from "../../composables/state";
 import { formatDate } from "../../composables";
 
@@ -31,7 +30,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const style = new Style("invoice-item");
+    const bemm = useBemm("invoice-item");
 
     const invoiceName = computed(() => {
       return props.invoice.client.companyName
@@ -47,7 +46,7 @@ export default defineComponent({
         props.invoice.current.number,
         props.invoice.current.date
       ),
-      style,
+      bemm,
       formatNumber,
       formatDate,
       invoiceName,
@@ -58,10 +57,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .invoice-item {
-  @include displayBlock();
-
   & + & {
-    margin-top: variable(space);
+    margin-top: calc(#{v(space)} / 2);
   }
 }
 </style>

@@ -1,6 +1,8 @@
 import { defineComponent, computed, ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
+// import {format, parseISO} from 'date-fns/fp'
+// import { eo } from 'date-fns/locale'
 
 import { getInvoiceID, getInvoice as invoice } from "../../composables/state";
 import {
@@ -18,6 +20,7 @@ import { Entity } from "../Entity";
 import { Replacers, replaceStrings } from "../../composables";
 
 import { renderMarkdown } from "../../services";
+import { formatISO, format, parseISO } from "date-fns";
 
 export default defineComponent({
   components: {
@@ -27,13 +30,19 @@ export default defineComponent({
   setup() {
     const { t } = useI18n({});
 
-    const style = new Style("invoice");
+    const bemm = useBemm("invoice");
 
     const currentData = computed(() =>
       invoice.value.current.data.filter(
         (item) => item.title || item.description
       )
     );
+
+    const formatDate = (date: string, template = "MMMM do, yyyy"): string => {
+      const isoDate = parseISO(date);
+      return format(isoDate, template);
+    };
+
 
     const total = computed(() => {
       return getInvoiceTotal.value;
@@ -58,22 +67,32 @@ export default defineComponent({
     const templator = (str: string) =>
       renderMarkdown(replaceStrings(str, replaceValues.value));
 
+    const invoiceNumber = computed(() => {
+      if (invoice.value.current) {
+        return getInvoiceNumber(
+          invoice.value.current.number,
+          invoice.value.current.date
+        );
+      } else {
+        return "";
+      }
+    });
+
     return {
       t,
       Entity,
-      style,
+      bemm,
       invoice,
       total,
       tax: getInvoiceTax,
       sum: getInvoiceSum,
       currentData,
-      invoiceNumber: getInvoiceNumber(
-        invoice.value.current.number,
-        invoice.value.current.date
-      ),
+      invoiceNumber,
+      formatDate,
       formatNumber,
       discount,
       templator,
     };
   },
 });
+

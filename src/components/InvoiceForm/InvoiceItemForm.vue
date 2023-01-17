@@ -1,23 +1,23 @@
 <template>
-  <component :is="tag" :class="style.bem()">
+  <component :is="tag" :class="bemm()">
     <UIButton
       icon="delete"
       :size="ButtonSize.SMALL"
       :type="ButtonType.ICON"
-      :class="style.bem('delete')"
+      :class="bemm('delete')"
       @click="actions.removeEntryAlert(item.id)"
     />
 
     <div
-      :class="style.bem('preview')"
+      :class="bemm('preview')"
       v-if="!isEditting"
       @click="isEditting = !isEditting"
     >
       <template v-for="key in Object.keys(item)" :key="key">
         <div class="id-label" v-if="key == 'id'">{{ item[key] }}</div>
-        <dl v-else :class="[style.bem('list'), 'data-list']">
-          <dt :class="style.bem('title')">{{ t(`label.${key}`) }}</dt>
-          <dd :class="style.bem('detail')">{{ item[key] }}</dd>
+        <dl v-else :class="[bemm('list'), 'data-list']">
+          <dt :class="bemm('title')">{{ t(`label.${key}`) }}</dt>
+          <dd :class="bemm('detail')">{{ item[key] }}</dd>
         </dl>
       </template>
     </div>
@@ -28,7 +28,7 @@
     {{ item.discount }}
     {{ item.tax }} -->
 
-    <div :class="style.bem('form')" v-if="isEditting">
+    <div :class="bemm('form')" v-if="isEditting">
       <FormText :label="t('label.title')" v-model="item.title" />
       <FormText :label="t('label.description')" v-model="item.description" />
       <FormNumber :label="t('label.amount')" v-model="item.amount" />
@@ -54,7 +54,7 @@ import {
   getCurrentInstance,
 } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { createAlert } from "../ui/Alert";
 import { InvoiceItem } from "../Invoice";
@@ -89,7 +89,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n({});
-    const style = new Style("invoice-form-item");
+    const bemm = useBemm("invoice-form-item");
 
     const isEditting = ref(false);
 
@@ -123,7 +123,7 @@ export default defineComponent({
     };
 
     return {
-      style,
+      bemm,
       t,
       ButtonType,
       ButtonSize,

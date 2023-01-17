@@ -9,7 +9,8 @@
     top: 0;
     z-index: 3;
     background-color: variable(foreground);
-    border-bottom: 1px solid variable(foreground75);
+    color: v(foreground-text);
+    border-bottom: 1px solid variable(foreground10);
   }
   &__subheader {
     color: variable(primary);
@@ -20,6 +21,10 @@
     padding: variable(space-s);
     & + & {
       border-top: 1px solid variable(foreground75);
+    }
+    * {
+
+    margin: 0;
     }
     .button {
       margin: 0;
@@ -51,7 +56,7 @@
     }
   }
   &__invoices {
-    margin-top: variable(space);
+    margin-top: calc(#{variable(space)} / 2);
   }
   &__main {
     // border: 2px solid green;

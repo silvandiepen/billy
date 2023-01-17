@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm"
 
-import { ButtonAlign } from "./Button.model";
+import { ButtonAlign } from "../Button";
 
 export default defineComponent({
   props: {
@@ -18,13 +18,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const style = new Style("button-bar");
+    const bemm = useBemm("button-bar");
 
     const classes = computed(() => {
       let classNames = [];
 
-      classNames.push(style.bem());
-      classNames.push(style.bem("", props.align));
+      classNames.push(bemm());
+      classNames.push(bemm("", props.align));
 
       return classNames;
     });
@@ -40,8 +40,8 @@ export default defineComponent({
   gap: 1px;
 
   .button {
-    --roundness: calc(#{variable(borderRadius)} * 3);
-    --inner-roundness: #{variable(borderRadius)};
+    --roundness: calc(#{variable(borderRadius)} * 2);
+    --inner-roundness: calc(#{variable(borderRadius)} *  0);
     border-radius: var(--inner-roundness);
     &:first-child {
       border-radius: var(--roundness) var(--inner-roundness)
@@ -51,6 +51,8 @@ export default defineComponent({
       border-radius: var(--inner-roundness) var(--roundness) var(--roundness)
         var(--inner-roundness);
     }
+
+    &+ .button { margin: 0; }
   }
   &--left {
     justify-content: flex-start;

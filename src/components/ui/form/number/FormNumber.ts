@@ -1,4 +1,4 @@
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { defineComponent, ref, computed } from "vue";
 import { useInputValidator, minLength, maxLength } from "../form.helpers";
 import FormError from "../error/FormError.vue";
@@ -31,7 +31,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const style = new Style("form-number");
+    const bemm = useBemm("form-number");
     const validators = ref<Function[]>([]);
 
     if (props.minLength > 0) validators.value.push(minLength(props.minLength));
@@ -48,13 +48,13 @@ export default defineComponent({
     const hasValue = computed(() => input.value.length > 0);
 
     const mainClasses = computed(() => [
-      style.bem(),
+      bemm(),
       "form-field",
-      hasValue && style.bem("", "has-value"),
+      hasValue && bemm("", "has-value"),
     ]);
 
     return {
-      style,
+      bemm,
       mainClasses,
       input,
       errors,

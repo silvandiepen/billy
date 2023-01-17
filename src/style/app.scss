@@ -1,20 +1,6 @@
-// // // @import "@sil/themer/use";
-
+@import "./theme.scss";
 @import "@sil/themer/app";
 
-// #app {
-//   @include property(
-//     (
-//       position: relative,
-//       font-family:
-//         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-//       -webkit-font-smoothing: antialiased,
-//       -moz-osx-font-smoothing: grayscale,
-//       color: variable(foreground),
-//       background-color: variable(background10),
-//     )
-//   );
-// }
 :root {
   --space: 2em;
   --border-radius: 4px;
@@ -61,17 +47,13 @@ h6,
 }
 
 .id-label {
-  @include property(
-    (
-      background-color: foreground,
-      border: 1px solid variable(foreground90),
-      color: foreground75,
-      display: inline-block,
-      padding: 0.25em 0.5em,
-      border-radius: borderRadius,
-      font-size: 0.75rem,
-    )
-  );
+  background-color: v(foreground);
+  border: 1px solid v(foreground90);
+  color: v(foreground75);
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: v(borderRadius);
+  font-size: 0.75rem;
 }
 
 p {
@@ -79,16 +61,13 @@ p {
 }
 
 hr {
-  @include property(
-    (
-      margin: 1.5em 0,
-      background-color: foreground50,
-      color: foreground50,
-      opacity: 0.5,
-      height: 1px,
-      border: none,
-    )
-  );
+  margin: 1.5em 0;
+
+  background-color: v(foreground50);
+  color: v(foreground50);
+  opacity: 0.5;
+  height: 1px;
+  border: none;
 }
 
 .debug {

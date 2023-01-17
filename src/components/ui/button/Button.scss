@@ -3,34 +3,22 @@
 .button {
   $block: &;
 
-  @include property(
-    (
-      color: white,
-      border-radius: borderRadius,
-      border: none,
-      padding: v(space-xs) v(space-xs),
-      display: flex,
-    )
-  );
+  color: white;
+  border-radius: variable(borderRadius);
+  border: none;
+  padding: variable(space-xs);
+  display: flex;
 
   &__text {
-    @include property(
-      (
-        font-size: 1em,
-        font-weight: 600,
-        line-height: 1em,
-        white-space: nowrap,
-        text-align: left,
-      )
-    );
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1em;
+    white-space: nowrap;
+    text-align: left;
   }
 
   &:hover {
-    @include property(
-      (
-        background-color: primary75,
-      )
-    );
+    background-color: variable(primary75);
   }
 
   // Size Modifiers
@@ -49,49 +37,37 @@
   &--ghost {
     &#{$block}--primary {
       background-color: transparent;
-      color: v(primary);
-      box-shadow: 0 0 0 1px v(primary) inset;
+      color: variable(primary);
+      box-shadow: 0 0 0 1px variable(primary) inset;
       &:hover {
-        background-color: v(primary);
-        color: v(primaryText);
+        background-color: variable(primary);
+        color: variable(primaryText);
       }
     }
   }
   &--icon-only {
-    padding: v(space-xs);
+    padding: variable(space-xs);
   }
 
   // Color Modifiers
 
   &--primary {
-    @include property(
-      (
-        background-color: primary,
-        color: primaryText,
-      )
-    );
+    background-color: variable(primary);
+    color: variable(primaryText);
   }
   &--secondary {
-    @include property(
-      (
-        background-color: secondary,
-        color: secondaryText,
-      )
-    );
+    background-color: variable(secondary);
+    color: variable(secondaryText);
     &:hover {
-      @include property(
-        (
-          background-color: secondary75,
-          color: secondary75Text,
-        )
-      );
+      background-color: variable(secondary75);
+      color: variable(secondary75Text);
     }
   }
 
   &--has-icon {
-    padding-left: v(space-xs);
+    padding-left: variable(space-xs);
     .icon {
-      margin-right: v(space-xs);
+      margin-right: variable(space-xs);
     }
   }
 

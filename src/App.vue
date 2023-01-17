@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, onMounted } from "vue";
 
 import { ControlPanelComponent } from "./components/ControlPanel";
 import { PreviewComponent } from "./components/Preview";
@@ -26,6 +26,9 @@ export default defineComponent({
     const showIntroduction = computed(() => {
       return isPristineInvoice();
     });
+    onMounted(()=>{
+      document.querySelector('body')?.setAttribute('color-mode','light');
+    })
     return { showIntroduction, SidepanelIdentfier, ModalIdentifier };
   },
 });

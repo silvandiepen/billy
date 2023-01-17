@@ -1,23 +1,23 @@
 <template>
-  <component :is="tag" v-if="client" :class="style.bem()">
-    <div :class="style.bem('container')">
-      <div :class="style.bem('column')">
-        <h4 :class="style.bem('name')">
+  <component :is="tag" v-if="client" :class="bemm()">
+    <div :class="bemm('container')">
+      <div :class="bemm('column')">
+        <h4 :class="bemm('name')">
           {{ getName(client) }}
         </h4>
         <div class="label">{{ client.id }}</div>
       </div>
-      <div :class="style.bem('column')">
-        <div :class="style.bem('details')">
+      <div :class="bemm('column')">
+        <div :class="bemm('details')">
           <template v-for="(key, index) in Object.keys(client)" :key="index">
-            <dl :class="style.bem('detail')" v-if="client[key]">
-              <dt :class="style.bem('title')">{{ t(`label.${key}`) }}</dt>
-              <dd :class="style.bem('description')">{{ client[key] }}</dd>
+            <dl :class="bemm('detail')" v-if="client[key]">
+              <dt :class="bemm('title')">{{ t(`label.${key}`) }}</dt>
+              <dd :class="bemm('description')">{{ client[key] }}</dd>
             </dl>
           </template>
         </div>
       </div>
-      <div :class="style.bem('column')">
+      <div :class="bemm('column')">
         <Knoppen :align="ButtonAlign.RIGHT">
           <Knop @click="setClientToState(client?.id || '')">Use</Knop>
           <Knop icon="delete" @click="removeClient(client?.id || '')"
@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { useI18n } from "vue-i18n";
 
 import { getName } from "../../composables";
@@ -71,7 +71,7 @@ export default defineComponent({
   setup(props) {
     const { t } = useI18n({});
 
-    const style = new Style("entity");
+    const bemm = useBemm("entity");
     const showDetails = ref(false);
 
     const removeClient = (id: string) => {
@@ -85,7 +85,7 @@ export default defineComponent({
 
     return {
       t,
-      style,
+      bemm,
       client: props.entityData,
       removeClient,
       ButtonType,

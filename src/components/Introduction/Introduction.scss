@@ -79,7 +79,7 @@
   }
 
   .container {
-    padding: calc(variable(space) * 4);
+    padding: calc(variable(space) * 2);
   }
   h2 {
     color: variable(primary);
@@ -96,6 +96,7 @@
       padding: 0.5em 0;
       line-height: 1.5;
       counter-increment: listCounter;
+      align-items: flex-start;
       &::before {
         border-radius: 50%;
         display: block;

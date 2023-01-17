@@ -1,9 +1,9 @@
 <template>
-  <component :is="tag" :class="style.bem()">
-    <header :class="style.bem('header')">
-      <div :class="style.bem('header-container')">
-        <h3 :class="style.bem('subheader')">{{ t(entity) }}</h3>
-        <div :class="style.bem('actions')">
+  <component :is="tag" :class="bemm()">
+    <header :class="bemm('header')">
+      <div :class="bemm('header-container')">
+        <h3 :class="bemm('subheader')">{{ t(entity) }}</h3>
+        <div :class="bemm('actions')">
           <UIButtonGroup>
             <UIButton
               @click="actions.update"
@@ -40,14 +40,14 @@
         </div>
       </div>
     </header>
-    <div :class="style.bem('view')" v-if="!isEditting">
+    <div :class="bemm('view')" v-if="!isEditting">
       <InvoiceEntityComponent
         :isForm="true"
         @click="isEditting = true"
         :entity="entity"
       />
     </div>
-    <div :class="style.bem('form')" v-if="isEditting">
+    <div :class="bemm('form')" v-if="isEditting">
       <UIFormText
         :label="t('label.companyName')"
         v-model="entityData.companyName"
@@ -101,7 +101,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { InvoiceEntity } from "../Invoice";
 import {
@@ -152,7 +152,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n({});
-    const style = new Style("invoice-form-entity");
+    const bemm = useBemm("invoice-form-entity");
 
     const isEditting = ref<Boolean>(false);
 
@@ -204,7 +204,7 @@ export default defineComponent({
     };
 
     return {
-      style,
+      bemm,
       t,
       isEditting,
       showUpdate,

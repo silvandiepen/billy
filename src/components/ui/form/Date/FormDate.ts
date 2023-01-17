@@ -1,4 +1,4 @@
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { defineComponent, ref, computed, watchEffect } from "vue";
 
 import { useInputValidator, minLength, maxLength } from "../Form.helpers";
@@ -32,7 +32,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const style = new Style("form-date");
+    const bemm = useBemm("form-date");
 
     const validators = ref<Function[]>([]);
 
@@ -52,13 +52,13 @@ export default defineComponent({
     });
 
     const mainClasses = computed(() => [
-      style.bem(),
+      bemm(),
       "form-field",
-      hasValue.value ? style.bem("", "has-value") : "",
+      hasValue.value ? bemm("", "has-value") : "",
     ]);
 
     return {
-      style,
+      bemm,
       input,
       errors,
       mainClasses,

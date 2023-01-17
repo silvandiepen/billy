@@ -1,4 +1,4 @@
-@import "@sil/themer/use";
+// @import "@sil/themer/use";
 
 .preview {
   --margin-y: calc((100vh - 27cm) / 2);
@@ -7,14 +7,14 @@
   // min-height: calc(27cm + (var(--margin-y) * 2));
   width: 100vw;
   overflow: scroll;
-  background-color: variable(background90);
+  background-color: v(background10);
 
   &__paper {
     margin: var(--margin-y) var(--margin-x, 0);
     width: 20cm;
     height: 27cm;
     flex-shrink: 0;
-    background-color: variable(background);
+    background-color: v(background);
     box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.1);
     transition: transform 0.5s ease-in-out;
     transform: translate(var(--transform-x-desktop, 0), 0) scale(1);

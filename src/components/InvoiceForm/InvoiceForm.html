@@ -1,15 +1,15 @@
-<section :class="style.bem('section')" v-if="invoice.current">
-  <h3 :class="style.bem('subheader')">{{t('setting',2)}}</h3>
-  <InvoiceSettingsForm :class="style.bem('settings')" />
+<section :class="bemm('section')" v-if="invoice.current">
+  <h3 :class="bemm('subheader')">{{t('setting',2)}}</h3>
+  <InvoiceSettingsForm :class="bemm('settings')" />
 </section>
 
-<section :class="style.bem('section')">
-  <h3 :class="style.bem('subheader')">{{t('item',2)}}</h3>
+<section :class="bemm('section')">
+  <h3 :class="bemm('subheader')">{{t('item',2)}}</h3>
 
-  <ul :class="style.bem('items')">
+  <ul :class="bemm('items')">
     <InvoiceItemForm
       tag="li"
-      :class="style.bem('item')"
+      :class="bemm('item')"
       :item="item"
       v-for="(item,index) in invoice.current.data"
       :key="index"
@@ -17,7 +17,7 @@
   </ul>
   <UIButtonGroup :align="ButtonAlign.CENTER">
     <UIButton
-      :class="style.bem('add')"
+      :class="bemm('add')"
       @click="actions.newEntry"
       :icon="ButtonIcon.ADD"
     >
@@ -26,29 +26,29 @@
   </UIButtonGroup>
 </section>
 
-<section :class="style.bem('section')">
+<section :class="bemm('section')">
   <InvoiceEntityForm
-    :class="style.bem('entity')"
+    :class="bemm('entity')"
     :entityData="invoice.client"
     :entity="Entity.CLIENT"
   />
 </section>
 
-<section :class="style.bem('section')">
+<section :class="bemm('section')">
   <InvoiceEntityForm
-    :class="style.bem('entity')"
+    :class="bemm('entity')"
     :entityData="invoice.seller"
     :entity="Entity.SELLER"
   />
 </section>
 
-<section :class="style.bem('section')">
-  <h3 :class="style.bem('subheader')">{{t('note',2)}}</h3>
+<section :class="bemm('section')">
+  <h3 :class="bemm('subheader')">{{t('note',2)}}</h3>
 
-  <ul :class="style.bem('items')">
+  <ul :class="bemm('items')">
     <InvoiceNoteForm
       tag="li"
-      :class="style.bem('item')"
+      :class="bemm('item')"
       :item="item"
       v-for="(item,index) in invoice.settings.notes"
       :key="index"
@@ -56,7 +56,7 @@
   </ul>
   <UIButtonGroup :align="ButtonAlign.CENTER">
     <UIButton
-      :class="style.bem('add')"
+      :class="bemm('add')"
       @click="actions.newNote"
       :icon="ButtonIcon.ADD"
     >
@@ -65,30 +65,30 @@
   </UIButtonGroup>
 </section>
 
-<section :class="style.bem('section')">
-  <h3 :class="style.bem('subheader')">{{t('footer')}}</h3>
+<section :class="bemm('section')">
+  <h3 :class="bemm('subheader')">{{t('footer')}}</h3>
   <UIFormTextArea v-model="invoice.settings.footer"></UIFormTextArea>
 </section>
 
 <section
-  :class="[style.bem('section'),style.bem('actions')]"
+  :class="[bemm('section'),bemm('actions')]"
   v-if="showActions"
 >
   <UIButtonGroup>
     <UIButton @click="actions.saveInvoice" v-if="!showSave" icon="arrow-down">
-      {{t('force-save')}}
+      {{t('action.force-save')}}
     </UIButton>
     <UIButton @click="actions.saveInvoice" v-if="showSave" icon="arrow-down">
-      {{t('save')}}
+      {{t('action.save')}}
     </UIButton>
     <UIButton @click="actions.saveInvoice" v-if="showUpdate" icon="arrow-down">
-      {{t('save')}}
+      {{t('action.save')}}
     </UIButton>
     <UIButton @click="actions.export" v-if="showExport" icon="arrow-down"
-      >{{t('export')}}</UIButton
+      >{{t('action.export')}}</UIButton
     >
     <UIButton @click="actions.toPdf" v-if="showExport" icon="arrow-down">
-      {{t('to-pdf')}}
+      {{t('action.to-pdf')}}
     </UIButton>
   </UIButtonGroup>
 </section>

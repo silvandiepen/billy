@@ -1,6 +1,6 @@
-<div :class="style.bem()">
-  <header :class="style.bem('header')">
-    <section :class="style.bem('title')">
+<div :class="bemm()">
+  <header :class="bemm('header')">
+    <section :class="bemm('title')">
       <Knop
         :type="ButtonType.ICON"
         :icon="ButtonIcon.ARROW_LEFT"
@@ -16,8 +16,8 @@
     </section>
   </header>
 
-  <main :class="style.bem('main')" v-if="show=='start'">
-    <section :class="style.bem('section')">
+  <main :class="bemm('main')" v-if="show=='start'">
+    <section :class="bemm('section')">
       <KnoppenGroup :direction="ButtonDirection.COLUMN">
         <Knop :icon="ButtonIcon.NEW" @click="showForm" :size="ButtonSize.LARGE"
           >{{t('action.new-invoice')}}</Knop
@@ -32,11 +32,11 @@
         >
       </KnoppenGroup>
     </section>
-    <section :class="style.bem('section')" v-if="savedInvoices.length > 0">
-      <h3 :class="style.bem('subheader')">
+    <section :class="bemm('section')" v-if="savedInvoices.length > 0">
+      <h3 :class="bemm('subheader')">
         {{ t('saved-invoice', savedInvoices.length)}}
       </h3>
-      <div :class="style.bem('invoices')">
+      <div :class="bemm('invoices')">
         <InvoiceItem
           @click="editForm"
           v-for="invoice in savedInvoices"
@@ -44,7 +44,7 @@
         />
       </div>
     </section>
-    <!-- <section :class="style.bem('section')">
+    <!-- <section :class="bemm('section')">
       <KnoppenGroup>
         <Knop :icon="ButtonIcon.FLAG_NL" @click="switchLanguage('nl')"
           >{{t('language.nl')}}</Knop
@@ -56,7 +56,7 @@
     </section> -->
   </main>
 
-  <main :class="style.bem('main')" v-if="show=='form'">
+  <main :class="bemm('main')" v-if="show=='form'">
     <InvoiceForm />
   </main>
 </div>

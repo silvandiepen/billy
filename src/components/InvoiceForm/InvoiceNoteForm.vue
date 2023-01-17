@@ -1,14 +1,14 @@
 <template>
-  <component :is="tag" :class="style.bem()">
+  <component :is="tag" :class="bemm()">
     <UIButton
       icon="delete"
       :size="ButtonSize.SMALL"
       :type="ButtonType.ICON"
-      :class="style.bem('delete')"
+      :class="bemm('delete')"
       @click="actions.removeNote(item.id)"
     />
     <div
-      :class="style.bem('preview')"
+      :class="bemm('preview')"
       v-if="!isEditting"
       @click="isEditting = !isEditting"
     >
@@ -16,7 +16,7 @@
       ><br />
       <div v-html="description"></div>
     </div>
-    <div :class="style.bem('form')" v-if="isEditting">
+    <div :class="bemm('form')" v-if="isEditting">
       <FormText :label="t('label.title')" v-model="item.title" />
       <FormTextArea
         :label="t('label.description')"
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { InvoiceNote } from "../Invoice";
 
@@ -65,7 +65,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n({});
-    const style = new Style("invoice-form-note");
+    const bemm = useBemm("invoice-form-note");
     const isEditting = ref(false);
 
     onMounted(() => {
@@ -79,7 +79,7 @@ export default defineComponent({
     });
 
     return {
-      style,
+      bemm,
       t,
       description,
       ButtonType,

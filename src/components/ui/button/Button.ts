@@ -1,5 +1,5 @@
 import { defineComponent, PropType, computed } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm, useClasses } from "bemm";
 import { IconComponent } from "../Icon";
 
 import {
@@ -31,25 +31,25 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    const style = new Style("button");
+    const bemm = useBemm("button");
+    const bemmClasses = useClasses("button");
+
     const iconOnly = props.type === ButtonType.ICON;
 
-    const classes = computed(() => {
-      let classNames = [];
-
-      classNames.push(style.bem());
-      classNames.push(style.bem("", props.size));
-      classNames.push(style.bem("", iconOnly ? "icon-only" : props.type));
-      classNames.push(style.bem("", props.color));
-      classNames.push(props.icon && !iconOnly ? style.bem("", "has-icon") : "");
-
-      return classNames;
-    });
+    const classes = computed(() =>
+      bemmClasses(
+        "",
+        { m: props.size },
+        { m: iconOnly ? "icon-only" : props.type },
+        { m: props.color },
+        props.icon && !iconOnly ? ["", "has-icon"] : null
+      )
+    );
 
     const hasSlot = (name: string) => !!slots[name];
 
     return {
-      style,
+      bemm,
       classes,
       iconOnly,
       hasSlot,

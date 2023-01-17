@@ -1,6 +1,6 @@
 <div :class="mainClasses">
-  <div :class="style.bem('container')">
-    <select :class="style.bem('control')" v-model="input">
+  <div :class="bemm('container')">
+    <select :class="bemm('control')" v-model="input">
       <option
         v-for="(option,index) in options"
         :key="index"
@@ -9,7 +9,7 @@
         {{option.label}}
       </option>
     </select>
-    <label :class="style.bem('label')">{{ label }}</label>
+    <label :class="bemm('label')">{{ label }}</label>
   </div>
 
   <FormError :errors="errors" />

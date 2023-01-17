@@ -1,6 +1,7 @@
 interface keys {
   invoice: string;
   "invoice-no": string;
+  "invoice-date": string;
   sum: string;
   vat: string;
   total: string;
@@ -39,6 +40,8 @@ interface keys {
   "action.save": string;
   "action.export": string;
   "action.new-invoice": string;
+  "action.force-save": string;
+  "action.to-pdf": string;
   "saved-invoice": string;
   "label.name": string;
   "label.id": string;
@@ -55,6 +58,7 @@ interface keys {
   "label.email": string;
   "label.country": string;
   "label.title": string;
+  "label.date": string;
   "label.description": string;
   "label.amount": string;
   "label.price": string;
@@ -73,6 +77,7 @@ interface keys {
 export const en: keys = {
   invoice: "Invoice",
   "invoice-no": "Invoice No.",
+  "invoice-date": "Invoice Date",
   sum: "Sum",
   vat: "Vat {count}%",
   total: "Total",
@@ -111,6 +116,8 @@ export const en: keys = {
   "action.save": "Save",
   "action.export": "Export",
   "action.new-invoice": "New Invoice",
+  "action.force-save": "Forceer opslaan",
+  "action.to-pdf":"Export PDF",
   "saved-invoice": "Saved Invoice | Saved Invoices",
   "label.id": "ID | IDs",
   "label.name": "Name | Names",
@@ -127,6 +134,7 @@ export const en: keys = {
   "label.website": "Website",
   "label.country": "Country | Countries",
   "label.title": "Title | Titles",
+  "label.date": "Date | Dates",
   "label.description": "Description",
   "label.amount": "Amount",
   "label.price": "Price",
@@ -144,6 +152,7 @@ export const en: keys = {
 export const nl: keys = {
   invoice: "Factuur",
   "invoice-no": "Factuur nr.",
+  "invoice-date": "Factuur Datum",
   sum: "Subtotaal",
   vat: "BTW {count}%",
   total: "Totaal",
@@ -168,6 +177,7 @@ export const nl: keys = {
   done: "Klaar",
 
   taxId: "BTW nummer {msg}",
+  
 
   "currency.eur": "Euro",
   "currency.usd": "USD",
@@ -182,6 +192,8 @@ export const nl: keys = {
   "action.save": "Opslaan",
   "action.export": "Exporteren",
   "action.new-invoice": "Nieuwe Factuur",
+  "action.force-save": "Forceer opslaan",
+  "action.to-pdf":"Export PDF",
   "saved-invoice": "Opgeslagen factuur | Opgeslagen facturen",
   "label.id": "ID | IDs",
   "label.name": "Naam | Namen",
@@ -198,6 +210,7 @@ export const nl: keys = {
   "label.website": "Website",
   "label.country": "Land | Landen",
   "label.title": "Titel | Titels",
+  "label.date": "Datum | Data",
   "label.description": "Omschrijving",
   "label.amount": "Hoeveel",
   "label.price": "Prijs",

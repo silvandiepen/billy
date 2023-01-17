@@ -1,38 +1,38 @@
 <template>
-  <component :is="tag" :class="style.bem()">
+  <component :is="tag" :class="bemm()">
     <div
-      :class="style.bem('preview')"
+      :class="bemm('preview')"
       v-if="!isEditting"
       @click="isEditting = !isEditting"
     >
-      <dl :class="[style.bem('list'), 'data-list']">
+      <dl :class="[bemm('list'), 'data-list']">
         <dt>{{ t("label.number") }}</dt>
         <dl>{{ invoice.current.number }}</dl>
       </dl>
-      <dl :class="[style.bem('list'), 'data-list']">
+      <dl :class="[bemm('list'), 'data-list']">
         <dt>{{ t("label.date") }}</dt>
         <dl>{{ invoice.current.date }}</dl>
       </dl>
-      <dl :class="[style.bem('list'), 'data-list']">
+      <dl :class="[bemm('list'), 'data-list']">
         <dt>{{ t("label.tax") }}</dt>
         <dl>{{ invoice.settings.tax }}</dl>
       </dl>
-      <dl :class="[style.bem('list'), 'data-list']">
+      <dl :class="[bemm('list'), 'data-list']">
         <dt>{{ t("label.currency") }}</dt>
         <dl>{{ invoice.settings.currency }}</dl>
       </dl>
-      <dl :class="[style.bem('list'), 'data-list']">
+      <dl :class="[bemm('list'), 'data-list']">
         <dt>{{ t("label.logo") }}</dt>
         <dl>
           <div
-            :class="style.bem('logo')"
+            :class="bemm('logo')"
             v-if="invoice.settings.logo"
             v-html="invoice.settings.logo"
           ></div>
         </dl>
       </dl>
     </div>
-    <div :class="style.bem('form')" v-if="isEditting">
+    <div :class="bemm('form')" v-if="isEditting">
       <FormNumber
         :label="`${t('invoice')} #`"
         v-model="invoice.current.number"
@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
 import { InvoiceNote } from "../Invoice";
 import {
@@ -97,7 +97,7 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n({});
-    const style = new Style("invoice-form-settings");
+    const bemm = useBemm("invoice-form-settings");
     const isEditting = ref(false);
 
     const currencyOptions = [
@@ -106,7 +106,7 @@ export default defineComponent({
     ];
 
     return {
-      style,
+      bemm,
       t,
       ButtonType,
       actions: {

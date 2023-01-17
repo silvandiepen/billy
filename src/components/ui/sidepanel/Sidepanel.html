@@ -1,15 +1,15 @@
 <div
-  :class="[style.bem(),style.bem('',position),style.bem('',isActive ? 'active' : 'inactive')]"
+  :class="[bemm(),bemm('',position),bemm('',isActive ? 'active' : 'inactive')]"
 >
-  <div @click="closeSidepanel" :class="style.bem('background')"></div>
+  <div @click="closeSidepanel" :class="bemm('background')"></div>
   <Knop
     :icon="isActive ? ButtonIcon.CLOSE : ButtonIcon.ARROW_LEFT"
     :type="ButtonType.ICON"
-    :class="style.bem('button')"
+    :class="bemm('button')"
     @click="toggleSidepanel"
   />
-  <aside :class="style.bem('panel')">
-    <div :class="style.bem('container')">
+  <aside :class="bemm('panel')">
+    <div :class="bemm('container')">
       <slot></slot>
     </div>
   </aside>

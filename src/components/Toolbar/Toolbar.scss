@@ -2,14 +2,14 @@
 
 .toolbar {
   position: fixed;
-  bottom: variable(space);
+  bottom: calc(#{variable(space)} / 1);
   left: 50%;
 
   border-radius: calc(variable(borderRadius) * 5);
-  background-color: variable(foreground);
+  background-color: variable(foreground25);
   transform: translateX(-50%) translateY(50%);
   color: variable(foregroundText);
-  padding: calc(variable(space) / 2);
+  padding: calc(variable(space) / 3);
   transform: translateX(-50%) translateY(0%);
   opacity: 1;
   z-index: 5;
@@ -17,6 +17,10 @@
   //   transform: translateX(-50%) translateY(0%);
   //   opacity: 1;
   // }
+
+  &::before{
+    content:""
+  }
   @media print {
     display: none;
   }

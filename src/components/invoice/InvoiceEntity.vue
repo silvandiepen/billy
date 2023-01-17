@@ -1,13 +1,13 @@
 <template>
-  <div :class="[style.bem(), isForm && style.bem('', 'is-form')]">
+  <div :class="[bemm(), isForm && bemm('', 'is-form')]">
     <div class="id-label">
       {{ entityData.id }}
     </div>
-    <div :class="style.bem('company-name')" v-if="entityData.companyName">
+    <div :class="bemm('company-name')" v-if="entityData.companyName">
       <strong>{{ entityData.companyName }}</strong>
     </div>
     <div
-      :class="style.bem('name')"
+      :class="bemm('name')"
       v-if="entityData.firstName || entityData.lastName"
     >
       <component
@@ -26,24 +26,24 @@
         >{{ entityData.lastName }}</component
       >
     </div>
-    <div :class="style.bem('street')" v-if="entityData.street">
-      <span :class="style.bem('street-name')">{{ entityData.street }}</span>
-      <span :class="style.bem('street-number')"> {{ entityData.number }}</span>
+    <div :class="bemm('street')" v-if="entityData.street">
+      <span :class="bemm('street-name')">{{ entityData.street }}</span>
+      <span :class="bemm('street-number')"> {{ entityData.number }}</span>
     </div>
-    <div :class="style.bem('additional')" v-if="entityData.additional">
+    <div :class="bemm('additional')" v-if="entityData.additional">
       {{ entityData.additional }}
     </div>
-    <div :class="style.bem('postalcode')" v-if="entityData.postalcode">
+    <div :class="bemm('postalcode')" v-if="entityData.postalcode">
       {{ entityData.postalcode }}
     </div>
-    <div :class="style.bem('city')" v-if="entityData.city">
+    <div :class="bemm('city')" v-if="entityData.city">
       {{ entityData.city }}
     </div>
-    <div :class="style.bem('country')" v-if="entityData.country">
+    <div :class="bemm('country')" v-if="entityData.country">
       {{ entityData.country }}
     </div>
 
-    <div :class="style.bem('tax-id')" v-if="entityData.taxId">
+    <div :class="bemm('tax-id')" v-if="entityData.taxId">
       {{ t("taxId", { msg: entityData.taxId }) }}
     </div>
 
@@ -56,19 +56,19 @@
       "
     /> -->
 
-    <!-- <div :class="style.bem('bank-name')" v-if="entity.bank.name">
+    <!-- <div :class="bemm('bank-name')" v-if="entity.bank.name">
       {{ entityData.bank.name }}
     </div>
-    <div :class="style.bem('bank-swift')" v-if="entity.bank.swift">
+    <div :class="bemm('bank-swift')" v-if="entity.bank.swift">
       {{ entityData.bank.swift }}
     </div>
-    <div :class="style.bem('bank-account')" v-if="entity.bank.account">
+    <div :class="bemm('bank-account')" v-if="entity.bank.account">
       {{ entityData.bank.account }}
     </div>
-    <div :class="style.bem('bank-beneficiary')" v-if="entity.bank.beneficiary">
+    <div :class="bemm('bank-beneficiary')" v-if="entity.bank.beneficiary">
       {{ entityData.bank.beneficiary }}
     </div>
-    <div :class="style.bem('tax-id')" v-if="entity.taxId">
+    <div :class="bemm('tax-id')" v-if="entity.taxId">
       {{ entityData.taxId }}
     </div> -->
 
@@ -81,16 +81,16 @@
       "
     />
 
-    <div :class="style.bem('phone')" v-if="entityData.phone">
+    <div :class="bemm('phone')" v-if="entityData.phone">
       {{ entityData.phone }}
     </div>
-    <div :class="style.bem('fax')" v-if="entityData.fax">
+    <div :class="bemm('fax')" v-if="entityData.fax">
       {{ entityData.fax }}
     </div>
-    <div :class="style.bem('email')" v-if="entityData.email">
+    <div :class="bemm('email')" v-if="entityData.email">
       {{ entityData.email }}
     </div>
-    <div :class="style.bem('website')" v-if="entityData.website">
+    <div :class="bemm('website')" v-if="entityData.website">
       {{ entityData.website }}
     </div>
   </div>
@@ -98,7 +98,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 import { useI18n } from "vue-i18n";
 import { Entity } from "../Entity";
 
@@ -126,7 +126,7 @@ export default defineComponent({
         : getInvoiceSeller();
     });
 
-    const style = new Style("invoice-entity");
+    const bemm = useBemm("invoice-entity");
 
     let format = {
       en: [
@@ -157,7 +157,7 @@ export default defineComponent({
       ],
     };
 
-    return { t, style, format, entityData };
+    return { t, bemm, format, entityData };
   },
 });
 </script>

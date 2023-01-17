@@ -1,7 +1,7 @@
 <template>
-  <ul v-if="errors" :class="style.bem('errors')">
+  <ul v-if="errors" :class="bemm('errors')">
     <li
-      :class="style.bem('error')"
+      :class="bemm('error')"
       v-for="(error, index) in errors"
       :key="index"
     >
@@ -13,9 +13,9 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Style } from "@sil/tools";
+import { useBemm } from "bemm";
 
-import { FormFieldError } from "../form.model";
+import { FormFieldError } from "../Form.model"
 
 export default defineComponent({
   props: {
@@ -25,8 +25,8 @@ export default defineComponent({
     },
   },
   setup() {
-    const style = new Style("form-field");
-    return { style };
+    const bemm = useBemm("form-field");
+    return { bemm };
   },
 });
 </script>

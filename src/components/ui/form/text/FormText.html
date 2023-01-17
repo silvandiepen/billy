@@ -1,12 +1,12 @@
 <div :class="mainClasses">
-  <div :class="style.bem('container')">
+  <div :class="bemm('container')">
     <input
-      :class="style.bem('control')"
+      :class="bemm('control')"
       :placeholder="placeholder"
       type="text"
       v-model="input"
     />
-    <label :class="style.bem('label')">{{ label }}</label>
+    <label :class="bemm('label')">{{ label }}</label>
   </div>
 
   <FormErrors :errors="errors" />
