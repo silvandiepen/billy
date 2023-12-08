@@ -10,7 +10,7 @@
   "dependencies": {
     "@sil/create-document": "^0.0.3",
     "@sil/tools": "^0.1.15",
-    "bemm": "^1.0.0",
+    "bemm": "^1.0.4",
     "date-fns": "^2.29.3",
     "html2pdf.js": "^0.10.1",
     "markdown-it": "^13.0.1",
