@@ -29,7 +29,6 @@ export interface InvoiceItem {
     description: string
     quantity: number
     price: number
-    total: number
     discount: number
     taxRate: number
     unit: string
@@ -91,7 +90,6 @@ export const BlankItem: InvoiceItem = {
     description: '',
     quantity: 0,
     price: 0,
-    total: 0,
     discount: 0,
     unit: '',
     taxRate: -1

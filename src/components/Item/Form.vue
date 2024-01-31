@@ -5,7 +5,6 @@
     <InputNumber label="quantity" type="number" v-model="theModel.quantity" :class="bemm('quantity')"
         placeholder="Quantity" />
     <InputNumber label="price" v-model="theModel.price" :class="bemm('price')" placeholder="Price" />
-    <InputNumber label="total" v-model="theModel.total" :class="bemm('total')" placeholder="Total" />
     <InputText label="unit" v-model="theModel.unit" :class="bemm('unit')" placeholder="Unit" />
     <InputNumber label="discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
     <InputNumber label="tax rate" v-model="theModel.taxRate" :class="bemm('tax-rate')" placeholder="Custom Tax Rate" />

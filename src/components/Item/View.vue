@@ -3,8 +3,7 @@
         <div :class="[bemm('column'), bemm('column', 'details')]">
             <span :class="bemm('item', 'title')">{{ item.title }}</span>
             <span :class="bemm('item', 'description')">{{ item.description }}</span>
-
-            <span :class="bemm('item', 'tax-rate')">{{ item.taxRate }}</span>
+            <span :class="bemm('item', 'tax-rate')" v-if="item.taxRate > -1">{{ item.taxRate }}</span>
         </div>
 
         <div :class="[bemm('column'), bemm('column', 'quantity')]">
