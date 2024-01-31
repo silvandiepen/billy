@@ -5,6 +5,8 @@ export const enrichContent = (content: string, invoice: Invoice) => {
 
 
     const replacers: { [key: string]: string } = {
+        phone: invoice.sender.phone,
+        email: invoice.sender.email,
         amount: formatCurrency(getTotal(invoice)),
         beneficiary: invoice.sender.beneficiary,
         iban: invoice.sender.iban,

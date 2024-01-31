@@ -4,12 +4,13 @@
             {{ label }}
         </label>
         <div :class="bemm('control-container')">
-        <textarea :class="bemm('control')" :placeholder="placeholder" v-model="value"></textarea>
-  </div>
-  </div>
+            <textarea v-on:input="autoGrow" :style="`height: ${controlHeight}px`" :class="bemm('control')" :placeholder="placeholder" v-model="value"></textarea>
+        </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from "vue";
 import { useBemm } from 'bemm';
 const bemm = useBemm('input-textarea');
 
@@ -24,6 +25,16 @@ defineProps({
     }
 })
 const value = defineModel({ type: String })
+
+const controlHeight = ref(0);
+
+const autoGrow = (element: HTMLTextAreaElement) => {
+    controlHeight.value = 5;
+    controlHeight.value = (element.scrollHeight);
+}
+onMounted(() => {
+    autoGrow(document.querySelector(`.${bemm('control')}`) as HTMLTextAreaElement);
+});
 </script>
 
 
