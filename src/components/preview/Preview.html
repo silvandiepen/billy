@@ -1,9 +1,0 @@
-<div :class="bemm()">
-  <div
-    :class="[bemm('paper'),allowZoom ?  'allow-zoom' : 'no-zoom']"
-    @click="allowZoom = !allowZoom"
-    id="invoice-document"
-  >
-    <slot></slot>
-  </div>
-</div>

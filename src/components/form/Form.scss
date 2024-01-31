@@ -1,0 +1,144 @@
+@mixin inputBase() {
+    color: currentColor;
+
+    &__control {
+
+        padding: .75em;
+        background-color: transparent;
+        border: none;
+        font-size: 1em;
+        width: 100%;
+        color: currentColor;
+        position: relative;
+        z-index: 2;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            opacity: .25;
+        }
+    }
+
+    &__control-container {
+
+        position: relative;
+        width: fit-content;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .25;
+            border-radius: 4px;
+            border: 1px solid currentColor;
+
+            content: "";
+            width: 100%;
+            height: 100%;
+        }
+
+        &:has(:focus) {
+            &::before {
+                opacity: 1;
+                border: 1px solid var(--secondary);
+            }
+        }
+
+    }
+
+    &__label {
+        font-size: .875em;
+    }
+}
+
+@mixin inputTextarea {
+    &__control {
+        font-size: .875em;
+        font-family: inherit;
+
+        padding: .5em;
+        height: 5em;
+    }
+}
+
+@mixin inputRange {
+    &__control {
+
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
+        overflow: hidden;
+        border-radius: 16px;
+
+        &::-webkit-slider-runnable-track {
+            height: 15px;
+            background: #ccc;
+            border-radius: 16px;
+        }
+
+        &::-moz-range-track {
+            height: 15px;
+            background: #ccc;
+            border-radius: 16px;
+        }
+
+        &::-webkit-slider-thumb {
+            /* removing default appearance */
+            -webkit-appearance: none;
+            appearance: none;
+            /* creating a custom design */
+            height: 15px;
+            width: 15px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 2px solid #f50;
+            /*  slider progress trick  */
+            box-shadow: -407px 0 0 400px #f50;
+        }
+
+        &::-moz-range-thumb {
+            height: 15px;
+            width: 15px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 1px solid #f50;
+            /*  slider progress trick  */
+            box-shadow: -407px 0 0 400px #f50;
+        }
+
+    }
+
+
+
+
+}
+
+
+.input-date {
+    @include inputBase();
+}
+
+.input-text {
+    @include inputBase();
+}
+
+.input-textarea {
+    @include inputBase();
+    @include inputTextarea();
+}
+
+.input-number {
+    @include inputBase();
+}
+
+.input-select {
+    @include inputBase();
+}
+.input-range{
+
+    @include inputRange();
+}

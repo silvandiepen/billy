@@ -1,0 +1,203 @@
+
+<template>
+  <div :class="bemm()">
+
+    <div :class="bemm('tools')">
+      <InputRange v-if="!autoSize" :label="`Preview Size`" v-model="previewSize" :min="0.2" :max="1.5" :step="0.01" />
+      <InputCheckbox :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
+    </div>
+
+    <div :class="bemm('paper')" :style="`--preview-size: ${previewSize}cm`">
+      <div :class="bemm('invoice')">
+
+        <header :class="bemm('header')">
+          <EntityView :entity="invoice.receiver" label="to" />
+          <EntityView :entity="invoice.sender" label="from" />
+        </header>
+
+        <div :class="bemm('details')">
+          <DetailsView :invoice="invoice"></DetailsView>
+        </div>
+
+        <main :class="bemm('main')">
+          <ItemListView :invoice="invoice"></ItemListView>
+          <TotalView :invoice="invoice"></TotalView>
+        </main>
+        <footer :class="bemm('footer')">
+          <NoteListView :invoice="invoice"></NoteListView>
+        </footer>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { useBemm } from "bemm";
+import { useInvoice, useUI } from "@/composables";
+
+import DetailsView from "@/components/Details/View.vue";
+import EntityView from "@/components/Entity/View.vue";
+import ItemListView from "@/components/Item/List.vue";
+import NoteListView from "@/components/Note/List.vue";
+import TotalView from "@/components/Total/View.vue";
+import InputRange from "@/components/form/InputRange.vue";
+import InputCheckbox from "@/components/form/InputCheckbox.vue";
+
+const { invoice } = useInvoice();
+const bemm = useBemm("preview");
+
+
+
+const autoSize = ref(true);
+
+
+
+const { previewSize } = useUI();
+
+
+const setAutoSize = () => {
+  previewSize.value = (window.innerWidth / 1000) - 0.25;
+
+}
+
+onMounted(() => {
+  previewSize.value = 1;
+
+  if (autoSize.value) {
+    setAutoSize();
+  }
+  window.addEventListener("resize", () => {
+    if (autoSize.value) {
+      setAutoSize()
+    }
+  });
+})
+
+
+</script>
+
+
+
+<style lang="scss">
+.preview {
+  width: 100%;
+  height: 100%;
+
+  padding-top: 5em;
+
+  &__tools {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    color: white;
+    background-color: var(--dark);
+    display: flex;
+    gap: var(--space);
+    padding: var(--space);
+    margin: var(--space-s);
+    border-radius: var(--border-radius);
+    opacity: .125;
+    &:hover{
+      opacity: 1; 
+    }
+  }
+
+  &__paper {
+
+
+    // width: 210mm;
+    // height: 297mm;
+
+    margin: auto;
+    display: block;
+    font-size: var(--preview-size, 1cm);
+    width: 21em;
+    height: 29.7em;
+    border: 1px solid #ccc;
+    background-color: var(--light);
+    color: var(--dark);
+
+  }
+
+  &__invoice {
+    color: black;
+    font-size: .35em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  &__footer {
+    align-self: flex-end;
+    justify-self: flex-end;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  &__debug {
+    max-height: 80vh;
+    overflow: scroll;
+    background-color: rgba(0, 0, 0, .75);
+    font-size: .5em;
+    color: white;
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    border-radius: .25em;
+
+    &--active {
+      opacity: 1
+    }
+
+    &--inactive {
+      opacity: .1;
+
+      max-height: 20vh;
+    }
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media print {
+  .debug {
+    display: none;
+  }
+
+  .preview {
+    padding-top: 0;
+  }
+
+  .preview__tools {
+    display: none;
+  }
+
+  .preview__paper {
+    font-size: .99cm;
+    border: none;
+  }
+
+  .preview__invoice {
+    // padding: 0; 
+  }
+
+  @page {
+    size: portrait;
+    margin: 0%
+  }
+}
+</style>
