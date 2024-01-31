@@ -7,7 +7,7 @@
       <InputCheckbox :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
     </div>
 
-    <div :class="bemm('paper')" :style="`--preview-size: ${previewSize}cm`">
+    <div :class="bemm('paper')" :style="`--preview-size: ${previewSize}cm; --primary: ${invoice.details.color}`">
       <div :class="bemm('invoice')">
 
         <header :class="bemm('header')">
@@ -33,9 +33,10 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, PropType } from "vue";
 import { useBemm } from "bemm";
-import { useInvoice, useUI } from "@/composables";
+import { useUI } from "@/composables";
+import { Invoice } from "@/types";
 
 import DetailsView from "@/components/Details/View.vue";
 import EntityView from "@/components/Entity/View.vue";
@@ -45,7 +46,13 @@ import TotalView from "@/components/Total/View.vue";
 import InputRange from "@/components/form/InputRange.vue";
 import InputCheckbox from "@/components/form/InputCheckbox.vue";
 
-const { invoice } = useInvoice();
+defineProps({
+  invoice: {
+    type: Object as PropType<Invoice>,
+    required: true
+  },
+})
+
 const bemm = useBemm("preview");
 
 
@@ -83,9 +90,11 @@ onMounted(() => {
 <style lang="scss">
 .preview {
   width: 100%;
-  height: 100%;
+  height: fit-content;
+  min-height: 100vh;
 
   padding-top: 5em;
+  padding-bottom: 5em;
 
   &__tools {
     position: absolute;
@@ -100,8 +109,9 @@ onMounted(() => {
     margin: var(--space-s);
     border-radius: var(--border-radius);
     opacity: .125;
-    &:hover{
-      opacity: 1; 
+
+    &:hover {
+      opacity: 1;
     }
   }
 

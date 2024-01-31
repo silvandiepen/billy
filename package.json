@@ -12,11 +12,14 @@
     "@sil/format": "^0.0.9",
     "@sil/id": "^0.0.7",
     "@sil/storage": "^0.0.7",
+    "crypto-js": "^4.2.0",
     "mitt": "^3.0.1",
     "open-icon": "^0.0.7",
-    "vue": "^3.3.11"
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.11.10",
     "@vitejs/plugin-vue": "^4.5.2",
     "bemm": "^1.0.4",

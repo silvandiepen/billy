@@ -165,8 +165,8 @@ const isCurrent = (entity: Entity, current: Entity) => {
     }
 
     &__entity-name {
-        background-color: var(--secondary);
-        color: var(--secondary-text);
+        background-color: var(--primary);
+        color: var(--primary-text);
         padding: var(--space-s);
         border-radius: var(--border-radius);
     }
@@ -196,7 +196,7 @@ const isCurrent = (entity: Entity, current: Entity) => {
         padding: var(--space);
 
         &:hover {
-            border: 1px solid var(--secondary);
+            border: 1px solid var(--primary);
         }
 
         &--current {

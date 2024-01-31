@@ -31,7 +31,7 @@ const props = defineProps({
     },
     type: {
         type: String as PropType<'primary' | 'secondary' | 'ghost'>,
-        default: 'secondary'
+        default: 'primary'
     }
 })
 

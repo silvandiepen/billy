@@ -3,7 +3,7 @@
         <ul :class="[bemm('list'), bemm('list', numberToWords(invoice.notes.length))]">
             <li :class="bemm('item')" v-for="note in invoice.notes">
                 <div :class="bemm('note')">
-                    <NoteView :note="note" />
+                    <NoteView :note="note" :invoice="invoice" />
                 </div>
             </li>
         </ul>

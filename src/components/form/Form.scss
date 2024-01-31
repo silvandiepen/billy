@@ -43,7 +43,7 @@
         &:has(:focus) {
             &::before {
                 opacity: 1;
-                border: 1px solid var(--secondary);
+                border: 1px solid var(--primary);
             }
         }
 
@@ -139,7 +139,8 @@
 .input-select {
     @include inputBase();
 }
-.input-range{
+
+.input-range {
 
     @include inputRange();
 }

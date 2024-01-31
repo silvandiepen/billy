@@ -78,10 +78,11 @@ const taxRates = computed(() => {
             width: 100%
         }
     }
+
     &__subtotal,
     &__shipping,
-    &__tax{
-       opacity: .5;
+    &__tax {
+        opacity: .5;
     }
 
     &__value {

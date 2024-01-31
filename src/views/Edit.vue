@@ -1,27 +1,24 @@
+<script setup lang="ts">
+import EditInvoice from "@/components/EditInvoice.vue";
+import Preview from "@/components/Preview.vue";
+import SideBar from "@/components/SideBar.vue";
 
+import { useInvoice } from "@/composables";
+const { invoice } = useInvoice();
+</script>
 
 <template>
-  <router-view :key="routeKey"></router-view>
+  <div class="container">
+    <div class="column column--edit">
+      <SideBar>
+        <EditInvoice />
+      </SideBar>
+    </div>
+    <div class="container column--preview">
+      <Preview :invoice="invoice"></Preview>
+    </div>
+  </div>
 </template>
-
-<script setup lang="ts">
-import { ref, watch } from "vue";
-
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-const routeKey = ref();
-watch(
-  () => route,
-  () => {
-    routeKey.value = `${route.path}-${route.params.level}`;
-  },
-  { immediate: true, deep: true }
-);
-
-
-
-</script>
 
 <style lang="scss">
 .container {
@@ -66,4 +63,3 @@ watch(
   }
 }
 </style>
-

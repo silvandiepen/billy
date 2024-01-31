@@ -70,7 +70,8 @@ export interface Invoice {
         notes: string[],
         taxRate: number,
         discount: number,
-        shipping: number
+        shipping: number,
+        color: string
     },
     notes: Note[],
     items: InvoiceItem[]

@@ -71,9 +71,9 @@ const theModel = computed({
     hr {
         margin: var(--space-l) 0;
         border: none;
-        background-color: var(--secondary);
+        background-color: var(--primary);
         height: 1px;
-        color: var(--secondary)
+        color: var(--primary)
     }
 
     display: flex;

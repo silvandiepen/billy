@@ -37,7 +37,7 @@ const bemm = useBemm('view-edit');
 
 <style lang="scss">
 .view-edit {
-    border: 1px solid var(--secondary);
+    border: 1px solid var(--primary);
     padding: .5em;
     border-radius: var(--border-radius);
 
@@ -52,7 +52,7 @@ const bemm = useBemm('view-edit');
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--secondary);
+        background-color: var(--primary);
         opacity: .125;
         z-index: -1;
         border-radius: inherit;

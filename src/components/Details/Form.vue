@@ -8,6 +8,7 @@
     <InputNumber label="tax Rate" v-model="theModel.taxRate" :class="bemm('taxRate')" placeholder="Tax Rate" />
     <InputNumber label="discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
     <InputNumber label="shipping" v-model="theModel.shipping" :class="bemm('shippping')" placeholder="Shipping" />
+    <InputColor label="color" v-model="theModel.color" :class="bemm('color')" placeholder="Color" />
 </template>
 
 <script lang="ts" setup>
@@ -15,7 +16,7 @@ import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
 
-import { InputNumber, InputText, InputDate, InputSelect } from "@/components/form";
+import { InputNumber, InputText, InputDate, InputSelect, InputColor } from "@/components/form";
 import { Currency, Invoice, Locales } from '@/types';
 
 

@@ -7,16 +7,18 @@
 import { PropType } from 'vue';
 import { useBemm } from 'bemm';
 
-import { Note } from "@/types"
+import { Note, Invoice } from "@/types"
 import { enrichContent } from '@/utils';
-import { useInvoice } from '@/composables';
 
 const bemm = useBemm('note-view');
 
-const { invoice } = useInvoice();
 
 
 defineProps({
+    invoice: {
+        type: Object as PropType<Invoice>,
+        required: true
+    },
     note: {
         type: Object as PropType<Note>,
         required: true
