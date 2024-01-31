@@ -122,7 +122,8 @@ export const BlankDetails: Invoice['details'] = {
     discount: 0,
     shipping: 0,
     currency: Currency.EUR,
-    locale: Locales['en-US']
+    locale: Locales['en-US'],
+    color: '#ff0099'
 }
 export const BlankInvoice: Invoice = {
     details: BlankDetails,
