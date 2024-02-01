@@ -1,4 +1,6 @@
 <template>
+    <Form>
+
     <InputText label="Title" v-model="theModel.title" :class="bemm('title')" placeholder="Title" />
     <InputTextArea label="Description" v-model="theModel.description" :class="bemm('description')" placeholder="Description" />
     <InputText label="SKU" v-model="theModel.sku" :class="bemm('sku')" placeholder="SKU" />
@@ -8,6 +10,8 @@
     <InputText label="unit" v-model="theModel.unit" :class="bemm('unit')" placeholder="Unit" />
     <InputNumber label="discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
     <InputNumber label="tax rate" v-model="theModel.taxRate" :class="bemm('tax-rate')" placeholder="Custom Tax Rate" />
+</Form>
+
 </template>
 
 
@@ -15,7 +19,7 @@
 import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
-import { InputText, InputNumber, InputTextArea } from "@/components/form";
+import { InputText, InputNumber, InputTextArea, Form } from "@/components/form";
 import { InvoiceItem } from '@/types';
 
 

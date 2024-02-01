@@ -184,6 +184,12 @@ onMounted(() => {
 }
 
 @media print {
+  :root{
+    background-color: white;
+  }
+  body,html{
+    background-color: white;
+  }
   .debug {
     display: none;
   }

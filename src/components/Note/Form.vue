@@ -2,8 +2,11 @@
     <div :class="bemm()">
         <div :class="bemm('column')">
 
-            <InputText label="Title" v-model="theModel.title" :class="bemm('title')" placeholder="Title" />
-            <InputTextArea label="Content" v-model="theModel.content" :class="bemm('content')" placeholder="Content" />
+            <Form>
+
+                <InputText label="Title" v-model="theModel.title" :class="bemm('title')" placeholder="Title" />
+                <InputTextArea label="Content" v-model="theModel.content" :class="bemm('content')" placeholder="Content" />
+            </Form>
         </div>
 
 
@@ -60,7 +63,7 @@
 import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
-import { InputText, InputTextArea } from "@/components/form";
+import { InputText, InputTextArea, Form } from "@/components/form";
 import { Note } from '@/types';
 import { enrichContent } from "@/utils";
 

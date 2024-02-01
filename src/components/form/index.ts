@@ -6,5 +6,6 @@ import InputSelect from "./InputSelect.vue";
 import InputColor from "./InputColor.vue";
 import InputRange from "./InputRange.vue";
 import InputCheckbox from "./InputCheckbox.vue";
+import Form from "./Form.vue";
 
-export { InputNumber, InputText, InputDate, InputTextArea, InputSelect, InputColor, InputRange, InputCheckbox }
+export { InputNumber, InputText, InputDate, InputTextArea, InputSelect, InputColor, InputRange, InputCheckbox, Form }

@@ -36,7 +36,6 @@ const close = () => {
 
 onMounted(() => {
   eventBus.on(EventChannel.UI, (data: any) => {
-    console.log(data);
     if (data.type === EventType.POPUP && data.id === props.id) {
 
       if (active.value) {

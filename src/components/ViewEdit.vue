@@ -1,18 +1,23 @@
 <template>
     <div :class="bemm()">
-        <Button :icon="Icons.EDIT" @click="showPopup({ id: currentId })"></Button>
-        <div :class="bemm('view')">
-            <slot name="view"></slot>
-        </div>
-        <!-- <div :class="bemm('edit')" v-if="mode == 'edit'"> -->
-        <PopUp :id="currentId">
-            <div :class="bemm('form')">
-                <slot name="edit"></slot>
-            </div>
+        <Card>
 
-        </PopUp>
+            <Button :icon="Icons.EDIT" @click="showPopup({ id: currentId })"></Button>
+            <div :class="bemm('view')">
+                <slot name="view"></slot>
+            </div>
+        </Card>
+
+        <!-- <div :class="bemm('edit')" v-if="mode == 'edit'"> -->
+
         <!-- </div> -->
     </div>
+    <PopUp :id="currentId">
+        <div :class="bemm('form')">
+            <slot name="edit"></slot>
+        </div>
+
+    </PopUp>
 </template>
 
 <script lang="ts" setup>
@@ -26,6 +31,7 @@ import { showPopup } from '@/utils';
 
 import Button from "@/components/Button.vue";
 import PopUp from '@/components/PopUp.vue';
+import Card from '@/components/Card.vue';
 
 const id = useId();
 const currentId = ref(id());
@@ -37,32 +43,25 @@ const bemm = useBemm('view-edit');
 
 <style lang="scss">
 .view-edit {
-    border: 1px solid var(--primary);
-    padding: .5em;
-    border-radius: var(--border-radius);
 
-    position: relative;
-    // z-index: 1;
 
-    &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        display: block;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--primary);
-        opacity: .125;
-        z-index: -1;
-        border-radius: inherit;
-    }
 
     .button {
         position: absolute;
         top: 0;
         right: 0;
-        transform: translate(50%, -50%);
+        transform: scale(0) translate(50%, -50%);
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: scale(1) translate(50%, -50%);
+        }
+    }
+
+    &:hover {
+        .button {
+            transform: scale(1) translate(50%, -50%);
+        }
     }
 
     &__view {

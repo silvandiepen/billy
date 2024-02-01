@@ -1,11 +1,5 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,10 +12,12 @@
   --border-radius: 3px;
   /* --primary: #abdb7c; */
   --primary: #1aa8cc;
+  --primary-rgb: 26, 168, 204;
   --primary-text: var(--light);
   --border-radius: 4px;
 
   --secondary: #79eec7;
+  --secondary-rgb: 121, 238, 199;
   --secondary-text: var(--dark);
 
   --space-xs: 0.33em;
@@ -30,8 +26,17 @@
   --space-l: 2em;
   --space-xl: 3em;
 
-}
+  --background: var(--dark);
+  --foreground: var(--light);
 
+}
+body{
+  background: var(--background);
+  color: var(--foreground);
+  background: radial-gradient(var(--dark),black);
+  background-size: 100% 100%;
+  min-height: 100vh;
+}
 
 
 body,

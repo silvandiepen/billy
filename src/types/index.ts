@@ -59,7 +59,7 @@ export const Locales = {
 export type Locales = typeof Locales[keyof typeof Locales];
 
 export interface Invoice {
-
+    id: string;
     details: {
         number: string
         date: Date
@@ -126,6 +126,7 @@ export const BlankDetails: Invoice['details'] = {
     color: '#ff0099'
 }
 export const BlankInvoice: Invoice = {
+    id: "",
     details: BlankDetails,
     items: [],
     notes: [],

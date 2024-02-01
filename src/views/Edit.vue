@@ -38,6 +38,8 @@ const { invoice } = useInvoice();
     width: fit-content;
     max-height: 100vh;
     overflow: scroll;
+    background-image: linear-gradient(to right bottom, black, var(--background));
+
   }
 
   &--preview {

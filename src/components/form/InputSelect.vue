@@ -39,7 +39,6 @@ const props = defineProps({
 const value = defineModel()
 
 const optionsObject = computed<Option[]>(() => {
-    console.log(props.options);
     return props.options.map((option: string | Option) => {
         if (typeof option === 'string') {
             return {
