@@ -110,7 +110,7 @@ const pointermoveHandler = (ev: PointerEv) => {
   if (evCache.value.length === 2) {
     const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);   
     prevDiff.value = curDiff;
-    previewSize.value = curDiff / 500;
+    previewSize.value = (curDiff / 250) + 0.5;
   }
 }
 
