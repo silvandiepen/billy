@@ -1,11 +1,11 @@
 <template>
     <div :class="bemm()">
-        <label :class="bemm('label')" v-if="label">
+        <div :class="bemm('control-container')">
+            <input id="test" :class="bemm('control')" type="checkbox" v-model="value" />
+        </div>
+        <label for="test" :class="bemm('label')" v-if="label">
             {{ label }}
         </label>
-        <div :class="bemm('control-container')">
-            <input :class="bemm('control')" type="checkbox" v-model="value" />
-        </div>
     </div>
 </template>
 

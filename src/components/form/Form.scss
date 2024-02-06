@@ -32,9 +32,9 @@
             top: 0;
             left: 0;
             opacity: 1;
-            border: 2px solid rgba(255,255,255,.25);
+            border: 2px solid rgba(255, 255, 255, .25);
             border-radius: 4px;
- 
+
             content: "";
             width: 100%;
             height: 100%;
@@ -43,7 +43,7 @@
         &:has(:focus) {
             &::before {
                 opacity: 1;
-                border: 2px solid rgba(var(--primary-rgb),.5);
+                border: 2px solid rgba(var(--primary-rgb), .5);
             }
         }
 
@@ -115,9 +115,58 @@
         }
 
     }
+}
 
+@mixin inputCheckbox() {
+    display: flex;
+    flex-direction: column-reverse;
 
+    &__control-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1em;
 
+        &:has(:checked) {
+            &~.input-checkbox__label::before {
+background-position: calc((var(--input-checkbox-height) * 0.5) + var(--input-checkbox-space))  var(--input-checkbox-space);
+
+            }
+        }
+
+    }
+
+    &__control {
+        opacity: 0;
+        position: absolute;
+        appearance: none;
+        -webkit-appearance: none;
+
+    }
+
+    &__label {
+        display: flex;
+        gap: .5em;
+
+        &::before {
+            --input-checkbox-height: 1.5em;
+            --input-checkbox-space: 3px;
+            display: block;
+            content: "";
+            width: calc(var(--input-checkbox-height) * 1.5);
+            height: var(--input-checkbox-height);
+            border-radius: 1em;
+            position: relative;
+            cursor: pointer;
+            transition: all .3s ease;
+            background-image: radial-gradient(closest-side, white 100%, transparent);
+            background-color: rgba(var(--primary-rgb), .5);
+            background-repeat: no-repeat, no-repeat;
+            background-size: calc(var(--input-checkbox-height) - (var(--input-checkbox-space) * 2)) calc(var(--input-checkbox-height) - (var(--input-checkbox-space) * 2));
+            background-position: var(--input-checkbox-space) var(--input-checkbox-space);
+        }
+
+    }
 
 }
 
@@ -146,4 +195,8 @@
 .input-range {
 
     @include inputRange();
+}
+
+.input-checkbox {
+    @include inputCheckbox();
 }

@@ -89,6 +89,7 @@ const viewInvoice = () => {
     background-color: var(--dark);
     border-radius: 4em;
     margin: var(--space);
+    transform: translateX(-50%);
 
     &__container {
 
