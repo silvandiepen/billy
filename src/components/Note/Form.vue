@@ -100,11 +100,22 @@ const theModel = computed({
     display: flex;
     gap: var(--space-xl);
 
+    @media screen and (width <=768px) {
+        flex-direction: column;
+        width: 100%;
+    }
+
     &__column {
         width: 300px;
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: var(--space);
+
+        @media screen and (width <=768px) {
+            width: 100%;
+        }
+
     }
 
     &__preview {
@@ -133,7 +144,8 @@ const theModel = computed({
         color: var(--light);
         padding: var(--space);
         border-radius: var(--border-radius);
-font-size: .875em;
+        font-size: .875em;
+        width: 100%;
 
         dl {
             margin: 0;
@@ -153,4 +165,5 @@ font-size: .875em;
 
         }
     }
-}</style>
+}
+</style>

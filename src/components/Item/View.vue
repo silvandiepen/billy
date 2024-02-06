@@ -18,7 +18,6 @@
                     formatCurrency(itemPrice(item)) }}</span>
             <span v-if="itemDiscount(item, props.invoice.details).discount" :class="bemm('item', 'discounted')">{{
                 formatCurrency(itemDiscount(item, props.invoice.details).price) }}</span>
-
         </div>
     </div>
 </template>
@@ -64,12 +63,14 @@ const blockClasses = computed(() => {
 </script>
 
 <style lang="scss">
-    .item-view{
-        &--edit{
-            &:hover{
+.item-view {
+    .preview & {
+        &--edit {
+            &:hover {
                 outline: 1px dotted var(--primary);
                 outline-offset: 1em;
             }
         }
     }
+}
 </style>

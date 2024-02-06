@@ -18,5 +18,6 @@ const { bemm } = useBemm('form');
     display: flex;
     flex-direction: column;
     gap: var(--space);
+    width: 100%;
 }
 </style>

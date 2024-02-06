@@ -85,6 +85,10 @@ const theModel = computed({
     display: flex;
     gap: var(--space-l);
 
+    @media screen and (width <= 768px) {
+        flex-direction: column;
+    }
+
     &__column {
         padding: var(--space);
         display: flex;

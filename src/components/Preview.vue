@@ -7,7 +7,8 @@
       <InputCheckbox :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
     </div>
 
-    <div :class="bemm('paper')" :style="`--preview-size: ${previewSize}cm; --primary: ${invoice.details.color}`">
+    <div :class="bemm('paper')" id="paper"
+      :style="`--preview-size: ${previewSize}cm; --primary: ${invoice.details.color}`">
       <div :class="bemm('invoice')">
 
         <header :class="bemm('header')">
@@ -54,19 +55,13 @@ defineProps({
 })
 
 const bemm = useBemm("preview");
-
-
+const { isMobile, previewSize } = useUI();
 
 const autoSize = ref(true);
 
 
-
-const { previewSize } = useUI();
-
-
 const setAutoSize = () => {
-  previewSize.value = (window.innerWidth / 1000) - 0.25;
-
+  previewSize.value = isMobile.value ? (window.innerWidth / 1000) : (window.innerWidth / 1000) - 0.25;
 }
 
 onMounted(() => {
@@ -83,6 +78,87 @@ onMounted(() => {
 })
 
 
+
+// Pinch
+
+const evCache = ref<{ pointerId: any, clientX: number, clientY: number }[]>([])
+const prevDiff = ref(-1);
+
+type PointerEv = PointerEvent & { target: HTMLElement };
+
+const removeEvent = (ev: PointerEv) => {
+  // Remove this event from the target's cache
+  const index = evCache.value.findIndex(
+    (cachedEv) => cachedEv.pointerId === ev.pointerId,
+  );
+  evCache.value.splice(index, 1);
+}
+
+const pointerdownHandler = (ev: PointerEv) => {
+  evCache.value.push(ev);
+}
+
+const pointerupHandler = (ev: PointerEv) => {
+  removeEvent(ev);
+  ev.target.style.background = "white";
+  ev.target.style.border = "1px solid black";
+
+  // If the number of pointers down is less than two then reset diff tracker
+  if (evCache.value.length < 2) {
+    prevDiff.value = -1;
+  }
+}
+const pointermoveHandler = (ev: PointerEv) => {
+
+  ev.target.style.border = "dashed";
+
+  const index = evCache.value.findIndex(
+    (cachedEv) => cachedEv.pointerId === ev.pointerId,
+  );
+  evCache.value[index] = ev;
+  if (evCache.value.length === 2) {
+    const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);
+
+    if (prevDiff.value > 0) {
+      if (curDiff > prevDiff.value) {
+        ev.target.style.background = "pink";
+      }
+      if (curDiff < prevDiff.value) {
+        ev.target.style.background = "lightblue";
+      }
+    }
+
+    prevDiff.value = curDiff;
+  }
+  console.log('does something', prevDiff.value)
+}
+
+
+const init = () => {
+  // Install event handlers for the pointer target
+  const el = document.getElementById("paper");
+  if (!el) return;
+
+  // @ts-ignore
+  el.onpointerdown = pointerdownHandler;
+  // @ts-ignore
+  el.onpointermove = pointermoveHandler;
+
+  // @ts-ignore
+  el.onpointerup = pointerupHandler;
+  // @ts-ignore
+  el.onpointercancel = pointerupHandler;
+  // @ts-ignore
+  el.onpointerout = pointerupHandler;
+  // @ts-ignore
+  el.onpointerleave = pointerupHandler;
+}
+
+onMounted(() => {
+  init()
+})
+
+
 </script>
 
 
@@ -95,12 +171,13 @@ onMounted(() => {
 
   padding-top: 5em;
   padding-bottom: 5em;
+  touch-action: none;
 
   &__tools {
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 100;
+    z-index: 10;
     color: white;
     background-color: var(--dark);
     display: flex;
@@ -182,5 +259,4 @@ onMounted(() => {
     justify-content: space-between;
   }
 }
-
 </style>

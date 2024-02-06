@@ -2,13 +2,15 @@
     <div :class="blockClasses">
         <Card>
 
-            <div :class="bemm('actions')">
+            <ButtonGroup :class="bemm('actions')" type="stack">
                 <Button :icon="Icons.EDIT" @click="showPopup({ id: popupId || id() })"></Button>
                 <Button v-if="deleteAction" :icon="Icons.CLOSE" @click="deleteAction()"></Button>
-                <Button v-if="activeAction" :icon="active ? Icons.VISIBLE : Icons.INVISIBLE" @click="activeAction()"></Button>
-            </div>
+                <Button v-if="activeAction" :icon="active ? Icons.VISIBLE : Icons.INVISIBLE"
+                    @click.prevent="activeAction()"></Button>
+            </ButtonGroup>
 
-            <div :class="bemm('view')">
+
+            <div :class="bemm('view')" @click.prevent="showPopup({ id: popupId || id() })">
                 <slot name="view"></slot>
             </div>
         </Card>
@@ -36,6 +38,7 @@ import { showPopup } from '@/utils';
 import Button from "@/components/Button.vue";
 import PopUp from '@/components/PopUp.vue';
 import Card from '@/components/Card.vue';
+import ButtonGroup from './ButtonGroup.vue';
 
 const id = useId();
 
@@ -50,9 +53,9 @@ const props = defineProps({
     activeAction: {
         type: Function as PropType<() => void>,
         default: null
-    }, 
+    },
     active: {
-        type: Boolean, 
+        type: Boolean,
         default: true
     }
 })
@@ -60,8 +63,8 @@ const props = defineProps({
 
 const bemm = useBemm('view-edit');
 
-const blockClasses = computed(()=>{
-    return [bemm(), bemm('',props.active ? 'active' : 'inactive')]
+const blockClasses = computed(() => {
+    return [bemm(), bemm('', props.active ? 'active' : 'inactive')]
 })
 
 
@@ -72,22 +75,25 @@ const blockClasses = computed(()=>{
 
 
     &__actions {
+
         position: absolute;
         top: 0;
         right: 0;
-        transform: scale(0) translate(50%, -50%);
+        transform: scale(0);
         transition: transform 0.2s ease-in-out;
+        display: flex;
+        gap: .25em;
 
     }
 
     &:hover {
         .view-edit__actions {
-            transform: scale(1) translate(50%, -50%);
+            transform: scale(1);
         }
     }
 
-    &--inactive{
-        .view-edit__view{
+    &--inactive {
+        .view-edit__view {
             opacity: .5;
         }
     }

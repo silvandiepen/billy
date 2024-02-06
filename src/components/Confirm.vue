@@ -15,9 +15,7 @@ import { useBemm } from 'bemm';
 import { useId } from '@sil/id';
 const newId = useId();
 
-
 const currentId = ref(newId());
-
 import PopUp from './PopUp.vue';
 const bemm = useBemm('confirm');
 

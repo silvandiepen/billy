@@ -4,6 +4,7 @@
     <div :class="[bemm(), bemm('', loaded ? 'active' : 'inactive')]" v-if="active">
       <div :class="bemm('background')" @click="close()">
       </div>
+      <Button :class="bemm('close')"  :icon="Icons.CLOSE"  @click="close()"></Button>
       <div :class="bemm('content')">
         <slot></slot>
       </div>
@@ -14,9 +15,13 @@
 
 <script lang="ts" setup>
 
-import { EventChannel, EventType, eventBus } from '@/utils';
 import { useBemm } from 'bemm';
 import { onMounted, ref } from 'vue';
+
+import { EventChannel, EventType, eventBus } from '@/utils';
+import { Icons } from "@/types";
+
+import Button from '@/components/Button.vue';
 
 const active = ref(false);
 const loaded = ref(false);
@@ -70,6 +75,11 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   z-index: 20;
+    @media screen and (width <= 768px) {
+
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
 
   &__background {
     position: absolute;
@@ -93,7 +103,20 @@ onMounted(() => {
     transform: translateY(calc(var(--space-xl) * -1)) scale(0.9);
     transition: .2s ease-in-out;
     opacity: 0;
+    max-height: 80vh;
+    overflow: scroll;
+
+    @media screen and (width <= 768px) {
+border-radius: 0; 
+      min-height: 100vh;
+        width: 100%; max-height: 100vh;
+    }
   }
+
+&__close{
+  position: fixed; top: 1em; right: 1em;
+  z-index: 100  ;
+}
 
   &--active {
     .pop-up__background {

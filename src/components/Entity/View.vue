@@ -69,9 +69,11 @@ const editItem = () => {
     position: relative;
 
     &--edit {
-        &:hover {
-            outline: 1px dotted var(--primary);
-            outline-offset: 1em;
+        .preview & {
+            &:hover {
+                outline: 1px dotted var(--primary);
+                outline-offset: 1em;
+            }
         }
     }
 

@@ -97,7 +97,7 @@ const blockClasses = computed(() => {
 
             .button:last-child {
                 border-bottom-right-radius: var(--space);
-                border-bottom-left-radius: var(--space);
+                border-bottom-left-radius: var(--spacel);
             }
         }
     }

@@ -3,27 +3,27 @@
         <ul :class="bemm('list')">
             <li :class="[bemm('item'), bemm('item', folded.details ? 'folded' : 'open')]">
                 <EditHeader label="Details" v-model="folded.details"></EditHeader>
-                <DetailsEdit v-if="!folded.details" label="Details" v-model="invoice.details" />
+                <DetailsEdit v-show="!folded.details" label="Details" v-model="invoice.details" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.sender ? 'folded' : 'open')]">
                 <EditHeader label="From" v-model="folded.sender"></EditHeader>
-                <EntityEdit v-if="!folded.sender" label="Sender" v-model="invoice.sender" />
+                <EntityEdit v-show="!folded.sender" label="Sender" v-model="invoice.sender" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.receiver ? 'folded' : 'open')]">
                 <EditHeader label="To" v-model="folded.receiver"></EditHeader>
-                <EntityEdit v-if="!folded.receiver" label="Receiver" v-model="invoice.receiver" />
+                <EntityEdit v-show="!folded.receiver" label="Receiver" v-model="invoice.receiver" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.items ? 'folded' : 'open')]">
                 <EditHeader label="Items" v-model="folded.items"></EditHeader>
-                <ItemEdit v-if="!folded.items" label="Items" v-model="invoice.items" />
+                <ItemEdit v-show="!folded.items" label="Items" v-model="invoice.items" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.notes ? 'folded' : 'open')]">
                 <EditHeader label="Notes" v-model="folded.notes"></EditHeader>
-                <NoteEdit v-if="!folded.notes" label="Notes" v-model="invoice.notes" />
+                <NoteEdit v-show="!folded.notes" label="Notes" v-model="invoice.notes" />
             </li>
         </ul>
     </div>
