@@ -168,6 +168,15 @@ onMounted(() => {
     border-radius: var(--border-radius);
     opacity: .125;
 
+    @media screen and (width <= 768px) {
+    
+      font-size: 12px;
+      margin: 0; border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      transform: translateY(-100%) rotate(-90deg) translateX(-1em);
+      transform-origin:100% 100%;
+    }
+
     &:hover {
       opacity: 1;
     }
