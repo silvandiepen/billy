@@ -183,37 +183,4 @@ onMounted(() => {
   }
 }
 
-@media print {
-  :root{
-    background-color: white;
-  }
-  body,html{
-    background-color: white;
-  }
-  .debug {
-    display: none;
-  }
-
-  .preview {
-    padding-top: 0;
-  }
-
-  .preview__tools {
-    display: none;
-  }
-
-  .preview__paper {
-    font-size: .99cm;
-    border: none;
-  }
-
-  .preview__invoice {
-    // padding: 0; 
-  }
-
-  @page {
-    size: portrait;
-    margin: 0%
-  }
-}
 </style>

@@ -3,34 +3,27 @@
         <div :class="bemm('container')">
             <ul :class="bemm('list')">
                 <li :class="bemm('item')" v-for="invoice in invoices">
-                    <InvoiceCard  :invoice="invoice" />
+                    <InvoiceCard :invoice="invoice" />
                 </li>
             </ul>
-            <Button :icon="Icons.DOCUMENT_ADD" @click="createNewInvoice()">New Invoice</Button>
         </div>
     </div>
+
+    <Navigation></Navigation>
 </template>
 
 <script lang="ts" setup>
 
 import { useBemm } from 'bemm';
 
+import { useArchive } from '@/composables';
+
 import InvoiceCard from '@/components/Invoice/Card.vue';
-import Button from '@/components/Button.vue';
-import { useArchive, useInvoice } from '@/composables';
-import { useRouter } from 'vue-router';
-import { Icons } from '@/types';
+import Navigation from '@/components/Navigation.vue';
 
 const bemm = useBemm('archive');
 const { invoices } = useArchive();
-const { newInvoice } = useInvoice();
 
-const router = useRouter();
-
-const createNewInvoice = () => {
-    newInvoice();
-    router.push('/edit');
-}
 
 
 </script>
@@ -69,4 +62,5 @@ const createNewInvoice = () => {
         //     margin-top: var(--space)
         // }
     }
-}</style>
+}
+</style>

@@ -1,13 +1,22 @@
 
 
 <template>
-  <router-view :key="routeKey"></router-view>
+  <div class="app-container" :class="isMobile ? 'mobile' : 'desktop'">
+    <router-view :key="routeKey"></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import { useRoute } from "vue-router";
+
+import { useUI } from "@/composables";
+
+const { initCheckMobile, isMobile } = useUI();
+onMounted(() => {
+  initCheckMobile();
+})
 
 const route = useRoute();
 const routeKey = ref();
@@ -29,41 +38,7 @@ watch(
   height: 100vh;
 }
 
-.column {
-  width: 50%;
-  min-height: 100vh;
-  flex-shrink: 0;
-  padding: 2em;
-  position: relative;
-
-  &--edit {
-    background-color: black;
-    width: fit-content;
-    max-height: 100vh;
-    overflow: scroll;
-  }
-
-  &--preview {
-    width: 100%;
-    max-height: 100vh;
-    overflow: scroll;
-    background-color: #f7f7f7;
-  }
-}
 
 
-@media print {
-
-  .column--edit {
-
-    display: none;
-  }
-
-  .column--preview {
-    width: 100%;
-    overflow: auto;
-    background-color: transparent;
-  }
-}
 </style>
 

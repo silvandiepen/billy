@@ -17,9 +17,8 @@
             </fieldset>
 
 
-            <fieldset :class="bemm('help')">
+            <Card :class="bemm('help')">
 
-                <legend :class="bemm('legend')">help</legend>
                 <div :class="bemm('content')">
                     <dl>
                         <dt>[phone]</dt>
@@ -52,7 +51,7 @@
                 </div>
 
 
-            </fieldset>
+            </Card>
 
         </div>
     </div>
@@ -64,6 +63,7 @@ import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
 import { InputText, InputTextArea, Form } from "@/components/form";
+import Card from "@/components/Card.vue";
 import { Note } from '@/types';
 import { enrichContent } from "@/utils";
 
@@ -98,7 +98,7 @@ const theModel = computed({
 .note-form {
 
     display: flex;
-    gap: var(--space);
+    gap: var(--space-xl);
 
     &__column {
         width: 300px;
@@ -108,35 +108,49 @@ const theModel = computed({
     }
 
     &__preview {
-        border: 1px solid #ccc;
+        border: none;
+        background-color: var(--light);
+        color: var(--dark);
         padding: var(--space);
         border-radius: var(--border-radius);
 
-        .note-form__content {
+        legend {
+            background-color: var(--dark);
+            border: 1px solid var(--light);
             font-size: .75em;
+            padding: .5em .75em;
+            color: var(--light);
+            border-radius: var(--border-radius);
         }
     }
 
-    &__legend {
-        padding: 0 var(--space-s);
-    }
 
     &__help {
-        border-radius: var(--border-radius);
-        background-color: #f7f7f7;
-        border: 1px solid #ccc;
+        border: none;
+        background-color: var(--dark);
+        color: var(--dark);
+        border: 1px solid var(--light);
+        color: var(--light);
         padding: var(--space);
-
-        .note-form__content {
-            font-size: .75em;
-        }
+        border-radius: var(--border-radius);
+font-size: .875em;
 
         dl {
-            display: flex;
             margin: 0;
-            flex-direction: row;
-            gap: var(--space);
+
+            &+dl {
+                margin-top: .5em;
+            }
+        }
+
+        legend {
+            background-color: var(--dark);
+            border: 1px solid var(--light);
+            font-size: .75em;
+            padding: .5em .75em;
+            color: var(--light);
+            border-radius: var(--border-radius);
+
         }
     }
-}
-</style>
+}</style>

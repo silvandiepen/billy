@@ -2,7 +2,7 @@
 <template>
     <div :class="bemm()">
         <ul :class="bemm('list')">
-            <li :class="bemm('item')" v-for="item in invoice.items">
+            <li :class="bemm('item')" v-for="item in invoiceItems">
                 <ItemView :item="item" :invoice="invoice" />
             </li>
         </ul>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from "vue";
+import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
 import { Invoice } from '@/types';
@@ -20,11 +20,15 @@ import ItemView from "@/components/Item/View.vue";
 
 const bemm = useBemm('item-list');
 
-defineProps({
+const props = defineProps({
     invoice: {
         type: Object as PropType<Invoice>,
         required: true
     },
+})
+
+const invoiceItems = computed(() => {
+    return props.invoice.items.filter((item) => item.active);
 })
 
 

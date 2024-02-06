@@ -51,7 +51,8 @@ export const useEntity = () => {
                 });
             });
         },
-        entities: computed(() => state.entity )
+        entities: computed(() => state.entity ),
+        hasEntities: computed(() => state.entity.length > 0),
     }
 
 }

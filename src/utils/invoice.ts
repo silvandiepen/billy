@@ -33,7 +33,9 @@ export const isDefined = (v: any) => {
 }
 
 export const getSubTotal = (invoice: Invoice) => {
-    return invoice.items.reduce((acc: number, item: InvoiceItem) => {
+    return invoice.items.filter((item) => item.active).reduce((acc: number, item: InvoiceItem) => {
+
+
 
         const discounted = itemDiscount(item, invoice.details);
         if (discounted.discount > 0) {
@@ -47,7 +49,7 @@ export const getSubTotal = (invoice: Invoice) => {
 export const getAllTaxRates = (invoice: Invoice): number[] => {
 
     let rates: number[] = [];
-    invoice.items.forEach((item) => {
+    invoice.items.filter((item) => item.active).forEach((item) => {
         let localRate = isDefined(item.taxRate) ? item.taxRate : -1;
         let globalRate = invoice.details.taxRate !== null ? invoice.details.taxRate : 0;
         let rate = localRate !== -1 ? localRate : globalRate;
@@ -74,7 +76,8 @@ export const getTaxRates = (invoice: Invoice) => {
         })
 
     } else {
-        invoice.items.forEach((item) => {
+        invoice.items.filter((item) => item.active).forEach((item) => {
+
             const price = endPrice(item, invoice.details);
             const rate = isDefined(item.taxRate) ? item.taxRate : invoice.details.taxRate;
             const amount = (price * (rate / 100));

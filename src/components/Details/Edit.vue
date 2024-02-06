@@ -1,10 +1,7 @@
 <template>
     <div :class="bemm()">
-        <header :class="bemm('heading')">
-            <h3>{{ label }}</h3>
-        </header>
 
-        <ViewEdit>
+        <ViewEdit popupId="details">
             <template v-slot:edit>
                 <DetailsForm v-model="theModel" />
             </template>

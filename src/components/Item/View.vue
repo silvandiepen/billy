@@ -1,5 +1,5 @@
 <template>
-    <div :class="bemm()">
+    <div :class="blockClasses" @click="editItem()">
         <div :class="[bemm('column'), bemm('column', 'details')]">
             <span :class="bemm('item', 'title')">{{ item.title }}</span>
             <span :class="bemm('item', 'description')">{{ item.description }}</span>
@@ -24,14 +24,19 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 import { useBemm } from 'bemm';
+import { useRoute } from 'vue-router';
 
 import { InvoiceItem, Invoice } from "@/types"
 
 const bemm = useBemm('item-view');
 
-import { itemDiscount, formatCurrency, itemPrice } from '@/utils';
+import { itemDiscount, formatCurrency, itemPrice, showPopup } from '@/utils';
+import { RouteName } from '@/router';
+
+const route = useRoute();
+
 
 const props = defineProps({
     item: {
@@ -43,4 +48,28 @@ const props = defineProps({
         required: true
     }
 })
+
+const editItem = () => {
+
+    if (route.name === RouteName.EDIT) {
+
+        showPopup({ id: props.item.id })
+
+    }
+}
+
+const blockClasses = computed(() => {
+    return [bemm(), bemm('', route.name as string || '')]
+})
 </script>
+
+<style lang="scss">
+    .item-view{
+        &--edit{
+            &:hover{
+                outline: 1px dotted var(--primary);
+                outline-offset: 1em;
+            }
+        }
+    }
+</style>

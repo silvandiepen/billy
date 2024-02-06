@@ -23,6 +23,7 @@ export interface Entity {
 
 }
 export interface InvoiceItem {
+    active: boolean,
     id: string;
     title: string;
     sku: string;
@@ -35,6 +36,7 @@ export interface InvoiceItem {
 }
 
 export interface Note {
+    active: boolean,
     id: string;
     title: string;
     content: string;
@@ -82,7 +84,8 @@ export interface Invoice {
 export const BlankNote: Note = {
     id: '',
     title: '',
-    content: ''
+    content: '', 
+    active: true
 }
 export const BlankItem: InvoiceItem = {
     id: '',
@@ -93,7 +96,8 @@ export const BlankItem: InvoiceItem = {
     price: 0,
     discount: 0,
     unit: '',
-    taxRate: -1
+    taxRate: -1, 
+    active: true
 }
 export const BlankEntity: Entity = {
     id: '',

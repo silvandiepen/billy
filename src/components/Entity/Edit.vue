@@ -1,19 +1,8 @@
 <template>
     <div :class="bemm()">
-        <header :class="bemm('heading')" @click="folded = !folded">
-            <div :class="bemm('titles')">
-                <h4 :class="bemm('label')">{{ label }}</h4>
-                <h5 :class="bemm('entity-name')" v-if="folded">{{ modelValue.companyName || modelValue.name }}</h5>
-            </div>
-            <div :class="bemm('arrow')">
-                <Icon :class="bemm('arrow')" :name="folded ? Icons.CHEVRON_DOWN : Icons.CHEVRON_UP" />
-            </div>
-        </header>
-
-        <ViewEdit v-if="!folded">
+        <ViewEdit :popupId="theModel.id">
             <template v-slot:edit>
                 <EntityForm v-model="theModel"></EntityForm>
-
             </template>
             <template v-slot:view>
                 <EntityView :entity="modelValue"></EntityView>
@@ -33,15 +22,15 @@
         <div :class="bemm('status')">
 
             <ButtonGroup type="stack" direction="vertical">
-                <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entityExists"
+                <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entityExists && filledEntity"
                     @click="saveCurrentEntity()">Save Entity</Button>
                 <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entitySaved && entityExists"
                     @click="updateCurrentEntity()">Update
                     Entity</Button>
-                <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entitySaved && entityExists"
+                <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entitySaved && entityExists && filledEntity"
                     @click="saveCurrentEntityAsNew()">Save
                     as new Entity</Button>
-                <Button :icon="Icons.USER_TEAM" @click="loadEntities()" type="ghost" size="small">
+                <Button :icon="Icons.USER_TEAM" @click="loadEntities()" type="ghost" size="small" v-if="hasEntities">
                     Load Entity
                 </Button>
             </ButtonGroup>
@@ -58,7 +47,6 @@ import { Entity, Icons } from '@/types';
 import EntityView from "@/components/Entity/View.vue";
 import EntityForm from "@/components/Entity/Form.vue";
 import ViewEdit from "@/components/ViewEdit.vue";
-import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
 import ButtonGroup from "@/components/ButtonGroup.vue";
 
@@ -78,7 +66,8 @@ const panelId = ref(id());
 const {
     hasEntity,
     hasEntityId, saveAsNewEntity, updateEntity,
-    entities
+    entities,
+    hasEntities
 
 } = useEntity();
 
@@ -86,8 +75,6 @@ const {
 
 const bemm = useBemm('entity-edit');
 
-
-const folded = ref(false);
 
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
@@ -132,9 +119,16 @@ const entitySaved = computed(() => {
     return hasEntity(theModel.value)
 })
 
+const filledEntity = computed(()=>{
+    return theModel.value.name !== '' || theModel.value.companyName !== '';
+})
+ 
+
 const loadEntities = () => {
     showPopup({ id: panelId.value })
 }
+
+
 
 const setCurrentEntity = (entity: Entity) => {
     theModel.value = entity;
@@ -157,6 +151,18 @@ const isCurrent = (entity: Entity, current: Entity) => {
         padding: 1em 0;
     }
 
+    &__arrow {
+        width: 1em;
+        height: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1em;
+            height: 1em;
+        }
+    }
     &__titles {
         * {
             margin: 0;
@@ -171,18 +177,10 @@ const isCurrent = (entity: Entity, current: Entity) => {
         border-radius: var(--border-radius);
     }
 
-    &__arrow {
-        width: 1em;
-        height: 1em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-            width: 1em;
-            height: 1em;
-        }
+    &__status{
+        padding-top: var(--space);
     }
+
 
 
     &__load-list {

@@ -1,5 +1,5 @@
 <template>
-    <div :class="bemm()">
+    <div :class="blockClasses" @click="editDetails()">
 
         <div :class="[bemm('column'), bemm('invoice-nr')]" v-if="invoice.details.number">
             <strong>Invoice Nr.</strong>
@@ -25,11 +25,14 @@
 import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
-import { invoiceNumber } from "@/utils";
+import { invoiceNumber, showPopup } from "@/utils";
 import { Invoice } from '@/types';
 import { getDateObject } from "@sil/format";
+import { useRoute } from "vue-router";
+import { RouteName } from "@/router";
 
 const bemm = useBemm('show-invoice-details');
+const route = useRoute();
 
 const props = defineProps({
     invoice: {
@@ -59,6 +62,17 @@ const dueDate = computed(() => {
     return getDateObject(myDate);
 })
 
+const editDetails = () => {
+    if (route.name === RouteName.EDIT) {
+        showPopup({ id: 'details' })
+    }
+}
+
+
+const blockClasses = computed(() => {
+    return [bemm(), bemm('', route.name as string || '')]
+})
+
 </script>
 
 <style lang="scss">
@@ -66,16 +80,26 @@ const dueDate = computed(() => {
     display: flex;
     justify-content: flex-start;
     gap: 2em;
+
+    &--edit {
+        &:hover {
+            outline: 1px dotted var(--primary);
+            outline-offset: 1em;
+        }
+    }
+
     &__column {
         display: flex;
         flex-direction: column;
 
         padding: .5em 2em;
-        &+&{
-            border-left: 2px dotted var(--primary); 
-        
+
+        &+& {
+            border-left: 2px dotted var(--primary);
+
         }
-        &:first-child{
+
+        &:first-child {
             padding-left: 0;
         }
     }

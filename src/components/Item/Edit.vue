@@ -1,11 +1,9 @@
 <template>
     <div :class="bemm()">
-        <header :class="bemm('heading')">
-            <h3>{{ label }}</h3>
-        </header>
+
         <div :class="bemm('item')" v-for="(_, index) in theModel">
 
-            <ViewEdit>
+            <ViewEdit :active="theModel[index].active" :popupId="theModel[index].id" :activeAction="()=>toggleItem(theModel[index].id)"  :deleteAction="()=>removeItem(theModel[index].id)">
                 <template v-slot:edit>
                     <ItemForm v-model="theModel[index]" />
                 </template>
@@ -34,7 +32,9 @@ import ItemView from "@/components/Item/View.vue";
 import ItemForm from "@/components/Item/Form.vue";
 
 import { useInvoice } from "@/composables";
-const { invoice } = useInvoice();
+import { showPopup } from "@/utils";
+
+const { invoice, removeItem, toggleItem } = useInvoice();
 
 const bemm = useBemm('item-edit');
 
@@ -52,10 +52,14 @@ const props = defineProps({
 
 
 const addItem = () => {
+    const id = createId();
     theModel.value.push({
         ...BlankItem,
-        id: createId()
+        id
     })
+    setTimeout(() => {
+        showPopup({ id })
+    }, 0)
 }
 
 const theModel = computed({
@@ -66,6 +70,7 @@ const theModel = computed({
         emit('update:modelValue', value)
     }
 })
+
 </script>
 <style lang="scss">
 .item-edit {
@@ -74,12 +79,25 @@ const theModel = computed({
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        padding: 1em 0;
     }
 
-    &__item{
-        &+&{
-            margin-top: 1em;
+    &__arrow {
+        width: 1em;
+        height: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1em;
+            height: 1em;
         }
+    }
+
+    &__item {
+        margin-bottom: 1em;
     }
 
 }

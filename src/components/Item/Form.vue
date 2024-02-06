@@ -1,17 +1,17 @@
 <template>
     <Form>
 
-    <InputText label="Title" v-model="theModel.title" :class="bemm('title')" placeholder="Title" />
-    <InputTextArea label="Description" v-model="theModel.description" :class="bemm('description')" placeholder="Description" />
-    <InputText label="SKU" v-model="theModel.sku" :class="bemm('sku')" placeholder="SKU" />
-    <InputNumber label="quantity" type="number" v-model="theModel.quantity" :class="bemm('quantity')"
-        placeholder="Quantity" />
-    <InputNumber label="price" v-model="theModel.price" :class="bemm('price')" placeholder="Price" />
-    <InputText label="unit" v-model="theModel.unit" :class="bemm('unit')" placeholder="Unit" />
-    <InputNumber label="discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
-    <InputNumber label="tax rate" v-model="theModel.taxRate" :class="bemm('tax-rate')" placeholder="Custom Tax Rate" />
-</Form>
-
+        <InputText label="Title" v-model="theModel.title" :class="bemm('title')" placeholder="Title" />
+        <InputTextArea label="Description" v-model="theModel.description" :class="bemm('description')"
+            placeholder="Description" />
+        <InputText label="SKU" v-model="theModel.sku" :class="bemm('sku')" placeholder="SKU" />
+        <InputNumber label="Quantity" type="number" v-model="theModel.quantity" :class="bemm('quantity')"
+            placeholder="Quantity" />
+        <InputNumber label="Price" v-model="theModel.price" :class="bemm('price')" placeholder="Price" />
+        <InputText label="Unit" v-model="theModel.unit" :class="bemm('unit')" placeholder="Unit" />
+        <InputNumber label="Discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
+        <InputNumber label="Tax rate" v-model="theModel.taxRate" :class="bemm('tax-rate')" placeholder="Custom Tax Rate" />
+    </Form>
 </template>
 
 

@@ -1,8 +1,13 @@
 <template>
-    <div :class="bemm()">
+    <div :class="blockClasses">
         <Card>
 
-            <Button :icon="Icons.EDIT" @click="showPopup({ id: currentId })"></Button>
+            <div :class="bemm('actions')">
+                <Button :icon="Icons.EDIT" @click="showPopup({ id: popupId || id() })"></Button>
+                <Button v-if="deleteAction" :icon="Icons.CLOSE" @click="deleteAction()"></Button>
+                <Button v-if="activeAction" :icon="active ? Icons.VISIBLE : Icons.INVISIBLE" @click="activeAction()"></Button>
+            </div>
+
             <div :class="bemm('view')">
                 <slot name="view"></slot>
             </div>
@@ -12,7 +17,7 @@
 
         <!-- </div> -->
     </div>
-    <PopUp :id="currentId">
+    <PopUp :id="popupId || id()">
         <div :class="bemm('form')">
             <slot name="edit"></slot>
         </div>
@@ -21,9 +26,8 @@
 </template>
 
 <script lang="ts" setup>
-
+import { PropType, computed } from 'vue';
 import { useBemm } from 'bemm';
-import { ref } from 'vue';
 import { useId } from '@sil/id';
 
 import { Icons } from "@/types"
@@ -34,9 +38,31 @@ import PopUp from '@/components/PopUp.vue';
 import Card from '@/components/Card.vue';
 
 const id = useId();
-const currentId = ref(id());
+
+const props = defineProps({
+    popupId: {
+        type: String as PropType<string>,
+    },
+    deleteAction: {
+        type: Function as PropType<() => void>,
+        default: null
+    },
+    activeAction: {
+        type: Function as PropType<() => void>,
+        default: null
+    }, 
+    active: {
+        type: Boolean, 
+        default: true
+    }
+})
+
 
 const bemm = useBemm('view-edit');
+
+const blockClasses = computed(()=>{
+    return [bemm(), bemm('',props.active ? 'active' : 'inactive')]
+})
 
 
 </script>
@@ -45,22 +71,24 @@ const bemm = useBemm('view-edit');
 .view-edit {
 
 
-
-    .button {
+    &__actions {
         position: absolute;
         top: 0;
         right: 0;
         transform: scale(0) translate(50%, -50%);
         transition: transform 0.2s ease-in-out;
 
-        &:hover {
+    }
+
+    &:hover {
+        .view-edit__actions {
             transform: scale(1) translate(50%, -50%);
         }
     }
 
-    &:hover {
-        .button {
-            transform: scale(1) translate(50%, -50%);
+    &--inactive{
+        .view-edit__view{
+            opacity: .5;
         }
     }
 

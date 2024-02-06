@@ -86,9 +86,28 @@ const theModel = computed({
     gap: var(--space-l);
 
     &__column {
+        padding: var(--space);
         display: flex;
         flex-direction: column;
         gap: var(--space);
+
     }
+
+&__preview {
+    border: none;
+    background-color: var(--light);
+    color: var(--dark);
+    padding: var(--space);
+    border-radius: var(--border-radius);
+
+    legend {
+        background-color: var(--dark);
+        border: 1px solid var(--light);
+        font-size: .75em;
+        padding: .5em .75em;
+        color: var(--light);
+        border-radius: var(--border-radius);
+    }
+}
 }
 </style>

@@ -1,34 +1,32 @@
 <template>
     <Preview v-if="invoiceData" :invoice="invoiceData"></Preview>
+    <Navigation v-if="!isBlank"></Navigation>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import CryptoJS from 'crypto-js';
-
 import Preview from "@/components/Preview.vue";
+import Navigation from "@/components/Navigation.vue";
 
 import { useRoute } from "vue-router";
 import { Invoice } from "@/types";
+import { decodeInvoice } from "@/utils";
+import { useInvoice } from "@/composables";
 
+const { isBlank } = useInvoice();
 
 const route = useRoute();
 
 
 const invoiceData = ref<Invoice | null>(null);
 
-const decode = (data: string, key: string) => {
-    const bytes = CryptoJS.AES.decrypt(data, key);
-    const originalData = bytes.toString(CryptoJS.enc.Utf8);
 
-    return JSON.parse(originalData);
-}
+
 
 onMounted(() => {
     if (route.params.data) {
-        invoiceData.value = decode(route.params.data as string, 'your-secret-key');
-
+        invoiceData.value = decodeInvoice(route.params.data as string, 'secret-key')
     }
 })
 

@@ -1,5 +1,5 @@
 <template>
-    <div :class="bemm()">
+    <div :class="blockClasses" @click="editItem()">
         <h4 :class="bemm('label')" v-if="label">{{ label }}</h4>
         <fieldset :class="bemm('field')">
 
@@ -25,14 +25,18 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from "vue";
+import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
 import { Entity } from '@/types';
+import { useRoute } from "vue-router";
+import { RouteName } from "@/router";
+import { showPopup } from "@/utils";
 
 const bemm = useBemm('show-invoice-entity');
+const route = useRoute();
 
-defineProps({
+const props = defineProps({
     entity: {
         type: Object as PropType<Entity>,
         required: true
@@ -42,12 +46,34 @@ defineProps({
     }
 });
 
+
+const blockClasses = computed(() => {
+    return [bemm(), bemm('', route.name as string || '')]
+})
+
+const editItem = () => {
+
+    if (route.name === RouteName.EDIT) {
+
+
+        showPopup({ id: props.entity.id })
+
+    }
+}
+
 </script>
 
 <style lang="scss">
 .show-invoice-entity {
 
     position: relative;
+
+    &--edit {
+        &:hover {
+            outline: 1px dotted var(--primary);
+            outline-offset: 1em;
+        }
+    }
 
     &--name,
     &--company-name {

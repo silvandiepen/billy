@@ -1,86 +1,79 @@
 <template>
     <div :class="bemm()">
+        <ul :class="bemm('list')">
+            <li :class="[bemm('item'), bemm('item', folded.details ? 'folded' : 'open')]">
+                <EditHeader label="Details" v-model="folded.details"></EditHeader>
+                <DetailsEdit v-if="!folded.details" label="Details" v-model="invoice.details" />
+            </li>
 
-        <span> id: {{ invoice.id }}</span>
-        <DetailsEdit label="Details" v-model="invoice.details" />
-        <EntityEdit label="Sender" v-model="invoice.sender" />
-        <EntityEdit label="Receiver" v-model="invoice.receiver" />
-        <ItemEdit label="Items" v-model="invoice.items" />
-        <NoteEdit label="Notes" v-model="invoice.notes" />
+            <li :class="[bemm('item'), bemm('item', folded.sender ? 'folded' : 'open')]">
+                <EditHeader label="From" v-model="folded.sender"></EditHeader>
+                <EntityEdit v-if="!folded.sender" label="Sender" v-model="invoice.sender" />
+            </li>
 
-        <Button @click="viewInvoice()">View</Button>
+            <li :class="[bemm('item'), bemm('item', folded.receiver ? 'folded' : 'open')]">
+                <EditHeader label="To" v-model="folded.receiver"></EditHeader>
+                <EntityEdit v-if="!folded.receiver" label="Receiver" v-model="invoice.receiver" />
+            </li>
 
-        {{ isArchived ? 'is archive' : 'not in archive' }}
-        {{ hasUpdate ? 'has update' : 'no update' }}
+            <li :class="[bemm('item'), bemm('item', folded.items ? 'folded' : 'open')]">
+                <EditHeader label="Items" v-model="folded.items"></EditHeader>
+                <ItemEdit v-if="!folded.items" label="Items" v-model="invoice.items" />
+            </li>
 
-        <Button v-if="!isArchived" @click="saveToArchive()">Save</Button>
-        <Button v-if="isArchived && hasUpdate" @click="saveToArchive()">Update</Button>
-
-        {{ invoices.length }}
-
-
+            <li :class="[bemm('item'), bemm('item', folded.notes ? 'folded' : 'open')]">
+                <EditHeader label="Notes" v-model="folded.notes"></EditHeader>
+                <NoteEdit v-if="!folded.notes" label="Notes" v-model="invoice.notes" />
+            </li>
+        </ul>
     </div>
 </template>
 <script lang="ts" setup>
 
 
-import { computed } from "vue";
 
-import CryptoJS from 'crypto-js';
+import { useBemm } from 'bemm';
+import { ref } from "vue";
 
 
 import DetailsEdit from '@/components/Details/Edit.vue';
 import EntityEdit from '@/components/Entity/Edit.vue';
 import ItemEdit from '@/components/Item/Edit.vue';
-import NoteEdit from '@/components/Note/Edit.vue';
+import NoteEdit from '@/components/Note/Edit.vue'
+import EditHeader from '@/components/EditHeader.vue';
 
-import Button from "@/components/Button.vue";
-import { useInvoice, useArchive } from '@/composables';
-import { useBemm } from 'bemm';
-const bemm = useBemm('edit-invoice');
+import { useInvoice } from '@/composables';
 
-const { invoice, setId } = useInvoice();
-const { addInvoice, invoiceExists, invoiceHasUpdate, invoices } = useArchive();
+const { bemm } = useBemm('edit-invoice');
+const { invoice } = useInvoice();
 
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-
-const saveToArchive = () => {
-    const newInvoice = addInvoice(invoice.value);
-    setId(newInvoice.id);
-}
-
-const isArchived = computed(() => {
-    return invoiceExists(invoice.value);
-})
-
-const hasUpdate = computed(() => {
-    return invoiceHasUpdate(invoice.value);
-})
-
-const viewInvoice = () => {
-
-    const invoiceData = JSON.stringify(invoice.value);
-    // const hash = CryptoJS.SHA256(invoiceData).toString(CryptoJS.enc.Hex);
-
-    const secretKey = 'your-secret-key';
-    const data = CryptoJS.AES.encrypt(invoiceData, secretKey).toString();
+const folded = ref({
+    details: false,
+    sender: false,
+    receiver: false,
+    items: false,
+    notes: false
+});
 
 
-
-
-    console.log(data);
-    router.push({
-        name: 'view',
-        params: {
-            data: data
-        }
-    })
-
-
-
-}
 
 </script>
+
+<style lang="scss">
+.edit-invoice {
+
+    &__item {
+        &+& {
+            border-top: 1px solid rgba(255, 255, 255, .25);
+
+        }
+
+        &--open {
+
+            &+.edit-invoice__item {
+                border-top: none
+            }
+        }
+    }
+}
+</style>

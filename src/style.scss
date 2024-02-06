@@ -80,3 +80,37 @@ li {
   margin: 0;
   padding: 0;
 }
+
+
+@media print {
+
+  body{
+    background-color: red; 
+    background: blue;
+  }
+  .debug {
+    display: none;
+  }
+
+  .preview {
+    padding-top: 0;
+  }
+
+  .preview__tools {
+    display: none;
+  }
+
+  .preview__paper {
+    font-size: .99cm;
+    border: none;
+  }
+
+  .preview__invoice {
+    // padding: 0; 
+  }
+
+  @page {
+    size: portrait;
+    margin: 0%
+  }
+}

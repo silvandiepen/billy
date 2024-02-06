@@ -1,12 +1,15 @@
 <template>
-  <div :class="[bemm(), bemm('', loaded ? 'active' : 'inactive')]" v-if="active">
-    <div :class="bemm('background')" @click="close()">
-    </div>
-    <div :class="bemm('content')">
-      <slot></slot>
-    </div>
+  <Teleport to="body">
 
-  </div>
+    <div :class="[bemm(), bemm('', loaded ? 'active' : 'inactive')]" v-if="active">
+      <div :class="bemm('background')" @click="close()">
+      </div>
+      <div :class="bemm('content')">
+        <slot></slot>
+      </div>
+
+    </div>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
@@ -83,8 +86,8 @@ onMounted(() => {
   &__content {
     position: relative;
     z-index: 2;
-    background-color: white;
-    color: black;
+    background-color: var(--background);
+    color: var(--foreground);
     padding: var(--space);
     border-radius: var(--border-radius);
     transform: translateY(calc(var(--space-xl) * -1)) scale(0.9);

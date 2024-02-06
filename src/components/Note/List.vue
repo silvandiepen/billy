@@ -1,7 +1,7 @@
 <template>
-    <div :class="bemm()">
+    <div :class="blockClasses">
         <ul :class="[bemm('list'), bemm('list', numberToWords(invoice.notes.length))]">
-            <li :class="bemm('item')" v-for="note in invoice.notes">
+            <li :class="bemm('item')" v-for="note in invoiceNotes" @click="editItem(note.id)">
                 <div :class="bemm('note')">
                     <NoteView :note="note" :invoice="invoice" />
                 </div>
@@ -11,23 +11,41 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from "vue";
+import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
 import { Invoice } from '@/types';
-import { numberToWords } from "@/utils";
+import { numberToWords, showPopup } from "@/utils";
 
 import NoteView from '@/components/Note/View.vue';
+import { useRoute } from "vue-router";
+import { RouteName } from "@/router";
 
 const bemm = useBemm('note-view');
 
+const route = useRoute();
 
-defineProps({
+const props = defineProps({
     invoice: {
         type: Object as PropType<Invoice>,
         required: true
     },
 });
+const blockClasses = computed(() => {
+    return [bemm(), bemm('', route.name as string || '')]
+})
+
+const editItem = (id: string) => {
+    if (route.name === RouteName.EDIT) {
+        showPopup({ id })
+    }
+}
+
+
+const invoiceNotes = computed(() => {
+    return props.invoice.notes.filter((note) => note.active);
+})
+
 
 
 
@@ -36,6 +54,16 @@ defineProps({
 <style lang="scss">
 .note-view {
 
+
+    &--edit {
+        .note-view__item {
+            &:hover {
+                outline: 1px dotted var(--primary);
+                outline-offset: 1em;
+            }
+
+        }
+    }
 
 
     &__list {

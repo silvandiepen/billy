@@ -1,11 +1,9 @@
 <template>
     <div :class="bemm()">
-        <header :class="bemm('heading')">
-            <h3>{{ label }}</h3>
-        </header>
+
         <div :class="bemm('item')" v-for="(_, index) in theModel">
 
-            <ViewEdit>
+            <ViewEdit :active="theModel[index].active" :popupId="theModel[index].id" :activeAction="()=>toggleNote(theModel[index].id)" :deleteAction="()=>removeNote(theModel[index].id)">
                 <template v-slot:edit>
                     <NoteForm v-model="theModel[index]" />
                 </template>
@@ -13,10 +11,9 @@
                     <NoteView :note="theModel[index]" :invoice="invoice" />
                 </template>
             </ViewEdit>
-
         </div>
 
-        <Button size="small" :icon="Icons.PLUS" @click="addNote">Add item</Button>
+        <Button size="small" :icon="Icons.PLUS" @click="addNote">Add Note</Button>
     </div>
 </template>
 <script lang="ts" setup>
@@ -32,7 +29,9 @@ import ViewEdit from "@/components/ViewEdit.vue";
 import NoteView from "@/components/Note/View.vue";
 import NoteForm from "@/components/Note/Form.vue";
 
-const { invoice } = useInvoice();
+import { showPopup } from "@/utils";
+
+const { invoice, removeNote, toggleNote } = useInvoice();
 
 const bemm = useBemm('note-edit');
 
@@ -50,11 +49,16 @@ const props = defineProps({
 
 
 const addNote = () => {
+    const id = createId();
     theModel.value.push({
         ...BlankNote,
-        id: createId()
+        id
     })
+    setTimeout(() => {
+        showPopup({ id })
+    }, 0)
 }
+
 
 const theModel = computed({
     get() {
@@ -72,12 +76,26 @@ const theModel = computed({
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        padding: 1em 0;
     }
 
-    &__item {
-        &+& {
-            margin-top: 1em;
+    &__arrow {
+        width: 1em;
+        height: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1em;
+            height: 1em;
         }
+    }
+
+
+    &__item {
+        margin-bottom: 1em;
     }
 }
 </style>

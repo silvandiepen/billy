@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { useInvoice } from "@/composables";
+
 import EditInvoice from "@/components/EditInvoice.vue";
 import Preview from "@/components/Preview.vue";
 import SideBar from "@/components/SideBar.vue";
+import Navigation from "@/components/Navigation.vue";
+import { onMounted } from "vue";
 
-import { useInvoice } from "@/composables";
-const { invoice } = useInvoice();
+const { invoice, newInvoice } = useInvoice();
+
+onMounted(() => {
+  if (invoice.value.id === '') {
+    newInvoice()
+  }
+}); 
 </script>
 
 <template>
@@ -18,6 +27,7 @@ const { invoice } = useInvoice();
       <Preview :invoice="invoice"></Preview>
     </div>
   </div>
+  <Navigation></Navigation>
 </template>
 
 <style lang="scss">
@@ -30,16 +40,12 @@ const { invoice } = useInvoice();
   width: 50%;
   min-height: 100vh;
   flex-shrink: 0;
-  padding: 2em;
   position: relative;
 
   &--edit {
     background-color: black;
-    width: fit-content;
-    max-height: 100vh;
-    overflow: scroll;
     background-image: linear-gradient(to right bottom, black, var(--background));
-
+    width: fit-content;
   }
 
   &--preview {
@@ -56,6 +62,7 @@ const { invoice } = useInvoice();
   .column--edit {
 
     display: none;
+
   }
 
   .column--preview {
