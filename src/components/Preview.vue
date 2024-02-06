@@ -87,7 +87,6 @@ const prevDiff = ref(-1);
 type PointerEv = PointerEvent & { target: HTMLElement };
 
 const removeEvent = (ev: PointerEv) => {
-  // Remove this event from the target's cache
   const index = evCache.value.findIndex(
     (cachedEv) => cachedEv.pointerId === ev.pointerId,
   );
@@ -100,37 +99,19 @@ const pointerdownHandler = (ev: PointerEv) => {
 
 const pointerupHandler = (ev: PointerEv) => {
   removeEvent(ev);
-  ev.target.style.background = "white";
-  ev.target.style.border = "1px solid black";
-
-  // If the number of pointers down is less than two then reset diff tracker
-  if (evCache.value.length < 2) {
-    prevDiff.value = -1;
-  }
+  if (evCache.value.length < 2)  prevDiff.value = -1;  
 }
 const pointermoveHandler = (ev: PointerEv) => {
-
-  ev.target.style.border = "dashed";
 
   const index = evCache.value.findIndex(
     (cachedEv) => cachedEv.pointerId === ev.pointerId,
   );
   evCache.value[index] = ev;
   if (evCache.value.length === 2) {
-    const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);
-
-    if (prevDiff.value > 0) {
-      if (curDiff > prevDiff.value) {
-        ev.target.style.background = "pink";
-      }
-      if (curDiff < prevDiff.value) {
-        ev.target.style.background = "lightblue";
-      }
-    }
-
+    const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);   
     prevDiff.value = curDiff;
+    previewSize.value = curDiff / 1000;
   }
-  console.log('does something', prevDiff.value)
 }
 
 
