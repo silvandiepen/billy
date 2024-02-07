@@ -99,7 +99,7 @@ const pointerdownHandler = (ev: PointerEv) => {
 
 const pointerupHandler = (ev: PointerEv) => {
   removeEvent(ev);
-  if (evCache.value.length < 2)  prevDiff.value = -1;  
+  // if (evCache.value.length < 2)  prevDiff.value = -1;  
 }
 const pointermoveHandler = (ev: PointerEv) => {
 
