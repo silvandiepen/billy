@@ -81,7 +81,7 @@ const insertObjectComputed = computed({
 });
 
 
-watch(() => insertObject.value, (value) => {
+watch(() => insertObject.value, () => {
     try {
         theModel.value.name = insertObject.value.name;
         theModel.value.companyName = insertObject.value.companyName;
