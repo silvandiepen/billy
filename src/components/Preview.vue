@@ -2,7 +2,7 @@
 <template>
   <div :class="bemm()">
 
-    <div :class="bemm('tools')">
+    <div :class="[bemm('tools'),'print-hide']">
       <InputRange v-if="!autoSize" :label="`Preview Size`" v-model="previewSize" :min="0.2" :max="1.5" :step="0.01" />
       <InputCheckbox :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
     </div>

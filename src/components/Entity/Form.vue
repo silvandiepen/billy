@@ -36,7 +36,8 @@
                 <legend :class="bemm('legend')">Preview</legend>
                 <EntityView :entity="theModel" />
             </fieldset>
-
+            <textarea v-model="insertObjectComputed">
+            </textarea>
         </div>
     </div>
 </template>
@@ -44,10 +45,11 @@
 <script lang="ts" setup>
 import { useBemm } from "bemm";
 
-import { PropType, computed } from "vue";
+import { PropType, computed, ref, watch } from "vue";
 import { InputText, Form } from "@/components/form";
 import { Entity } from '@/types';
 import EntityView from "@/components/Entity/View.vue";
+
 
 
 const bemm = useBemm('entity-form');
@@ -69,6 +71,37 @@ const theModel = computed({
     }
 })
 
+const insertObject = ref(theModel.value);
+const insertObjectComputed = computed({
+    get() {
+        return JSON.stringify(insertObject.value, null, 2)
+    }, set(value) {
+        insertObject.value = JSON.parse(value)
+    }
+});
+
+
+watch(() => insertObject.value, (value) => {
+    try {
+        theModel.value.name = insertObject.value.name;
+        theModel.value.companyName = insertObject.value.companyName;
+        theModel.value.address = insertObject.value.address;
+        theModel.value.city = insertObject.value.city;
+        theModel.value.state = insertObject.value.state;
+        theModel.value.zip = insertObject.value.zip;
+        theModel.value.country = insertObject.value.country;
+        theModel.value.phone = insertObject.value.phone;
+        theModel.value.email = insertObject.value.email;
+        theModel.value.website = insertObject.value.website;
+        theModel.value.taxId = insertObject.value.taxId;
+        theModel.value.iban = insertObject.value.iban;
+        theModel.value.bic = insertObject.value.bic;
+        theModel.value.beneficiary = insertObject.value.beneficiary;
+
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 </script>
 
@@ -85,7 +118,7 @@ const theModel = computed({
     display: flex;
     gap: var(--space-l);
 
-    @media screen and (width <= 768px) {
+    @media screen and (width <=768px) {
         flex-direction: column;
     }
 
@@ -97,21 +130,21 @@ const theModel = computed({
 
     }
 
-&__preview {
-    border: none;
-    background-color: var(--light);
-    color: var(--dark);
-    padding: var(--space);
-    border-radius: var(--border-radius);
-
-    legend {
-        background-color: var(--dark);
-        border: 1px solid var(--light);
-        font-size: .75em;
-        padding: .5em .75em;
-        color: var(--light);
+    &__preview {
+        border: none;
+        background-color: var(--light);
+        color: var(--dark);
+        padding: var(--space);
         border-radius: var(--border-radius);
+
+        legend {
+            background-color: var(--dark);
+            border: 1px solid var(--light);
+            font-size: .75em;
+            padding: .5em .75em;
+            color: var(--light);
+            border-radius: var(--border-radius);
+        }
     }
-}
 }
 </style>
