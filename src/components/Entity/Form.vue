@@ -31,13 +31,11 @@
 
         </div>
         <div :class="bemm('column')">
-
             <fieldset :class="bemm('preview')">
                 <legend :class="bemm('legend')">Preview</legend>
                 <EntityView :entity="theModel" />
             </fieldset>
-            <textarea v-model="insertObjectComputed">
-            </textarea>
+            <EditJson v-model="theModel" :fields="Object.keys(theModel)" />
         </div>
     </div>
 </template>
@@ -45,11 +43,11 @@
 <script lang="ts" setup>
 import { useBemm } from "bemm";
 
-import { PropType, computed, ref, watch } from "vue";
+import { PropType, computed } from "vue";
 import { InputText, Form } from "@/components/form";
 import { Entity } from '@/types';
 import EntityView from "@/components/Entity/View.vue";
-
+import EditJson from "@/components/EditJson.vue";
 
 
 const bemm = useBemm('entity-form');
@@ -71,37 +69,6 @@ const theModel = computed({
     }
 })
 
-const insertObject = ref(theModel.value);
-const insertObjectComputed = computed({
-    get() {
-        return JSON.stringify(insertObject.value, null, 2)
-    }, set(value) {
-        insertObject.value = JSON.parse(value)
-    }
-});
-
-
-watch(() => insertObject.value, () => {
-    try {
-        theModel.value.name = insertObject.value.name;
-        theModel.value.companyName = insertObject.value.companyName;
-        theModel.value.address = insertObject.value.address;
-        theModel.value.city = insertObject.value.city;
-        theModel.value.state = insertObject.value.state;
-        theModel.value.zip = insertObject.value.zip;
-        theModel.value.country = insertObject.value.country;
-        theModel.value.phone = insertObject.value.phone;
-        theModel.value.email = insertObject.value.email;
-        theModel.value.website = insertObject.value.website;
-        theModel.value.taxId = insertObject.value.taxId;
-        theModel.value.iban = insertObject.value.iban;
-        theModel.value.bic = insertObject.value.bic;
-        theModel.value.beneficiary = insertObject.value.beneficiary;
-
-    } catch (error) {
-        console.error(error);
-    }
-});
 
 </script>
 

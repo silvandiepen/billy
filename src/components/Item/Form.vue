@@ -11,7 +11,10 @@
         <InputText label="Unit" v-model="theModel.unit" :class="bemm('unit')" placeholder="Unit" />
         <InputNumber label="Discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
         <InputNumber label="Tax rate" v-model="theModel.taxRate" :class="bemm('tax-rate')" placeholder="Custom Tax Rate" />
-    </Form>
+
+        <EditJson  v-model="theModel" />
+
+   </Form>
 </template>
 
 
@@ -21,6 +24,7 @@ import { useBemm } from "bemm";
 import { PropType, computed } from "vue";
 import { InputText, InputNumber, InputTextArea, Form } from "@/components/form";
 import { InvoiceItem } from '@/types';
+import EditJson from "@/components/EditJson.vue";
 
 
 

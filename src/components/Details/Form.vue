@@ -13,20 +13,21 @@
         <InputNumber label="discount" v-model="theModel.discount" :class="bemm('discount')" placeholder="Discount" />
         <InputNumber label="shipping" v-model="theModel.shipping" :class="bemm('shippping')" placeholder="Shipping" />
         <InputColor label="color" v-model="theModel.color" :class="bemm('color')" placeholder="Color" />
-    </Form>
+
+        <EditJson v-model="theModel" :fields="Object.keys(theModel)" />
+  </Form>
 </template>
 
 <script lang="ts" setup>
 import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
-
+import EditJson from "@/components/EditJson.vue";
 import { InputNumber, InputText, InputDate, InputSelect, InputColor, Form } from "@/components/form";
 import { Currency, Invoice, Locales } from '@/types';
 
 
 const bemm = useBemm('edit-invoice-details');
-
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
@@ -43,5 +44,8 @@ const theModel = computed({
         emit('update:modelValue', value)
     }
 })
+
+
+
 
 </script>

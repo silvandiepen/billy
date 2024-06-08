@@ -54,7 +54,7 @@ export const useInvoice = () => {
 
 
     const setData = (value: Invoice) => {
-        console.log('setData', value)
+        setInvoice(value);
     }
     const setInvoice = (value: Invoice) => {
         invoiceState.id = value.id
@@ -77,7 +77,7 @@ export const useInvoice = () => {
         })
     }
 
-    const toggleItem = (id: string) => {    
+    const toggleItem = (id: string) => {
         invoiceState.items = invoiceState.items.map((item) => {
             if (item.id === id) {
                 item.active = !item.active;
@@ -93,7 +93,7 @@ export const useInvoice = () => {
             return note;
         })
     }
-    
+
 
     return {
         newInvoice: () => {

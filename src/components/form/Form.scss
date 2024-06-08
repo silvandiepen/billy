@@ -66,6 +66,18 @@
         min-height: 5em;
     }
 }
+@mixin inputCode {
+    &__control {
+        font-size: .75em;
+        font-family: monospace;
+        line-height: 1.5;
+
+        padding: .75em 1em;
+        min-height: 5em;
+        background-color: rgba(var(--primary-rgb),.125);
+        max-height: calc(100vh - (var(--spacing) * 2));
+    }
+}
 
 @mixin inputRange {
     &__control {
@@ -184,6 +196,11 @@
 .input-textarea {
     @include inputBase();
     @include inputTextarea();
+}
+.input-code{
+    @include inputBase();
+    @include inputCode();
+
 }
 
 .input-number {

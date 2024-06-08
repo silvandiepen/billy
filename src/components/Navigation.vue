@@ -3,20 +3,31 @@
 
         <div :class="bemm('container')">
 
-            <ButtonGroup type="stack" v-if="name == 'archive'">
+            <ButtonGroup type="stack" v-if="name == RouteName.ARCHIVE">
                 <Button :icon="Icons.DOCUMENT_ADD" @click="createNewInvoice()"></Button>
             </ButtonGroup>
 
-            <ButtonGroup type="stack" v-if="name == 'view'">
+            <ButtonGroup type="stack" v-if="name == RouteName.VIEW">
                 <Button :icon="Icons.ARROW_LEFT" @click="goToEdit()"></Button>
             </ButtonGroup>
 
-            <ButtonGroup type="stack" v-if="name == 'edit'">
+            <ButtonGroup type="stack" v-if="name == RouteName.EDIT">
                 <Button :icon="Icons.ARROW_LEFT" @click="goToArchive()"></Button>
                 <Button :icon="Icons.VISIBLE" v-if="!isBlank" @click="viewInvoice()"></Button>
                 <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && !isArchived" @click="saveToArchive()"></Button>
                 <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && isArchived && hasUpdate"
                     @click="saveToArchive()"></Button>
+                <Button :icon="Icons.ARROW_DOWN" v-if="!isBlank" @click="viewInsert()"></Button>
+
+            </ButtonGroup>
+            <ButtonGroup type="stack" v-if="name == RouteName.INSERT">
+                <Button :icon="Icons.ARROW_LEFT" @click="goToEdit()"></Button>
+                <Button :icon="Icons.VISIBLE" v-if="!isBlank" @click="viewInvoice()"></Button>
+                <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && !isArchived" @click="saveToArchive()"></Button>
+                <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && isArchived && hasUpdate"
+                    @click="saveToArchive()"></Button>
+                <Button :icon="Icons.ARROW_DOWN_LEFT" v-if="!isBlank" @click="downloadJson"></Button>
+
             </ButtonGroup>
         </div>
 
@@ -32,10 +43,11 @@ import { useRouter, useRoute } from 'vue-router';
 
 import { Icons } from "@/types";
 import { useInvoice, useArchive } from '@/composables';
-import { encodeInvoice } from "@/utils";
+import { encodeInvoice, invoiceNumber } from "@/utils";
 
 import Button from "@/components/Button.vue";
 import ButtonGroup from '@/components/ButtonGroup.vue';
+import { RouteName } from "@/router";
 
 const { bemm } = useBemm('navigation');
 const { push } = useRouter();
@@ -65,6 +77,11 @@ const hasUpdate = computed(() => {
     return invoiceHasUpdate(invoice.value);
 })
 
+const viewInsert = () => {
+    push({
+        name: RouteName.INSERT
+    })
+}
 
 const viewInvoice = () => {
 
@@ -77,6 +94,18 @@ const viewInvoice = () => {
         }
     })
 }
+
+const downloadJson = () => {
+    const data = JSON.stringify(invoice.value);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${invoiceNumber(invoice.value)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
 
 </script>
 

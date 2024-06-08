@@ -4,7 +4,8 @@ import { createRouter, createWebHistory } from "vue-router";
 export const RouteName = {
   ARCHIVE : 'archive',
   EDIT : 'edit',
-  VIEW : 'view'
+  VIEW : 'view',
+  INSERT : 'insert'
 }
 
 
@@ -25,6 +26,11 @@ export default createRouter({
       name: RouteName.VIEW,
       path: "/view/:data",
       component: () => import("./views/View.vue"),
+    },
+    {
+      name: RouteName.INSERT,
+      path: "/insert",
+      component: () => import("./views/Insert.vue"),
     }
   ],
 });

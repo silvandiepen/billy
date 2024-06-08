@@ -1,0 +1,8 @@
+section {
+  position: relative;
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      z-index: #{$i};
+    }
+  }
+}

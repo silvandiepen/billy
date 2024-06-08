@@ -1,0 +1,47 @@
+
+@media print {
+    // *{ display: none; }
+    // .preview, .preview *{
+    //   display: block;
+    //   // padding-top: 0;
+    // }
+
+    // .debug {
+    //   display: none;
+    // }
+
+    body,
+    html {
+      background-color: white !important;
+      background-image: none !important;
+    }
+    .preview {
+      padding: 0 !important;
+    }
+
+    .print-hide,
+    .navigation {
+      display: none !important;
+    }
+
+    .preview__paper {
+      font-size: 0.99cm !important;
+      // width: 21cm;
+      border: 10px solid red !important;
+      border: none !important;
+      width: 100% !important;
+      height: 29.7em !important;
+    }
+
+    .preview__invoice {
+      padding: 0;
+    }
+
+    @page {
+      size: portrait;
+      margin: 0%;
+      width: 10cm;
+      height: 20cm;
+      font-size: 1cm;
+    }
+  }

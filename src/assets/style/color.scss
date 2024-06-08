@@ -1,0 +1,86 @@
+
+$colors: (
+  dark: #062232,
+  light: #ffffff,
+  accent-dark: #000000,
+  accent-light: #f1ece3,
+  primary: #1aa8cc,
+  secondary: #79eec7,
+  tertiary: #6bb66b,
+  quaternary: #9f651f,
+);
+
+
+@function values($color) {
+  @return #{red(map-get($colors, $color))}, #{green(map-get($colors, $color))},
+    #{blue(map-get($colors, $color))};
+}
+
+@function darkOrLight($color) {
+  @return if(lightness($color) > 50, "dark", "light");
+}
+
+@mixin darkModeBase {
+  --background: var(--dark);
+  --background-text: var(--light);
+  --background-rgb: var(--dark-rgb);
+  --foreground: var(--light);
+  --foreground-text: var(--dark);
+  --foreground-rgb: var(--light-rgb);
+  --accent: var(--accent-dark);
+  --accent-rgb: var(--accent-dark-rgb);
+  --accent-text: var(--accent-dark-text);
+}
+@mixin lightModeBase {
+  --background: var(--light);
+  --background-text: var(--dark);
+  --background-rgb: var(--light-rgb);
+  --foreground: var(--dark);
+  --foreground-text: var(--light);
+  --foreground-rgb: var(--dark-rgb);
+  --accent: var(--accent-light);
+  --accent-rgb: var(--accent-light-rgb);
+  --accent-text: var(--accent-light-text);
+}
+:root {
+  @each $color, $value in $colors {
+    --#{$color}: #{$value};
+    --#{$color}-rgb: #{values($color)};
+    --#{$color}-r: #{red($value)};
+    --#{$color}-g: #{green($value)};
+    --#{$color}-b: #{blue($value)};
+    --#{$color}-h: #{hue($value)};
+    --#{$color}-s: #{saturation($value)};
+    --#{$color}-l: #{lightness($value)};
+    --#{$color}-text: var(--#{darkOrLight($value)});
+  }
+
+  --space: 1em;
+  --spacing: clamp(2em, 8vw, 6em);
+
+
+  --space-xs: calc(var(--space) / 3);
+  --space-s: calc(var(--space) / 2);
+  --space-l: calc(var(--space) * 2);
+  --space-xl: calc(var(--space) * 3);
+
+  --border-radius: 1em;
+  --spacing: clamp(2em, 8vw, 6em);
+  --bezier: cubic-bezier(0, 0.75, 0.5, 1.5);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include darkModeBase();
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    @include lightModeBase();
+  }
+}
+[data-color-mode="dark"] {
+  @include darkModeBase();
+}
+[data-color-mode="light"] {
+  @include lightModeBase();
+}
