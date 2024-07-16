@@ -1,6 +1,7 @@
 <template>
     <div :class="bemm()">
-        <InputCode v-model="insertObjectComputed" />
+        <Button @click="expanded = !expanded">Expand</Button>
+        <InputCode v-if="expanded" v-model="insertObjectComputed" />
     </div>
 </template>
 
@@ -9,16 +10,25 @@
 import { computed, ref, watch } from "vue";
 import { useBemm } from 'bemm';
 import InputCode from "./form/InputCode.vue";
+import Button from "./Button.vue";
 
 const bemm = useBemm('edit-json');
+
 
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true
+    },
+    expanded: {
+        type: Boolean,
+        default: false
     }
 });
+
+const expanded = ref(props.expanded);
+
 const theModel = computed({
     get() {
         return props.modelValue;

@@ -1,11 +1,11 @@
 <template>
     <div :class="bemm()">
-        <div>
+        <div :class="bemm('json')">
             <pre>
         {{ invoice }}
     </pre>
         </div>
-        <div>
+        <div :class="bemm('edit')">
             <EditJson v-model="invoice"></EditJson>
 
         </div>
@@ -28,9 +28,29 @@ const { invoice } = useInvoice();
 </script>
 
 <style lang="scss">
-.edit-invoice-data{
+.edit-invoice-data {
     display: flex;
     width: 100%;
     padding: var(--spacing);
+    display: flex;
+    gap: var(--space);
+    height: 100vh;
+
+    &__json,
+    &__edit {
+        padding: var(--spacing);
+        border: 1px solid rgba(var(--foreground-rgb),.25);
+        border-radius: var(--border-radius);
+    }
+
+    &__json {
+        width: 50%;
+        overflow: scroll;
+    }
+
+    &__edit {
+        width: 50%;
+        overflow: scroll;
+    }
 }
 </style>

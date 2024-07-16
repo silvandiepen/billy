@@ -20,13 +20,14 @@
                 <Button :icon="Icons.ARROW_DOWN" v-if="!isBlank" @click="viewInsert()"></Button>
 
             </ButtonGroup>
+
             <ButtonGroup type="stack" v-if="name == RouteName.INSERT">
                 <Button :icon="Icons.ARROW_LEFT" @click="goToEdit()"></Button>
                 <Button :icon="Icons.VISIBLE" v-if="!isBlank" @click="viewInvoice()"></Button>
                 <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && !isArchived" @click="saveToArchive()"></Button>
                 <Button :icon="Icons.FLOPPY_DISK" v-if="!isBlank && isArchived && hasUpdate"
                     @click="saveToArchive()"></Button>
-                <Button :icon="Icons.ARROW_DOWN_LEFT" v-if="!isBlank" @click="downloadJson"></Button>
+                <Button :icon="Icons.ARROW_DOWN" v-if="!isBlank" @click="downloadJson"></Button>
 
             </ButtonGroup>
         </div>
