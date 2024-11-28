@@ -1,30 +1,66 @@
+<!-- InputNumber.vue -->
 <template>
-    <div :class="bemm()">
-        <label :class="bemm('label')"  v-if="label">
-            {{ label }}
-        </label>
-
-        <div :class="bemm('control-container')">
-        <input  :class="bemm('control')"  :placeholder="placeholder" type="number" v-model="value" />
-            </div>
-  </div>
+	<InputBase
+		v-if="model !== undefined"
+		v-model="model"
+		:block="block"
+		:label="label"
+		type="number"
+		:min="min"
+		:max="max"
+		:step="step"
+		@change="$emit('change', $event)"
+		@touched="$emit('touched', $event)"
+	/>
+	<InputBase
+		v-else
+		:value="value"
+		:block="block"
+		:label="label"
+		type="number"
+		:min="min"
+		:max="max"
+		:step="step"
+		@change="$emit('change', $event)"
+		@touched="$emit('touched', $event)"
+	/>
 </template>
 
 <script lang="ts" setup>
+import InputBase from './InputBase.vue';
 
-import { useBemm } from 'bemm';
-const bemm = useBemm('input-number');
+const model = defineModel<number>({
+	default: undefined,
+});
 
-defineProps({
-    label: {
-        type: String,
-        default: ""
-    },
-    placeholder: {
-        type: String,
-        default: ""
-    }
-})
-const value = defineModel()
+interface Props {
+	value?: number;
+	label?: string;
+	min?: number;
+	max?: number;
+	step?: number;
+}
+
+withDefaults(defineProps<Props>(), {
+	value: undefined,
+	label: '',
+	min: undefined,
+	max: undefined,
+	step: 1,
+});
+
+defineEmits<{
+	change: [value: number];
+	touched: [value: boolean];
+}>();
+
+const block = 'input-number';
 </script>
-<style lang="scss" src="./Form.scss"></style>
+
+<style lang="scss">
+@use "Form" as form;
+
+.input-number {
+  @include form.inputBase();
+}
+</style>

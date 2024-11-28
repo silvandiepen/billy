@@ -3,7 +3,7 @@
         <Card>
 
             <ButtonGroup :class="bemm('actions')" type="stack">
-                <Button :icon="Icons.EDIT" @click="showPopup({ id: popupId || id() })"></Button>
+                <Button :icon="Icons.FILE_EDIT2" @click="showPopup({ id: popupId || id() })"></Button>
                 <Button v-if="deleteAction" :icon="Icons.CLOSE" @click="deleteAction()"></Button>
                 <Button v-if="activeAction" :icon="active ? Icons.VISIBLE : Icons.INVISIBLE"
                     @click.prevent="activeAction()"></Button>
@@ -14,16 +14,11 @@
                 <slot name="view"></slot>
             </div>
         </Card>
-
-        <!-- <div :class="bemm('edit')" v-if="mode == 'edit'"> -->
-
-        <!-- </div> -->
     </div>
     <PopUp :id="popupId || id()">
         <div :class="bemm('form')">
             <slot name="edit"></slot>
         </div>
-
     </PopUp>
 </template>
 

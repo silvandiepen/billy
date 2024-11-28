@@ -18,7 +18,7 @@ import { useBemm } from 'bemm';
 
 import { Icons } from "@/types";
 
-const bemm = useBemm('button');
+const bemm = useBemm('button-legacy');
 
 const slots = useSlots();
 
@@ -64,7 +64,7 @@ const hasSlot = computed(() => {
 </script>
 
 <style lang="scss">
-.button {
+.button-legacy {
     // background-color: var(--secondary);
     color: var(--secondary-text);
     border-radius: var(--border-radius);

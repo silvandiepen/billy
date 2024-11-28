@@ -44,7 +44,9 @@
 import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
-import { InputText, Form } from "@/components/form";
+// import { InputText, Form } from "@/components/form";
+import Form from "@/components/form/Form.vue";
+import InputText from "@/components/form/InputText.vue"
 import { Entity } from '@/types';
 import EntityView from "@/components/Entity/View.vue";
 import EditJson from "@/components/EditJson.vue";

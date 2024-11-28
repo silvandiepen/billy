@@ -1,50 +1,186 @@
+<!-- InputTextArea.vue -->
 <template>
-    <div :class="bemm()">
-        <label :class="bemm('label')" v-if="label">
-            {{ label }}
-        </label>
-        <div :class="bemm('control-container')">
-            <textarea v-on:input="autoGrow" :style="`height: ${controlHeight}px`" :class="bemm('control')"
-                :placeholder="placeholder" v-model="value"></textarea>
-        </div>
-    </div>
+	<InputBase
+		v-if="model !== undefined"
+		v-model="model"
+		:block="block"
+		:label="label"
+		:description="description"
+		@change="handleChange"
+		@touched="$emit('touched', $event)"
+	>
+		<template #control="{ id, value: inputValue, disabled, handleInput }">
+			<textarea
+				:id="id"
+				ref="control"
+				:value="inputValue"
+				:style="textareaStyle"
+				:class="[bemm('control'), { 'no-resize': !allowResize }]"
+				:placeholder="placeholder"
+				:disabled="disabled"
+				@input="(e) => {
+					handleInput(e);
+					if (autoGrow) handleAutoGrow(e.target as HTMLTextAreaElement);
+				}"
+			/>
+		</template>
+	</InputBase>
+	<InputBase
+		v-else
+		:value="value"
+		:block="block"
+		:label="label"
+		:description="description"
+		@change="handleChange"
+		@touched="$emit('touched', $event)"
+	>
+		<template #control="{ id, value: inputValue, disabled, handleInput }">
+			<textarea
+				:id="id"
+				ref="control"
+				:value="inputValue"
+				:style="textareaStyle"
+				:class="[bemm('control'), { 'no-resize': !allowResize }]"
+				:placeholder="placeholder"
+				:disabled="disabled"
+				@input="(e) => {
+					handleInput(e);
+					if (autoGrow) handleAutoGrow(e.target as HTMLTextAreaElement);
+					emit('change', (e.target as HTMLTextAreaElement).value);
+				}"
+			/>
+		</template>
+	</InputBase>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from 'vue';
 import { useBemm } from 'bemm';
-const bemm = useBemm('input-textarea');
+import InputBase from './InputBase.vue';
 
-defineProps({
-    label: {
-        type: String,
-        default: ""
-    },
-    placeholder: {
-        type: String,
-        default: ""
-    }
-})
-const value = defineModel({ type: String })
+const model = defineModel<string>({
+	default: undefined,
+});
+
+interface Props {
+	value?: string;
+	label?: string;
+	description?: string;
+	placeholder?: string;
+	error?: string[];
+	autoGrow?: boolean;
+	allowResize?: boolean;
+	minRows?: number;
+	maxRows?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+	value: '',
+	label: '',
+	description: '',
+	placeholder: '',
+	error: () => [],
+	autoGrow: true,
+	allowResize: false,
+	minRows: 3,
+	maxRows: 10,
+});
+
+const emit = defineEmits<{
+	change: [value: string];
+	touched: [value: boolean];
+}>();
+
+const block = 'input-textarea';
+const bemm = useBemm(block);
+const control = ref<HTMLTextAreaElement>();
 
 const controlHeight = ref(0);
+const lineHeight = ref(0);
 
-const autoGrow = (event: Event | HTMLTextAreaElement) => {
-    let element: HTMLTextAreaElement | null = null;
-    if ((event as Event).target) {
-        element = (event as Event).target as HTMLTextAreaElement;
-    } else {
-        element = event as HTMLTextAreaElement;
-    }
-    controlHeight.value = 5;
-    controlHeight.value = element.scrollHeight;
+// Calculate base styles including line height and min/max heights
+const textareaStyle = computed(() => {
+	const styles: Record<string, string> = {
+		height: `${controlHeight.value}px`,
+	};
 
-}
+	if (props.minRows && lineHeight.value) {
+		styles.minHeight = `${props.minRows * lineHeight.value}px`;
+	}
+
+	if (props.maxRows && lineHeight.value) {
+		styles.maxHeight = `${props.maxRows * lineHeight.value}px`;
+	}
+
+	return styles;
+});
+
+const handleAutoGrow = (element: HTMLTextAreaElement) => {
+	// Reset height to auto to get proper scrollHeight
+	element.style.height = 'auto';
+
+	// Get the line height if we haven't yet
+	if (!lineHeight.value) {
+		const computedStyle = window.getComputedStyle(element);
+		lineHeight.value = parseInt(computedStyle.lineHeight);
+	}
+
+	// Calculate new height
+	let newHeight = element.scrollHeight;
+
+	// Apply min/max constraints
+	if (props.minRows && lineHeight.value) {
+		const minHeight = props.minRows * lineHeight.value;
+		newHeight = Math.max(newHeight, minHeight);
+	}
+
+	if (props.maxRows && lineHeight.value) {
+		const maxHeight = props.maxRows * lineHeight.value;
+		newHeight = Math.min(newHeight, maxHeight);
+	}
+
+	controlHeight.value = newHeight;
+};
+
+const handleChange = (value: string) => {
+	emit('change', value);
+};
+
 onMounted(() => {
-    autoGrow(document.querySelector(`.${bemm('control')}`) as HTMLTextAreaElement);
+	if (control.value) {
+		// Get initial line height
+		const computedStyle = window.getComputedStyle(control.value);
+		lineHeight.value = parseInt(computedStyle.lineHeight);
+
+		// Set initial height based on minRows
+		controlHeight.value = props.minRows * lineHeight.value;
+
+		// If there's initial content, adjust height accordingly
+		if (model.value || props.value) {
+			handleAutoGrow(control.value);
+		}
+	}
 });
 </script>
 
+<style lang="scss">
+@use "Form" as form;
 
+.input-textarea {
+  @include form.inputBase();
 
-<style lang="scss" src="./Form.scss"></style>
+  &__control {
+    font-size: 1em;
+    font-family: inherit;
+    padding: 0.75em 1em;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    resize: vertical;
+
+    &.no-resize {
+      resize: none;
+    }
+  }
+}
+</style>

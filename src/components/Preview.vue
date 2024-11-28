@@ -4,7 +4,7 @@
 
     <div :class="[bemm('tools'),'print-hide']">
       <InputRange v-if="!autoSize" :label="`Preview Size`" v-model="previewSize" :min="0.2" :max="1.5" :step="0.01" />
-      <InputCheckbox :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
+      <InputCheckboxSwitch :label="`Auto size`" :class="bemm('auto-size')" v-model="autoSize" />
     </div>
 
     <div :class="bemm('paper')" id="paper"
@@ -45,7 +45,7 @@ import ItemListView from "@/components/Item/List.vue";
 import NoteListView from "@/components/Note/List.vue";
 import TotalView from "@/components/Total/View.vue";
 import InputRange from "@/components/form/InputRange.vue";
-import InputCheckbox from "@/components/form/InputCheckbox.vue";
+import InputCheckboxSwitch from "@/components/form/InputCheckboxSwitch.vue";
 
 defineProps({
   invoice: {
@@ -99,7 +99,7 @@ const pointerdownHandler = (ev: PointerEv) => {
 
 const pointerupHandler = (ev: PointerEv) => {
   removeEvent(ev);
-  // if (evCache.value.length < 2)  prevDiff.value = -1;  
+  // if (evCache.value.length < 2)  prevDiff.value = -1;
 }
 const pointermoveHandler = (ev: PointerEv) => {
 
@@ -108,7 +108,7 @@ const pointermoveHandler = (ev: PointerEv) => {
   );
   evCache.value[index] = ev;
   if (evCache.value.length === 2) {
-    const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);   
+    const curDiff = Math.abs(evCache.value[0].clientX - evCache.value[1].clientX);
     prevDiff.value = curDiff;
     previewSize.value = (curDiff / 250) + 0.5;
   }
@@ -169,7 +169,7 @@ onMounted(() => {
     opacity: .125;
 
     @media screen and (width <= 768px) {
-    
+
       font-size: 12px;
       margin: 0; border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;

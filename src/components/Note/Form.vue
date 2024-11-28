@@ -13,7 +13,7 @@
         <div :class="bemm('column')">
             <fieldset :class="bemm('preview')">
                 <legend :class="bemm('legend')">preview</legend>
-                <div :class="bemm('content')" v-html="enrichContent(theModel.content, invoice)"></div>
+                <div :class="bemm('content')" v-html="renderedNote"></div>
             </fieldset>
 
 
@@ -62,12 +62,15 @@
 import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
-import { InputText, InputTextArea, Form } from "@/components/form";
+import InputText from "../form/InputText.vue";
+import InputTextArea from "../form/InputTextArea.vue";
+import Form from "../form/Form.vue";
 import Card from "@/components/Card.vue";
 import { Note } from '@/types';
 import { enrichContent } from "@/utils";
 
 import { useInvoice } from "@/composables";
+import { Marked } from "@ts-stack/markdown";
 const { invoice } = useInvoice();
 
 
@@ -89,6 +92,10 @@ const theModel = computed({
     set(value) {
         emit('update:modelValue', value)
     }
+})
+
+const renderedNote = computed(()=>{
+    return Marked.parse(enrichContent(theModel.value.content, invoice.value))
 })
 
 

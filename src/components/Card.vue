@@ -75,7 +75,8 @@ const addMousePosition = (e: MouseEvent) => {
         display: flex;
         align-items: center;
         gap: var(--space);
-        padding: 1em;
+        padding: var(--space-s);
+        overflow: scroll;
     }
 }
 </style>

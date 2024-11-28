@@ -23,8 +23,17 @@ import { PropType, computed } from "vue";
 import { useBemm } from 'bemm';
 
 import EditJson from "@/components/EditJson.vue";
-import { InputNumber, InputText, InputDate, InputSelect, InputColor, Form } from "@/components/form";
+// import { InputNumber, InputText, InputDate, InputSelect, InputColor, Form } from "@/components/_form";
+
+import InputNumber from "../form/InputNumber.vue";
+import InputText from "../form/InputText.vue";
+import InputDate from "../form/InputDate.vue";
+import InputSelect from "../form/InputSelect.vue";
+import InputColor from "../form/InputColor.vue";
+import Form from "../form/Form.vue";
 import { Currency, Invoice, Locales } from '@/types';
+
+
 
 
 const bemm = useBemm('edit-invoice-details');

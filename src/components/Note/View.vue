@@ -1,11 +1,12 @@
 <template>
     <strong :class="bemm('note-title')">{{ note.title }}</strong>
-    <p :class="bemm('note-content')" v-html="enrichContent(note.content, invoice)"></p>
+    <div  :class="bemm('note-content')" v-html="renderedNote"></div>
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import { computed, PropType } from 'vue';
 import { useBemm } from 'bemm';
+import { Marked } from "@ts-stack/markdown";
 
 import { Note, Invoice } from "@/types"
 import { enrichContent } from '@/utils';
@@ -13,8 +14,7 @@ import { enrichContent } from '@/utils';
 const bemm = useBemm('note-view');
 
 
-
-defineProps({
+const props = defineProps({
     invoice: {
         type: Object as PropType<Invoice>,
         required: true
@@ -24,4 +24,10 @@ defineProps({
         required: true
     }
 })
+const renderedNote = computed(()=>{
+    return Marked.parse(enrichContent(props.note.content, props.invoice))
+});
+
+
+
 </script>

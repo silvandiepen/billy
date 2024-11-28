@@ -1,8 +1,7 @@
-
 <template>
     <Card :class="bemm()">
 
-        <Icon :class="bemm('icon')" :name="Icons.DOCUMENT" />
+        <Icon :class="bemm('icon')" :name="Icons.FILE" />
         <div :class="bemm('details')">
             <dl :class="bemm('item')">
                 <dt :class="bemm('label')">Number</dt>
@@ -21,8 +20,10 @@
 
         <div :class="bemm('actions')">
 
-            <Button :icon="Icons.EDIT" @click="editInvoice(invoice)"></Button>
-            <Button :icon="Icons.CLOSE" @click="deleteInvoice(invoice)"></Button>
+            <Button :icon="Icons.EDIT_M" @click="editInvoice(invoice)" :tooltip="'Edit Invoice'"></Button>
+            <Button :icon="Icons.EYE" @click="viewInvoice(invoice)" :tooltip="'View Invoice'"></Button>
+            <Button :icon="Icons.CLOSE" @click="deleteInvoice(invoice)" :tooltip="'Delete Invoice'"></Button>
+            <Button :icon="Icons.FILE_MULTIPLY" @click="duplicateInvoice(invoice)" :tooltip="'Duplicate Invoice'"></Button>
 
         </div>
     </Card>
@@ -33,12 +34,12 @@ import { PropType } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Invoice, Icons } from '@/types';
-import { invoiceNumber, getTotal, formatCurrency } from '@/utils';
+import { invoiceNumber, getTotal, formatCurrency, encodeInvoice } from '@/utils';
 import { useArchive, useInvoice } from '@/composables';
 
 import Icon from '@/components/Icon.vue';
 import Card from "@/components/Card.vue";
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
 
 
 const { removeInvoice } = useArchive();
@@ -67,6 +68,29 @@ const editInvoice = (invoice: Invoice) => {
 
 }
 
+const viewInvoice = (invoice: Invoice) => {
+    const data = encodeInvoice(invoice, 'secret-key');
+    push({
+        name: 'view',
+        params: {
+            data: data,
+        },
+    });
+}
+
+const duplicateInvoice = (invoice: Invoice) => {
+    const newInvoice = {
+        ...invoice, details: {
+            ...invoice.details,
+            number: '',
+            date: new Date().toISOString().slice(0, 10),
+            dueDate: new Date().toISOString().slice(0, 10),
+        }
+    }
+    setInvoice(newInvoice)
+    push(`/edit`);
+}
+
 </script>
 
 <style lang="scss">
@@ -78,6 +102,7 @@ const editInvoice = (invoice: Invoice) => {
         flex-direction: row;
         align-items: flex-start;
         justify-content: flex-start;
+        width: fit-content;
     }
 
     &__icon {
@@ -88,6 +113,20 @@ const editInvoice = (invoice: Invoice) => {
 
     }
 
+    &__item{
+        width: fit-content;
+    }
+    &__label{
+        font-size: .75em;
+        opacity: .5;
+        color: var(--primary);
+
+    }
+    &__value{
+        font-size: .85em;
+        white-space: nowrap;
+
+    }
     &__actions {
         padding: .5em;
         border-radius: 4em;

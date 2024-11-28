@@ -1,8 +1,8 @@
 <template>
     <div :class="blockClasses" @click="editItem()">
         <h4 :class="bemm('label')" v-if="label">{{ label }}</h4>
-        <fieldset :class="bemm('field')">
 
+        <fieldset :class="bemm('field')">
             <span v-if="entity.companyName" :class="bemm('', 'companyName')">{{ entity.companyName }}</span>
             <span v-if="entity.name" :class="bemm('', 'name')">{{ entity.name }}</span>
             <span v-if="entity.address" :class="bemm('', 'address')">{{ entity.address }}</span>
@@ -11,12 +11,13 @@
             <span v-if="entity.state" :class="bemm('', 'state')">{{ entity.state }}</span>
             <span v-if="entity.country" :class="bemm('', 'country')">{{ entity.country }}</span>
         </fieldset>
+
         <fieldset :class="bemm('field')" v-if="entity.phone || entity.email || entity.website">
             <span v-if="entity.phone" :class="bemm('', 'phone')">{{ entity.phone }}</span>
             <span v-if="entity.email" :class="bemm('', 'email')">{{ entity.email }}</span>
             <span v-if="entity.website" :class="bemm('', 'website')">{{ entity.website }}</span>
-
         </fieldset>
+
         <fieldset :class="bemm('field')" v-if="entity.taxId">
             <span v-if="entity.taxId" :class="bemm('', 'taxId')">{{ entity.taxId }}</span>
         </fieldset>

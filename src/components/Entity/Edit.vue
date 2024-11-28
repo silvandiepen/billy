@@ -30,7 +30,7 @@
                 <Button :icon="Icons.USER_ADD" type="ghost" size="small" v-if="!entitySaved && entityExists && filledEntity"
                     @click="saveCurrentEntityAsNew()">Save
                     as new Entity</Button>
-                <Button :icon="Icons.USER_TEAM" @click="loadEntities()" type="ghost" size="small" v-if="hasEntities">
+                <Button :icon="Icons.USERS" @click="loadEntities()" type="ghost" size="small" v-if="hasEntities">
                     Load Entity
                 </Button>
             </ButtonGroup>
@@ -122,7 +122,7 @@ const entitySaved = computed(() => {
 const filledEntity = computed(()=>{
     return theModel.value.name !== '' || theModel.value.companyName !== '';
 })
- 
+
 
 const loadEntities = () => {
     showPopup({ id: panelId.value })

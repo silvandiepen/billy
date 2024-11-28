@@ -22,7 +22,10 @@
 import { useBemm } from "bemm";
 
 import { PropType, computed } from "vue";
-import { InputText, InputNumber, InputTextArea, Form } from "@/components/form";
+import InputText from "@/components/form/InputText.vue";
+import InputNumber from "@/components/form/InputNumber.vue";
+import InputTextArea from "@/components/form/InputTextArea.vue";
+import Form from "@/components/form/Form.vue";
 import { InvoiceItem } from '@/types';
 import EditJson from "@/components/EditJson.vue";
 

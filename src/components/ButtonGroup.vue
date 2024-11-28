@@ -62,16 +62,18 @@ const blockClasses = computed(() => {
 
             .button {
                 border-radius: 0;
+                --button-border-radius: 0;
             }
 
             .button:first-child {
-                border-bottom-left-radius: var(--space-l);
-                border-top-left-radius: var(--space-l);
+                --button-border-radius: var(--space-xl) 0 0  var(--space-xl) ;
             }
 
             .button:last-child {
-                border-bottom-right-radius: var(--space-l);
-                border-top-right-radius: var(--space-l);
+                --button-border-radius: 0  var(--space-xl)   var(--space-xl)  0;
+            }
+            .button:first-child:last-child{
+                --button-border-radius: var(--space-xl);
             }
         }
     }

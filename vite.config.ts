@@ -13,4 +13,12 @@ export default defineConfig({
       "@": resolve(__dirname, "./src"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        additionalData: `\n@use "@/assets/style/global.scss" as global;`,
+      },
+    },
+  },
 })

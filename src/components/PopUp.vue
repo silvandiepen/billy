@@ -43,6 +43,15 @@ const close = () => {
 }
 
 onMounted(() => {
+  // on keypress escape close
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      close();
+    }
+  })
+
+
   eventBus.on(EventChannel.UI, (data: any) => {
     if (data.type === EventType.POPUP && data.id === props.id) {
 
@@ -107,7 +116,7 @@ onMounted(() => {
     overflow: scroll;
 
     @media screen and (width <= 768px) {
-border-radius: 0; 
+border-radius: 0;
       min-height: 100vh;
         width: 100%; max-height: 100vh;
     }

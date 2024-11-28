@@ -1,30 +1,50 @@
+<!-- TextInput.vue -->
 <template>
-    <div :class="bemm()">
-        <label :class="bemm('label')" v-if="label">
-            {{ label }}
-        </label>
-        <div :class="bemm('control-container')">
-            <input :class="bemm('control')" :placeholder="placeholder" type="text" v-model="value" />
-        </div>
-    </div>
+	<InputBase
+		v-if="model !== undefined"
+		v-model="model"
+		:block="block"
+		:label="label"
+		@change="$emit('change', $event)"
+		@touched="$emit('touched', $event)"
+	/>
+	<InputBase
+		v-else
+		:value="value"
+		:block="block"
+		:label="label"
+		@change="$emit('change', $event)"
+		@touched="$emit('touched', $event)"
+	/>
 </template>
 
 <script lang="ts" setup>
-import { useBemm } from 'bemm';
-const bemm = useBemm('input-text');
+import InputBase from './InputBase.vue';
+
+const model = defineModel<string>({
+	default: undefined,
+});
 
 defineProps({
-    label: {
-        type: String,
-        default: ""
-    },
-    placeholder: {
-        type: String,
-        default: ""
-    }
-})
-const value = defineModel()
+	value: {
+		type: String,
+		default: '',
+	},
+	label: {
+		type: String,
+		default: '',
+	},
+});
+
+defineEmits(['change', 'touched']);
+
+const block = 'input-text';
 </script>
 
+<style lang="scss">
+@use "Form" as form;
 
-<style lang="scss" src="./Form.scss"></style>
+.input-text {
+  @include form.inputBase();
+}
+</style>
