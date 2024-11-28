@@ -1,5 +1,3 @@
-
-
 import { computed, reactive } from 'vue';
 import { watchState, retrieveState } from "@sil/storage";
 

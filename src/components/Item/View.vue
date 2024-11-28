@@ -2,7 +2,7 @@
     <div :class="blockClasses" @click="editItem()">
         <div :class="[bemm('column'), bemm('column', 'details')]">
             <span :class="bemm('item', 'title')">{{ item.title }}</span>
-            <span :class="bemm('item', 'description')">{{ item.description }}</span>
+            <span :class="bemm('item', 'description')" v-html="renderedDescription"></span>
             <span :class="bemm('item', 'tax-rate')" v-if="item.taxRate > -1">{{ item.taxRate }}</span>
         </div>
 
@@ -26,6 +26,7 @@
 import { PropType, computed } from 'vue';
 import { useBemm } from 'bemm';
 import { useRoute } from 'vue-router';
+import { Marked } from '@ts-stack/markdown';
 
 import { InvoiceItem, Invoice } from "@/types"
 
@@ -56,6 +57,10 @@ const editItem = () => {
 
     }
 }
+
+const renderedDescription = computed(()=>{
+      return Marked.parse(props.item.description);
+})
 
 const blockClasses = computed(() => {
     return [bemm(), bemm('', route.name as string || '')]
