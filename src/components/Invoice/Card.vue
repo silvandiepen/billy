@@ -20,10 +20,10 @@
 
         <div :class="bemm('actions')">
 
-            <Button :icon="Icons.EDIT_M" @click="editInvoice(invoice)" :tooltip="'Edit Invoice'"></Button>
-            <Button :icon="Icons.EYE" @click="viewInvoice(invoice)" :tooltip="'View Invoice'"></Button>
-            <Button :icon="Icons.CLOSE" @click="deleteInvoice(invoice)" :tooltip="'Delete Invoice'"></Button>
-            <Button :icon="Icons.FILE_MULTIPLY" @click="duplicateInvoice(invoice)" :tooltip="'Duplicate Invoice'"></Button>
+            <Button :icon="Icons.EDIT_M" @click="editInvoice(invoice)" :tooltip="{ position: 'top', text: 'Edit Invoice'}"></Button>
+            <Button :icon="Icons.EYE" @click="viewInvoice(invoice)" :tooltip="{ position: 'top', text: 'View Invoice'}"></Button>
+            <Button :icon="Icons.CLOSE" @click="deleteInvoice(invoice)" :tooltip="{ position: 'top', text: 'Delete Invoice'}"></Button>
+            <Button :icon="Icons.FILE_MULTIPLY" @click="duplicateInvoice(invoice)" :tooltip="{ position: 'top', text: 'Duplicate Invoice'}"></Button>
 
         </div>
     </Card>

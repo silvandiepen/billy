@@ -1,9 +1,9 @@
 <template>
     <nav :class="bemm()">
         <div :class="bemm('container')">
-            <ButtonGroup type="stack">
-                <Button v-for="(button, btnIndex) in navigationItems" :key="btnIndex" :color="button.color"
-                    :icon="button.icon" @click="button.action" :tooltip="button.tooltip"></Button>
+            <ButtonGroup type="normal">
+                <Button v-for="(button, btnIndex) in navigationItems" :key="btnIndex" :color="button.color || ButtonSettings.Color.BACKGROUND"
+                    :icon="button.icon" @click="button.action" :tooltip="{ text: button.tooltip || '', position: 'top'}"></Button>
             </ButtonGroup>
         </div>
     </nav>
@@ -78,7 +78,7 @@ const downloadJson = () => {
 const route = useRoute();
 
 const navigationItems = computed<{
-    color: Colors;
+    color?: Colors;
     icon: Icons;
     action: () => void;
     condition: boolean;
@@ -87,7 +87,6 @@ const navigationItems = computed<{
 
     if (route.name === RouteName.ARCHIVE) {
         return [{
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.FILE_ADD,
             action: createNewInvoice,
             condition: true,
@@ -97,12 +96,10 @@ const navigationItems = computed<{
 
     if (route.name === RouteName.VIEW) {
         return [{
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_LEFT,
             action: goToArchive,
             condition: true,
         },{
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.FILE_EDIT,
             action: goToEdit,
             condition: true,
@@ -111,35 +108,30 @@ const navigationItems = computed<{
 
     if (route.name === RouteName.EDIT) {
         return [{
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_LEFT,
             tooltip: 'Go to archive',
             action: goToArchive,
             condition: true,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.VISIBLE,
             tooltip: 'View invoice',
             action: viewInvoice,
             condition: !isBlank.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_RIGHT,
             tooltip: 'Save to archive',
             action: saveToArchive,
             condition: !isBlank.value && !isArchived.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_RIGHT,
             tooltip: 'Save to archive',
             action: saveToArchive,
             condition: !isBlank.value && isArchived.value && hasUpdate.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_DOWN,
             tooltip: 'Import/Export data',
             action: viewInsert,
@@ -149,35 +141,30 @@ const navigationItems = computed<{
 
     if (route.name === RouteName.INSERT) {
         return [{
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_LEFT,
             tooltip: 'Go to edit',
             action: goToEdit,
             condition: true,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.VISIBLE,
             tooltip: 'View invoice',
             action: viewInvoice,
             condition: !isBlank.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_RIGHT,
             tooltip: 'Save to archive',
             action: saveToArchive,
             condition: !isBlank.value && !isArchived.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_RIGHT,
             tooltip: 'Save to archive',
             action: saveToArchive,
             condition: !isBlank.value && isArchived.value && hasUpdate.value,
         },
         {
-            color: ButtonSettings.Color.PRIMARY,
             icon: Icons.ARROW_DOWN,
             tooltip: 'Import/Export data',
             action: downloadJson,
@@ -193,8 +180,8 @@ const navigationItems = computed<{
     position: fixed;
     bottom: 0;
     left: 50%;
-    padding: var(--space);
-    background-color: var(--dark);
+    // padding: var(--space);
+    // background-color: var(--dark);
     border-radius: 4em;
     margin: var(--space);
     transform: translateX(-50%);

@@ -12,7 +12,7 @@
 
     body,
     html {
-      background-color: white !important;
+      background-color: red !important;
       background-image: none !important;
     }
     .preview {
@@ -25,9 +25,7 @@
     }
 
     .preview__paper {
-      font-size: 0.99cm !important;
-      // width: 21cm;
-      border: 10px solid red !important;
+      font-size: 1cm !important;
       border: none !important;
       width: 100% !important;
       height: 29.7em !important;
@@ -40,8 +38,8 @@
     @page {
       size: portrait;
       margin: 0%;
-      width: 10cm;
-      height: 20cm;
+      width: 21cm;
+      height: 29.7cm;
       font-size: 1cm;
     }
   }

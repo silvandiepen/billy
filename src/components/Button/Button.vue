@@ -18,7 +18,7 @@
     <Chip v-if="count && count > -1" :color="ChipColor.TERTIARY" :class="bemm('count')">
       {{ count }}
     </Chip>
-    <ToolTip v-if="tooltip">
+    <ToolTip v-if="tooltip.text" :position="tooltip.position">
       {{ tooltip }}
     </ToolTip>
   </component>
@@ -73,8 +73,14 @@ const props = defineProps({
     default: 'button',
   },
   tooltip: {
-    type: String as PropType<string>,
-    default: '',
+    type: Object as PropType<{
+      position: string;
+      text: string;
+    }>,
+    default: {
+      position: 'bottom',
+      text: '',
+    },
   },
   shadow: {
     type: Boolean as PropType<boolean>,
