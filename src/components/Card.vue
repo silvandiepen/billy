@@ -33,6 +33,7 @@ const addMousePosition = (e: MouseEvent) => {
     border-radius: var(--border-radius);
     position: relative;
 
+
     --primary-opacity-25: rgba(var(--primary-rgb), .25);
     --primary-opacity-10: rgba(var(--primary-rgb), .1);
 
@@ -76,7 +77,7 @@ const addMousePosition = (e: MouseEvent) => {
         align-items: center;
         gap: var(--space);
         padding: var(--space-s);
-        overflow: scroll;
+        overflow: hidden;
     }
 }
 </style>
