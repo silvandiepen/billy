@@ -10,7 +10,7 @@
 import { computed, ref, watch } from "vue";
 import { useBemm } from 'bemm';
 import InputCode from "./_form/InputCode.vue";
-import Button from "./Button.vue";
+import Button from "@/components/Button/Button.vue";
 
 const bemm = useBemm('edit-json');
 
