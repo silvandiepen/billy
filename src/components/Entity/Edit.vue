@@ -47,8 +47,8 @@ import { Entity, Icons } from '@/types';
 import EntityView from "@/components/Entity/View.vue";
 import EntityForm from "@/components/Entity/Form.vue";
 import ViewEdit from "@/components/ViewEdit.vue";
-import Button from "@/components/Button.vue";
-import ButtonGroup from "@/components/ButtonGroup.vue";
+import Button from "@/components/Button/Button.vue";
+import ButtonGroup from "@/components/Button/ButtonGroup.vue";
 
 import PopUp from "@/components/PopUp.vue";
 
