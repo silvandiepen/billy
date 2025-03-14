@@ -30,10 +30,10 @@ import { useId } from '@sil/id';
 import { Icons } from "@/types"
 import { showPopup } from '@/utils';
 
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
 import PopUp from '@/components/PopUp.vue';
 import Card from '@/components/Card.vue';
-import ButtonGroup from './ButtonGroup.vue';
+import ButtonGroup from '@/components/Button/ButtonGroup.vue';
 
 const id = useId();
 
@@ -78,6 +78,7 @@ const blockClasses = computed(() => {
         transition: transform 0.2s ease-in-out;
         display: flex;
         gap: .25em;
+        z-index: 10;
 
     }
 
@@ -100,5 +101,6 @@ const blockClasses = computed(() => {
     &__form {
         padding: var(--space);
     }
+
 }
 </style>
