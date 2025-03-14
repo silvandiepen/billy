@@ -26,7 +26,7 @@ import { createId } from "@sil/id";
 // import { Icon } from "open-icon";
 import { BlankItem, InvoiceItem, Icons } from "@/types";
 
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
 import ViewEdit from "@/components/ViewEdit.vue";
 import ItemView from "@/components/Item/View.vue";
 import ItemForm from "@/components/Item/Form.vue";
