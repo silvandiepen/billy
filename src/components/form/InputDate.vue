@@ -1,75 +1,31 @@
 <!-- InputDate.vue -->
 <template>
-	<InputBase
-		v-if="model !== undefined"
-		v-model="model"
-		:block="block"
-		:label="label"
-		:error="allErrors"
-		@change="handleChange"
-		@touched="$emit('touched', $event)"
-	>
+	<InputBase v-if="model !== undefined" v-model="model" :block="block" :label="label" :error="allErrors"
+		@change="handleChange" @touched="$emit('touched', $event)">
 		<template #control="{ id, value: inputValue, disabled, handleInput }">
 			<div :class="bemm('wrapper')">
-				<input
-					:id="`${id}-hidden`"
-					ref="hiddenInput"
-					:value="inputValue"
-					type="date"
-					:min="minDate"
-					:max="maxDate"
-					:disabled="disabled"
-					class="visually-hidden"
-					@input="handleInput"
-				>
-				<input
-					:id="id"
-					ref="displayInput"
-					:value="formatDate(inputValue || '')"
-					:class="bemm('control')"
-					type="text"
-					:disabled="disabled"
-					readonly
-					@click="openDatePicker"
-				>
+				<input :id="`${id}-hidden`" ref="hiddenInput" :value="inputValue" type="date" :min="minDate" :max="maxDate"
+					:disabled="disabled" class="visually-hidden" @input="handleInput">
+				<input :id="id" ref="displayInput"
+					:value="formatDate({ dateString: inputValue || '', displayFormat: displayFormat, customFormat: customFormat })"
+					:class="bemm('control')" type="text" :disabled="disabled" readonly @click="openDatePicker">
 			</div>
 		</template>
 	</InputBase>
-	<InputBase
-		v-else
-		:value="value"
-		:block="block"
-		:label="label"
-		:error="allErrors"
-		@change="handleChange"
-		@touched="$emit('touched', $event)"
-	>
+	<InputBase v-else :value="value" :block="block" :label="label" :error="allErrors" @change="handleChange"
+		@touched="$emit('touched', $event)">
 		<template #control="{ id, value: inputValue, disabled, handleInput }">
 			<div :class="bemm('wrapper')">
-				<input
-					:id="`${id}-hidden`"
-					ref="hiddenInput"
-					:value="inputValue"
-					type="date"
-					:min="minDate"
-					:max="maxDate"
-					:disabled="disabled"
-					class="visually-hidden"
-					@input="(e) => {
+				<input :id="`${id}-hidden`" ref="hiddenInput" :value="inputValue" type="date" :min="minDate" :max="maxDate"
+					:disabled="disabled" class="visually-hidden" @input="(e) => {
 						handleInput(e);
 						emit('change', (e.target as HTMLInputElement).value);
-					}"
-				>
-				<input
-					:id="id"
-					ref="displayInput"
-					:value="formatDate(inputValue || '')"
-					:class="bemm('control')"
-					type="text"
-					:disabled="disabled"
-					readonly
-					@click="openDatePicker"
-				>
+					}">
+				<input :id="id" ref="displayInput" :value="formatDate({
+					dateString: inputValue || '',
+					displayFormat: displayFormat,
+					customFormat: customFormat
+				})" :class="bemm('control')" type="text" :disabled="disabled" readonly @click="openDatePicker">
 			</div>
 		</template>
 	</InputBase>
@@ -79,6 +35,8 @@
 import { ref, computed, watch } from 'vue';
 import { useBemm } from 'bemm';
 import InputBase from './InputBase.vue';
+
+import { formatDate } from "./Form.utils";
 
 const model = defineModel<string>({
 	default: undefined,
@@ -147,64 +105,6 @@ const allErrors = computed(() => {
 	return [...blockErrors.value, ...(props.error || [])];
 });
 
-const formatDate = (dateString: string): string => {
-	if (!dateString) return '';
-
-	try {
-		const date = new Date(dateString);
-
-		if (props.customFormat) {
-			let formatted = props.customFormat;
-			const year = date.getFullYear();
-			const month = String(date.getMonth() + 1).padStart(2, '0');
-			const day = String(date.getDate()).padStart(2, '0');
-
-			formatted = formatted.replace('yyyy', year.toString());
-			formatted = formatted.replace('mm', month);
-			formatted = formatted.replace('dd', day);
-
-			return formatted;
-		}
-
-		switch (props.displayFormat) {
-			case 'yyyy-mm-dd':
-				return dateString;
-			case 'dd/mm/yyyy':
-				return date.toLocaleDateString('en-GB');
-			case 'mm/dd/yyyy':
-				return date.toLocaleDateString('en-US');
-			case 'dd-mm-yyyy':
-				return date.toLocaleDateString('en-GB').replace(/\//g, '-');
-			case 'mm-dd-yyyy':
-				return date.toLocaleDateString('en-US').replace(/\//g, '-');
-			case 'long':
-				return date.toLocaleDateString(undefined, {
-					weekday: 'long',
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-				});
-			case 'short':
-				return date.toLocaleDateString(undefined, {
-					month: 'short',
-					day: 'numeric',
-					year: 'numeric',
-				});
-			case 'medium':
-				return date.toLocaleDateString(undefined, {
-					month: 'long',
-					day: 'numeric',
-					year: 'numeric',
-				});
-			default:
-				return date.toLocaleDateString();
-		}
-	}
-	catch {
-		return dateString;
-	}
-};
-
 const validateDate = (value: string) => {
 	blockErrors.value = [];
 
@@ -223,11 +123,19 @@ const validateDate = (value: string) => {
 	}
 
 	if (props.minDate && new Date(value) < new Date(props.minDate)) {
-		blockErrors.value.push(`Date must be after ${formatDate(props.minDate.toString())}`);
+		blockErrors.value.push(`Date must be after ${formatDate({
+			dateString: props.minDate.toString(),
+			customFormat: props.customFormat,
+			displayFormat: props.displayFormat,
+		})}`);
 	}
 
 	if (props.maxDate && new Date(value) > new Date(props.maxDate)) {
-		blockErrors.value.push(`Date must be before ${formatDate(props.maxDate.toString())}`);
+		blockErrors.value.push(`Date must be before ${formatDate({
+			dateString: props.maxDate.toString(),
+			customFormat: props.customFormat,
+			displayFormat: props.displayFormat,
+		})}`);
 	}
 };
 
