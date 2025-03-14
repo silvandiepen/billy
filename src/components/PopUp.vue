@@ -21,7 +21,7 @@ import { onMounted, ref } from 'vue';
 import { EventChannel, EventType, eventBus } from '@/utils';
 import { Icons } from "@/types";
 
-import Button from '@/components/Button.vue';
+import Button from '@/components/Button/Button.vue';
 
 const active = ref(false);
 const loaded = ref(false);
@@ -113,7 +113,7 @@ onMounted(() => {
     transition: .2s ease-in-out;
     opacity: 0;
     max-height: 80vh;
-    overflow: scroll;
+    overflow-y: scroll;
 
     @media screen and (width <= 768px) {
 border-radius: 0;
