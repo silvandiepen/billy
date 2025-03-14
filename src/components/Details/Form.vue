@@ -1,6 +1,5 @@
 <template>
-    <Form>
-
+    <Form :class="bemm()">
         <InputText label="number" v-model="theModel.number" :class="bemm('number')" placeholder="Invoice number" />
         <InputDate label="date" v-model="theModel.date" :class="bemm('date')" placeholder="Invoice date" />
         <InputDate label="Due Date" v-model="theModel.dueDate" :class="bemm('dueDate')" placeholder="Due date" />
