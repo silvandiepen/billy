@@ -1,7 +1,14 @@
 <template>
-  <component :is="to ? RouterLink : props.element" :to="to" :class="blockClasses" :tooltip="!!tooltip"
-    :disabled="disabled" :style="`--button-color: var(--${color})`"
-    :type="htmlButtonType == 'auto' ? '' : htmlButtonType">
+  <component
+    :is="to ? RouterLink : props.element"
+    :to="to"
+    :class="blockClasses"
+    :tooltip="!!tooltip"
+    :disabled="disabled"
+    :style="`--button-color: var(--${color})`"
+    :type="htmlButtonType === 'auto' ? 'button' : htmlButtonType"
+    @click.prevent="$emit('click', $event)"
+  >
     <div :class="bemm('container', ['', reverse ? 'direction-reverse' : ''])">
       <span v-if="icon" :class="bemm('icon')">
         <Icon :name="icon" :animation="true" />
@@ -37,7 +44,13 @@ import { ButtonType, ButtonSize, ButtonColor, ButtonStatus } from './Button.mode
 import { RouterLink } from 'vue-router';
 
 const bemm = useBemm('button');
-const slots = useSlots();
+const slots = useSlots() as {
+  default?: () => any;
+};
+
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+}>();
 
 const props = defineProps({
   icon: {
@@ -125,7 +138,7 @@ const blockClasses = computed(() => {
   return classes;
 });
 
-const hasSlot = computed(() => !!slots.default);
+const hasSlot = computed((): boolean => !!slots.default);
 </script>
 
 <style lang="scss">
