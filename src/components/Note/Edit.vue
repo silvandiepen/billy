@@ -24,7 +24,7 @@ import { createId } from "@sil/id";
 import { BlankNote, Note, Icons } from "@/types";
 import { useInvoice } from "@/composables";
 
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button/Button.vue";
 import ViewEdit from "@/components/ViewEdit.vue";
 import NoteView from "@/components/Note/View.vue";
 import NoteForm from "@/components/Note/Form.vue";
