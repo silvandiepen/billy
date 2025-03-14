@@ -27,7 +27,15 @@ const resizing = ref(false);
 const startX = ref(0);
 const startWidth = ref(0);
 
-const columnWidth = ref(240);
+const columnWidth = ref(480);
+
+const setColumnWidth = () => {
+    console.log('hi')
+columnWidth.value = window.innerWidth / 4;
+}
+
+
+
 
 
 const getColumnWidth = computed(() => {
@@ -62,6 +70,10 @@ onMounted(() => {
     resizer.addEventListener('mousedown', mouseDownHandler);
     window.addEventListener('mousemove', mouseMoveHandler);
     window.addEventListener('mouseup', mouseUpHandler);
+
+    setColumnWidth();
+
+    window.addEventListener('resize', ()=> setColumnWidth());
 
 });
 
