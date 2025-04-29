@@ -2,27 +2,27 @@
     <div :class="bemm()">
         <ul :class="bemm('list')">
             <li :class="[bemm('item'), bemm('item', folded.details ? 'folded' : 'open')]">
-                <EditHeader label="Details" v-model="folded.details"></EditHeader>
+                <EditHeader label="Details" v-model="folded.details"  :foldedContent="invoiceNumber(invoice)"></EditHeader>
                 <DetailsEdit v-show="!folded.details" label="Details" v-model="invoice.details" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.sender ? 'folded' : 'open')]">
-                <EditHeader label="From" v-model="folded.sender"></EditHeader>
+                <EditHeader label="From" v-model="folded.sender" :folded-content="invoice.sender.name"></EditHeader>
                 <EntityEdit v-show="!folded.sender" label="Sender" v-model="invoice.sender" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.receiver ? 'folded' : 'open')]">
-                <EditHeader label="To" v-model="folded.receiver"></EditHeader>
+                <EditHeader label="To" v-model="folded.receiver" :foldedContent="invoice.receiver.companyName || invoice.receiver.name"></EditHeader>
                 <EntityEdit v-show="!folded.receiver" label="Receiver" v-model="invoice.receiver" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.items ? 'folded' : 'open')]">
-                <EditHeader label="Items" v-model="folded.items"></EditHeader>
+                <EditHeader label="Items" v-model="folded.items" :count="invoice.items.length" :foldedContent="formatCurrency(getTotal(invoice))"></EditHeader>
                 <ItemEdit v-show="!folded.items" label="Items" v-model="invoice.items" />
             </li>
 
             <li :class="[bemm('item'), bemm('item', folded.notes ? 'folded' : 'open')]">
-                <EditHeader label="Notes" v-model="folded.notes"></EditHeader>
+                <EditHeader label="Notes" v-model="folded.notes" :count="invoice.notes.length"></EditHeader>
                 <NoteEdit v-show="!folded.notes" label="Notes" v-model="invoice.notes" />
             </li>
         </ul>
@@ -41,6 +41,8 @@ import EntityEdit from '@/components/Entity/Edit.vue';
 import ItemEdit from '@/components/Item/Edit.vue';
 import NoteEdit from '@/components/Note/Edit.vue'
 import EditHeader from '@/components/EditHeader.vue';
+
+import { invoiceNumber, getTotal, formatCurrency } from '../utils';
 
 import { useInvoice } from '@/composables';
 

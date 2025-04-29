@@ -208,17 +208,32 @@ onMounted(() => {
     gap: 2em;
     height: 100%;
     justify-content: space-between;
+    overflow: hidden;
   }
 
   &__footer {
     align-self: flex-end;
     justify-self: flex-end;
+    padding: 2em;
   }
 
   &__main {
     display: flex;
     flex-direction: column;
+    // padding: 2em;
 
+    .item-list{
+      padding: 2em;
+      background-color: color-mix(in srgb, var(--primary), transparent 75%);
+      border-radius: .5em;
+    }
+.show-total{
+  padding-inline: 2em;
+}
+  }
+
+  &__details{
+    padding: 0 2em;
   }
 
   &__debug {
@@ -244,6 +259,7 @@ onMounted(() => {
   }
 
   &__header {
+    padding: 2em;
     display: flex;
     width: 100%;
     justify-content: space-between;

@@ -33,6 +33,7 @@ export interface InvoiceItem {
     discount: number
     taxRate: number
     unit: string
+    days: Date[]
 }
 
 export interface Note {
@@ -97,7 +98,8 @@ export const BlankItem: InvoiceItem = {
     discount: 0,
     unit: '',
     taxRate: -1,
-    active: true
+    active: true,
+    days:[]
 }
 export const BlankEntity: Entity = {
     id: '',

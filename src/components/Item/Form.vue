@@ -19,7 +19,7 @@
 
             <ul :class="bemm('days-list')" v-if="tempDays.length">
                 <li :class="bemm('days-item')" v-for="day in tempDays" @click="removeDay(day)">
-                    {{ formatDate({ dateString: day.toDateString(), displayFormat: 'long'}) }}
+                    {{ day instanceof Date ? formatDate({ dateString: day.toDateString(), displayFormat: 'long'}) : '' }}
                 </li>
             </ul>
 
@@ -81,7 +81,10 @@ const theModel = computed({
 const tempStart = ref<Date>();
 const tempEnd = ref<Date>();
 
-const tempDays = ref<Date[]>(theModel.value.days || []);
+const tempDays = ref<Date[]>((theModel.value.days || []).map(day => {
+    // Ensure each day is properly converted to a Date object
+    return day instanceof Date ? day : new Date(day);
+}).filter(date => !isNaN(date.getTime()))); // Filter out invalid dates
 
 const fixDates = ()=>{
     // Order the dates and remove doubles

@@ -19,7 +19,7 @@ import { useInvoice, useArchive } from '@/composables';
 import { encodeInvoice, invoiceNumber } from '@/utils';
 
 import Button from '@/components/Button/Button.vue';
-import ButtonGroup from '@/components/ButtonGroup.vue';
+import ButtonGroup from '@/components/Button/ButtonGroup.vue';
 import { RouteName } from '@/router';
 import { ButtonSettings } from './Button/Button.model';
 

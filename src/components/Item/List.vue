@@ -42,17 +42,17 @@ const invoiceItems = computed(() => {
 
     padding: 2em 0;
 
-    &::before {
-        background-color: var(--primary);
-        opacity: .125;
-        z-index: -1;
-        position: absolute;
-        top: 0;
-        left: -2em;
-        content: "";
-        width: calc(100% + 4em);
-        height: 100%;
-    }
+    // &::before {
+    //     background-color: var(--primary);
+    //     opacity: .125;
+    //     z-index: -1;
+    //     position: absolute;
+    //     top: 0;
+    //     left: -2em;
+    //     content: "";
+    //     width: calc(100% + 4em);
+    //     height: 100%;
+    // }
 
     &__list {
         padding: 0;

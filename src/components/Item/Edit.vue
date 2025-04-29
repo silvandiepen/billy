@@ -3,7 +3,12 @@
 
         <div :class="bemm('item')" v-for="(_, index) in theModel">
 
-            <ViewEdit :active="theModel[index].active" :popupId="theModel[index].id" :activeAction="()=>toggleItem(theModel[index].id)"  :deleteAction="()=>removeItem(theModel[index].id)">
+            <ViewEdit
+                :active="theModel[index].active"
+                :popupId="theModel[index].id"
+                :activeAction="()=>toggleItem(theModel[index].id)"
+                :deleteAction="()=>removeItem(theModel[index].id)"
+                >
                 <template v-slot:edit>
                     <ItemForm v-model="theModel[index]" />
                 </template>

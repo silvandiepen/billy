@@ -75,7 +75,7 @@ const taxRates = computed(() => {
         gap: .5em;
 
         &:nth-child(1) {
-            width: 100%
+            width: 66.66%
         }
     }
 

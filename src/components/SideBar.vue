@@ -7,7 +7,6 @@
         <div :class="bemm('resizer')"></div>
         <div :class="bemm('container')">
             <slot></slot>
-
         </div>
     </aside>
 </template>
@@ -21,12 +20,10 @@ import Icon from "@/components/Icon.vue";
 
 const bemm = useBemm('sidebar');
 
-
 const isVisible = ref(true);
 const resizing = ref(false);
 const startX = ref(0);
 const startWidth = ref(0);
-
 const columnWidth = ref(480);
 
 const setColumnWidth = () => {
@@ -90,12 +87,12 @@ onUnmounted(() => {
     transition: all .3s ease-in-out;
     width: var(--side-width);
 
+
     &--hidden {
         transform: translateX(calc(var(--side-width) * -1));
         width: 0;
 
         .sidebar__toggle {
-
             transform: translateX(calc(var(--side-width) + 1em));
         }
     }
@@ -105,6 +102,9 @@ onUnmounted(() => {
         max-height: 100vh;
         overflow: scroll;
         padding: 2em;
+    scrollbar-color: rgba(255,255,255,.25) transparent;
+    scrollbar-width: thin;
+    overflow-x: hidden;
 
     }
 
